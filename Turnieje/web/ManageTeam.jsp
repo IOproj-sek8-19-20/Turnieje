@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Turnieje - stworz druzyne</title>
+        <title>Turnieje - edytuj druzyne</title>
 
     </head>
 

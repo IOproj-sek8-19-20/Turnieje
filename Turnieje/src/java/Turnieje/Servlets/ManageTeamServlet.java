@@ -17,8 +17,10 @@ import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
- *
- * @author Daniel-PC
+ * Servlets responsible for editing the team. 
+ * 
+ * @author Daniel Kaleta
+ * @version 1.0.0
  */
 @WebServlet(name = "ManageTeamServlet", urlPatterns = {"/ManageTeam"})
 public class ManageTeamServlet extends HttpServlet {
@@ -74,7 +76,7 @@ public class ManageTeamServlet extends HttpServlet {
             out.println("<h1>Pomyślna zmiana nazwy na: "+managedTeam+".</h1>");
             out.print("<script>\n" +
 "setTimeout(function() {\n" +
-"  location.replace(\"/Turnieje/ManageTeam.jsp\")\n" +
+"  location.replace(\"/Turnieje/ManageTeam.jsp?teamNameGet="+managedTeam+"\")\n" +
 "}, 2000);\n" +
 "</script>");
             

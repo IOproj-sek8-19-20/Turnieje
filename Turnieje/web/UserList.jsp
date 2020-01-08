@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
+    <body onload="saveDefaultOrder()">
 
         <%
         //Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -27,13 +27,14 @@
         
         <center>
             <select name="sorting" size="1" style="width:40%;" id="sorting">
-                <option></option>
+                <option>ID?</option>
+                <option>(-1)*ID?</option>
                 <option>A-Z</option>
                 <option>Z-A</option>
             </select>
         </center>
                 
-        <select name="choosedUser" size="7" style="width:100%;" id="choosedUser" onchange="mySortingFunction()">
+        <select name="choosedUser" size="7" style="width:100%;" id="choosedUser">
         <%  while(resultset.next()){ %>
         <option><%= resultset.getString(1)%></option>
         <% } %>
@@ -42,11 +43,22 @@
         
         <script>
             sort = document.getElementById("sorting");
-            sort.addEventListener("change", myFunctionSort);
+            sort.addEventListener("change", mySortingFunction);
+            var defaultOrderOptions;
+            
+            function saveDefaultOrder(){
+                console.log("Wywoluje funkcje zapisujaca domyslna kolejnosc");
+                
+                var select = document.getElementById("choosedUser");
+                defaultOrderOptions = select.getElementsByTagName('option');
+                defaultOrderOptions = Array.prototype.slice.call(defaultOrderOptions);
+                console.log("Domyslna:");
+                console.log(defaultOrderOptions);
+            }
             
             function mySortingFunction() {
                 console.log("Wywoluje funkcje sort");
-                var input, filter, select, options, i, txtValue, typeOfSorting;
+                var input, filter, select, options, i, typeOfSorting;
                 input = document.getElementById('searchUser');
                 filter = input.value.toUpperCase();
                 
@@ -56,9 +68,16 @@
                 options = select.getElementsByTagName('option');
                 options = Array.prototype.slice.call(options);
                 
-                if(typeOfSorting.localeCompare("")==0)
-                {
+                console.log("Przed sortowaniu:");
+                console.log(options);
                 
+                if(typeOfSorting.localeCompare("ID?")==0)
+                {
+                    options=defaultOrderOptions;
+                }
+                else if(typeOfSorting.localeCompare("(-1)*ID?")==0)
+                {
+                    options=defaultOrderOptions.reverse();
                 }
                 else if(typeOfSorting.localeCompare("A-Z")==0)
                 {
