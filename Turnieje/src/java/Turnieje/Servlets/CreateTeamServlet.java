@@ -62,9 +62,13 @@ public class CreateTeamServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body><center>");
             out.println("<h1> Druzyna "+teamName+" dodana.</h1>");
-                        out.print("<script>\n" +
+            out.print("<script>\n" +
 "setTimeout(function() {\n" +
+<<<<<<< Updated upstream
 "  location.replace(\"/Turnieje/ManageTeam.jsp\")\n" +
+=======
+"  location.replace(\"/Turnieje/ManageTeam.jsp?teamNameGet="+teamName+"\")\n" +
+>>>>>>> Stashed changes
 "}, 2000);\n" +
 "</script>");
             out.println("</center></body>");

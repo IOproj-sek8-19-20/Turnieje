@@ -9,6 +9,7 @@
     </head>
 
     <body>
+<<<<<<< Updated upstream
 
 
         <script>
@@ -27,6 +28,8 @@
                 console.log('--something went wrong---');
             }
         </script>
+=======
+>>>>>>> Stashed changes
         
 <%
 //Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -42,13 +45,21 @@ Connection connection =
 
 
 <center>
+<<<<<<< Updated upstream
     <form action = "ManageTeam" method="get">
+=======
+    <center><h1>Edytujesz druzyne: <%= request.getParameter("teamNameGet") %> </h1></center>
+    
+    <form action = "ManageTeam" method="get">
+        
+>>>>>>> Stashed changes
         Nazwa druzyny : <input type = "text" name = "teamName" id="teamName">
         <br/><br/>
         Dodaj zawodnika (nazwa) : <input type = "text" name = "userToAdd" id="userToAdd">
         <br/><br/>
         Dodaj zawodnika (id) : <input type = "number" name = "userToAddID" id="userToAddID">
         <br/><br/>
+<<<<<<< Updated upstream
         Przenieś uprawnienia: 
 
         <h1> Drop down box or select element</h1>
@@ -57,6 +68,13 @@ Connection connection =
             <option><%= resultset.getString(1)%></option>
         <% } %>
         </select>
+=======
+        Przenies uprawnienia: 
+        
+        <br/><br/>
+        
+        <iframe src="UserList.jsp"></iframe>
+>>>>>>> Stashed changes
 
 
         <br/><br/>

@@ -100,7 +100,11 @@ public class ManageTeamServlet extends HttpServlet {
             out.println("<h1>Pomyślna zmiana nazwy na: "+managedTeam+"</h1>");
             out.print("<script>\n" +
 "setTimeout(function() {\n" +
+<<<<<<< Updated upstream
 "  location.replace(\"/Turnieje/ManageTeam.jsp\")\n" +
+=======
+"  location.replace(\"/Turnieje/ManageTeam.jsp?teamNameGet="+managedTeam+"\")\n" +
+>>>>>>> Stashed changes
 "}, 2000);\n" +
 "</script>");
             
