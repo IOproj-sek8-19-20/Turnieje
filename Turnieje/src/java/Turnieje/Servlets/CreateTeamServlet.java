@@ -64,7 +64,7 @@ public class CreateTeamServlet extends HttpServlet {
             out.println("<h1> Druzyna "+teamName+" dodana.</h1>");
                         out.print("<script>\n" +
 "setTimeout(function() {\n" +
-"  location.replace(\"/Turnieje/ManageTeam.html\")\n" +
+"  location.replace(\"/Turnieje/ManageTeam.jsp\")\n" +
 "}, 2000);\n" +
 "</script>");
             out.println("</center></body>");

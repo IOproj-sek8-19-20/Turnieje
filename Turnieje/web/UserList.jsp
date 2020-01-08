@@ -19,14 +19,11 @@
         Connection connection = 
             DriverManager.getConnection
                 ("jdbc:derby://localhost:1527/danikaldb", "daniel", "daniel");
-
        Statement statement = connection.createStatement() ;
-
        resultset =statement.executeQuery("SELECT * FROM History");
-
         %>
         
-        Nazwa: <input type = "text" name = "userToAdd" id="searchUser" onkeyup="myFunction()">
+        Nazwa: <input type = "text" name = "userToAdd" id="searchUser" onkeyup="myFilterFunction()">
         
         <center>
             <select name="sorting" size="1" style="width:40%;" id="sorting">
@@ -36,7 +33,7 @@
             </select>
         </center>
                 
-        <select name="choosedUser" size="7" style="width:100%;" id="choosedUser" onchange="myFunctionSort()">
+        <select name="choosedUser" size="7" style="width:100%;" id="choosedUser" onchange="mySortingFunction()">
         <%  while(resultset.next()){ %>
         <option><%= resultset.getString(1)%></option>
         <% } %>
@@ -47,19 +44,18 @@
             sort = document.getElementById("sorting");
             sort.addEventListener("change", myFunctionSort);
             
-            function myFunctionSort() {
+            function mySortingFunction() {
                 console.log("Wywoluje funkcje sort");
-
                 var input, filter, select, options, i, txtValue, typeOfSorting;
                 input = document.getElementById('searchUser');
                 filter = input.value.toUpperCase();
                 
-                //sort = document.getElementById("sorting");
                 typeOfSorting = sort.options[sort.selectedIndex].value;
                 
                 select = document.getElementById("choosedUser");
                 options = select.getElementsByTagName('option');
                 options = Array.prototype.slice.call(options);
+                
                 if(typeOfSorting.localeCompare("")==0)
                 {
                 
@@ -88,25 +84,13 @@
                 }
             }
             
-            function myFunction() {
+            function myFilterFunction() {
                 console.log("Wywoluje funkcje");
-
                 var input, filter, select, options, i, txtValue;
                 input = document.getElementById('searchUser');
                 filter = input.value.toUpperCase();
                 select = document.getElementById("choosedUser");
                 options = select.getElementsByTagName('option');
-
-                //poczatki pracy nad sortowaniem
-                /*console.log("Przed sortowaniem:");
-                console.log(options);
-                options = Array.prototype.slice.call(options);
-                options.sort(function(a, b)
-                {
-                  return a.textContent.localeCompare(b.textContent);
-                });
-                console.log("Po sortowaniu:");
-                console.log(options);*/
 
                 for (i = 0; i < select.length; i++) {
                   txtValue = options[i].value;
