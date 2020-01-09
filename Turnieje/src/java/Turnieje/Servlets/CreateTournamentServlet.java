@@ -9,30 +9,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
- * Servlet responsible for editing the team.
+ * Servlet responsible for creating the tournament.
  *
  * @author Daniel Kaleta
  * @version 1.0.0
  */
-@WebServlet(name = "ManageTeamServlet", urlPatterns = {"/ManageTeam"})
-public class ManageTeamServlet extends HttpServlet {
-
-    ITeamRepository teamRepository;
-
-    //<editor-fold defaultstate="expanded" desc="init()">
-    @Override
-    public void init() {
-        teamRepository = new TeamRepository();
-    }
-    //</editor-fold>
+@WebServlet(name = "CreateTournamentServlet", urlPatterns = {"/CreateTournament"})
+public class CreateTournamentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,12 +35,9 @@ public class ManageTeamServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String managedTeam = request.getParameter("teamName");
+        String tournamentName = request.getParameter("tournamentName");
 
-        //Team toEdit = teamRepository.getById(managedTeamID);
-        //toEdit.setName(teamName);
-        //teamRepository.update(toEdit);
-        response.sendRedirect("TeamEdited.jsp?teamName=" + managedTeam);
+        response.sendRedirect("TournamentCreated.jsp?tournamentName=" + tournamentName);
 
     }
 
