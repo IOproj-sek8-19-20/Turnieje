@@ -1,8 +1,10 @@
 <%-- 
-    Document   : UserList
+    Document   : UsersList
     Created on : 2020-01-08, 13:20:06
     Author     : Daniel Kaleta
 --%>
+<%@page import="java.util.TreeSet"%>
+<%@page import="java.util.Set"%>
 <%@ page import="java.sql.*" %>
 <%ResultSet resultset =null;%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,29 +17,28 @@
     <body onload="saveDefaultOrder()">
 
         <%
-        //Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection connection = 
-            DriverManager.getConnection
-                ("jdbc:derby://localhost:1527/danikaldb", "daniel", "daniel");
-       Statement statement = connection.createStatement() ;
-       resultset =statement.executeQuery("SELECT * FROM History");
+            Set<String> users = new TreeSet<String>();
+            users.add("Daniel Kaleta");
+            users.add("Daniel Tarnecki");
+            users.add("Piotr Uhl");
+            users.add("Wojtek Woś");
+            users.add("Adam Adamski");
+            users.add("Mariusz Drynda");
         %>
         
         Nazwa: <input type = "text" name = "userToAdd" id="searchUser" onkeyup="myFilterFunction()">
         
         <center>
             <select name="sorting" size="1" style="width:40%;" id="sorting">
-                <option>ID?</option>
-                <option>(-1)*ID?</option>
-                <option>A-Z</option>
+                <option selected>A-Z</option>
                 <option>Z-A</option>
             </select>
         </center>
                 
         <select name="choosedUser" size="7" style="width:100%;" id="choosedUser">
-        <%  while(resultset.next()){ %>
-        <option><%= resultset.getString(1)%></option>
-        <% } %>
+            <% for(String user: users) {%>
+                <option><%= user%></option>
+            <%} %>
         </select>
 
         
@@ -47,8 +48,6 @@
             var defaultOrderOptions;
             
             function saveDefaultOrder(){
-                console.log("Wywoluje funkcje zapisujaca domyslna kolejnosc");
-                
                 var select = document.getElementById("choosedUser");
                 defaultOrderOptions = select.getElementsByTagName('option');
                 defaultOrderOptions = Array.prototype.slice.call(defaultOrderOptions);
@@ -57,10 +56,7 @@
             }
             
             function mySortingFunction() {
-                console.log("Wywoluje funkcje sort");
-                var input, filter, select, options, i, typeOfSorting;
-                input = document.getElementById('searchUser');
-                filter = input.value.toUpperCase();
+                var select, options, i, typeOfSorting;
                 
                 typeOfSorting = sort.options[sort.selectedIndex].value;
                 
@@ -68,18 +64,7 @@
                 options = select.getElementsByTagName('option');
                 options = Array.prototype.slice.call(options);
                 
-                console.log("Przed sortowaniu:");
-                console.log(options);
-                
-                if(typeOfSorting.localeCompare("ID?")==0)
-                {
-                    options=defaultOrderOptions;
-                }
-                else if(typeOfSorting.localeCompare("(-1)*ID?")==0)
-                {
-                    options=defaultOrderOptions.reverse();
-                }
-                else if(typeOfSorting.localeCompare("A-Z")==0)
+                if(typeOfSorting.localeCompare("A-Z")==0)
                 {
                     options.sort(function(a, b)
                     {
@@ -94,17 +79,12 @@
                     });
                 }
                 
-                console.log("Po sortowaniu:");
-                console.log(options);
-                
                 for (i = 0; i < select.length; i++) {
-                    console.log(options[i].value)
                     select.add(options[i])
                 }
             }
             
             function myFilterFunction() {
-                console.log("Wywoluje funkcje");
                 var input, filter, select, options, i, txtValue;
                 input = document.getElementById('searchUser');
                 filter = input.value.toUpperCase();

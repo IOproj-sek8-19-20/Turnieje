@@ -32,17 +32,22 @@ Connection connection =
         <br/><br/>
         Dodaj zawodnika (nazwa) : <input type = "text" name = "userToAdd" id="userToAdd">
         <br/><br/>
-        Dodaj zawodnika (id) : <input type = "number" name = "userToAddID" id="userToAddID">
-        <br/><br/>
         Przenies uprawnienia: 
         
         <br/><br/>
         
-        <iframe src="UserList.jsp"></iframe>
+        <iframe src="/Turnieje/Lists/UsersList.jsp"></iframe>
 
 
         <br/><br/>
         <input type = "submit" value = "Zatwierdz">
+        
+    </form>
+    
+    <br/>
+    
+    <form action = "index.html" method="get">
+        <input type = "submit" value = "Powrot">
     </form>
 
 </center>
