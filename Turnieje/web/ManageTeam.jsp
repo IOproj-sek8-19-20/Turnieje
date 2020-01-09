@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Turnieje - edytuj druzyne</title>
+        <title>Edytuj druzyne</title>
 
     </head>
 
@@ -24,7 +24,7 @@ Connection connection =
 
 
 <center>
-    <center><h1>Edytujesz druzyne: <%= request.getParameter("teamNameGet") %> </h1></center>
+    <center><h1>Edytujesz druzyne: <%= request.getParameter("teamName") %> </h1></center>
     
     <form action = "ManageTeam" method="get">
         

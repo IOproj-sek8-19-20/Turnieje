@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet responsible for creating the tournament.
+ * Servlet responsible for editing the tournament.
  *
  * @author Daniel Kaleta
  * @version 1.0.0
  */
-@WebServlet(name = "CreateTournamentServlet", urlPatterns = {"/CreateTournament"})
-public class CreateTournamentServlet extends HttpServlet {
+@WebServlet(name = "ManageTournamentServlet", urlPatterns = {"/ManageTournament"})
+public class ManageTournamentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,13 @@ public class CreateTournamentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String tournamentName = request.getParameter("tournamentName");
+        String managedTournament = request.getParameter("tournamentName");
 
-        response.sendRedirect("TournamentCreated.jsp?tournamentName=" + tournamentName);
+        //Team toEdit = teamRepository.getById(managedTeamID);
+        //toEdit.setName(teamName);
+        //teamRepository.update(toEdit);
 
+         response.sendRedirect("TournamentEdited.jsp?tournamentName="+managedTournament);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

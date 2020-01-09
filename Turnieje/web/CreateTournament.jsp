@@ -5,11 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Turnieje - stworz turniej</title>
+<title>Etworz turniej</title>
 
 </head>
 
-    <body>
+    <body onload="init()">
         <center>
             <br/>
             
@@ -70,19 +70,24 @@
             
             <br/>
             
-            </form>
-            
-            <button onclick="addTeam()">Dodaj</button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            rozwiazanie tymczasowe
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button onclick="deleteTeam()">Usun</button>
-            
             <br/><br/>
                 <input type = "submit" value = "Zatwierdz">
             </form>
             
+            
             <script>
+                
+                function init()
+                {
+                    var iframe = document.getElementById("AvaibleTeams");   //dobieram sie do iframe
+                    var select = iframe.contentWindow.document.getElementById("choosedTeam");
+                    select.addEventListener("click", addTeam);
+                    
+                    var iframe2 = document.getElementById("ChoosedTeams");   //dobieram sie do iframe
+                    var select2 = iframe2.contentWindow.document.getElementById("choosedTeam");
+                    select2.addEventListener("click", deleteTeam);
+                }
+                
                 function addTeam()
                 {
                     var iframe = document.getElementById("AvaibleTeams");   //dobieram sie do iframe

@@ -17,20 +17,19 @@ import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
- * Servlets responsible for editing the team. 
- * 
+ * Servlet responsible for editing the team.
+ *
  * @author Daniel Kaleta
  * @version 1.0.0
  */
 @WebServlet(name = "ManageTeamServlet", urlPatterns = {"/ManageTeam"})
 public class ManageTeamServlet extends HttpServlet {
-    
+
     ITeamRepository teamRepository;
-    
+
     //<editor-fold defaultstate="expanded" desc="init()">
     @Override
-    public void init()
-    {
+    public void init() {
         teamRepository = new TeamRepository();
     }
     //</editor-fold>
@@ -47,46 +46,14 @@ public class ManageTeamServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-            
-            int managedTeamID=0;
-            
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("managedTeamID")) {
-                        managedTeamID = Integer.parseInt(cookie.getValue());
-                        break;
-                    }
-                }
-            }
-            
-            String managedTeam = request.getParameter("teamName");
-            Cookie cookie = new Cookie("managedTeamName", managedTeam);
-            response.addCookie(cookie);
-            
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ManageTeamServlet</title>");            
-            out.println("</head>");
-            out.println("<body><center>");
-            out.println("<h1>Pomyślna zmiana nazwy na: "+managedTeam+".</h1>");
-            out.print("<script>\n" +
-"setTimeout(function() {\n" +
-"  location.replace(\"/Turnieje/ManageTeam.jsp?teamNameGet="+managedTeam+"\")\n" +
-"}, 2000);\n" +
-"</script>");
-            
-            out.println("</center></body>");
-            out.println("</html>");
-        }
-        
-            //Team toEdit = teamRepository.getById(managedTeamID);
-            //toEdit.setName(teamName);
-            //teamRepository.update(toEdit);
+
+        String managedTeam = request.getParameter("teamName");
+
+        //Team toEdit = teamRepository.getById(managedTeamID);
+        //toEdit.setName(teamName);
+        //teamRepository.update(toEdit);
+        response.sendRedirect("TeamEdited.jsp?teamName=" + managedTeam);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

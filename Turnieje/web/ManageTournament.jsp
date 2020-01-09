@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Turnieje - edytuj turniej</title>
+        <title>Edytuj turniej</title>
 
     </head>
 
@@ -13,11 +13,11 @@
 
 
 <center>
-    <center><h1>Edytujesz turniej: <%= request.getParameter("tournamentNameGet") %> </h1></center>
+    <center><h1>Edytujesz turniej: <%= request.getParameter("tournamentName") %> </h1></center>
     
-    <form action = "ManageTeam" method="get">
+    <form action = "ManageTournament" method="get">
         
-        Nazwa turnieju : <input type = "text" name = "teamName" id="teamName">
+        Nazwa turnieju : <input type = "text" name = "tournamentName" id="teamName">
         <br/><br/>
 
 
