@@ -5,41 +5,41 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edytuj druzyne</title>
-
     </head>
 
-    <body>
+    <body onload="init()">
+
+    <center>
         
-<%
-//Class.forName("com.mysql.jdbc.Driver").newInstance();
-Connection connection = 
-         DriverManager.getConnection
-            ("jdbc:derby://localhost:1527/danikaldb", "daniel", "daniel");
-
-       Statement statement = connection.createStatement() ;
-
-       resultset =statement.executeQuery("SELECT * FROM History");
-
-%>
-
-
-<center>
-    <center><h1>Edytujesz druzyne: <%= request.getParameter("teamName") %> </h1></center>
+    <h1>Edytujesz druzyne: <%= request.getParameter("teamName") %> </h1>
     
     <form action = "ManageTeam" method="get">
         
+        <!-- Nazwa druzyny -->
         Nazwa druzyny : <input type = "text" name = "teamName" id="teamName">
+        
         <br/><br/>
+        
+        <!-- Dodawanie zawodników -->
         Dodaj zawodnika (nazwa) : <input type = "text" name = "userToAdd" id="userToAdd">
-        <br/><br/>
-        Przenies uprawnienia: 
-        
-        <br/><br/>
-        
-        <iframe src="/Turnieje/Lists/UsersList.jsp"></iframe>
-
 
         <br/><br/>
+
+        Dodaj zawodnika (wybierz z listy) :
+
+        <br/>
+
+        Dostepni: 
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        Dodani:
+
+        <br/><br/>
+
+        <iframe id="AvaibleUsers" src="/Turnieje/Lists/UsersList.jsp"></iframe>
+        <iframe id="ChoosedUsers" src="/Turnieje/Lists/ChoosedUsersList.jsp"></iframe>
+
+        <br/><br/>
+        
         <input type = "submit" value = "Zatwierdz">
         
     </form>
@@ -50,11 +50,13 @@ Connection connection =
         <input type = "submit" value = "Powrot">
     </form>
 
-</center>
-</body>
-
-
-
+    </center>
+    
+    <script src="/Turnieje/JavaScripts/initUsers.js"></script>
+    <script src="/Turnieje/JavaScripts/addUsers.js"></script>
+    <script src="/Turnieje/JavaScripts/deleteUsers.js"></script>
+    
+    </body>
 </html>
 
 
