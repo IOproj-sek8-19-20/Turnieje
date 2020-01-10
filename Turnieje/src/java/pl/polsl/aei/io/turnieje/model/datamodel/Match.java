@@ -11,7 +11,7 @@ import java.util.Date;
  * Representation of single match.
  * 
  * @author Piotr Uhl
- * @version 0.1.0
+ * @version 0.1.1
  */
 public class Match {
     //<editor-fold defaultstate="collapsed" desc="Fields">
@@ -47,37 +47,58 @@ public class Match {
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public Date getDate() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.date;
     }
     public boolean getFinished() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.finished;
     }
     public MatchId getId() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.id;
     }
     public TeamId getTeamId(int nr) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	switch (nr) {
+	    case 1:
+		return this.team1Id;
+	    case 2:
+		return this.team2Id;
+	    default:
+		return null;
+	}
     }
     public TournamentId getTourId() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.tourId;
     }
     public TeamId getWinner() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.winner;
     }
     public boolean setDate(Date val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	this.date = val;
+	return true;
     }
     public boolean setFinished(boolean val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	this.finished = val;
+	return true;
     }
     public boolean setTeamId(int nr, TeamId val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	switch (nr) {
+	case 1:
+	    this.team1Id = val;
+	    break;
+	case 2:
+	    this.team2Id = val;
+	    break;
+	default:
+	    return false;
+	}
+	return true;
     }
     public boolean setTourId(TournamentId val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	this.tourId = val;
+	return true;
     }
     public boolean setWinner(TeamId val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	this.winner = val;
+	return true;
     }
     //</editor-fold>
 }
