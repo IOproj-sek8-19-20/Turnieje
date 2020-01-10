@@ -24,6 +24,7 @@
             users.add("Wojtek Woś");
             users.add("Adam Adamski");
             users.add("Mariusz Drynda");
+            boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
         
         <script>var toFilter="Users"</script>
@@ -37,9 +38,10 @@
         </center>
                 
         <select name="choosedUsers" size="7" style="width:100%;" id="choosedUsers">
-            <% for(String user: users) {%>
+            <% if(emptyList!=true){
+                for(String user: users) {%>
                 <option><%= user%></option>
-            <%} %>
+            <%}}%>
         </select>
 
         <script src="/Turnieje/JavaScripts/filterFunction.js"></script>

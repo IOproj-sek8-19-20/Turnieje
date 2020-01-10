@@ -21,6 +21,7 @@
             teams.add("Druzyna 3");
             teams.add("Druzyna 4");
             teams.add("Team 5");
+            boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
         
         <script>var toFilter="Teams"</script>
@@ -34,9 +35,10 @@
         </center>
                 
         <select name="choosedTeams" size="7" style="width:100%;" id="choosedTeams">
-            <% for(String team: teams) {%>
+            <% if(emptyList!=true){
+                for(String team: teams) {%>
                 <option><%= team%></option>
-            <%} %>
+            <%}}%>
         </select>
 
         <script src="/Turnieje/JavaScripts/filterFunction.js"></script>

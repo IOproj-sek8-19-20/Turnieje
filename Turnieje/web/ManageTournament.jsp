@@ -20,7 +20,7 @@
         <br/><br/>
 
         <iframe id="AvaibleTeams" src="/Turnieje/Lists/TeamsList.jsp" width="300" height="150"></iframe>
-        <iframe id="ChoosedTeams" src="/Turnieje/Lists/ChoosedTeamsList.jsp" width="300" height="150"></iframe>
+        <iframe id="ChoosedTeams" src="/Turnieje/Lists/TeamsList.jsp?Empty=true" width="300" height="150"></iframe>
 
         <br/><br/>
         
