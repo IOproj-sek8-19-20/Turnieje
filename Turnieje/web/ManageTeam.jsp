@@ -7,7 +7,8 @@
         <title>Edytuj druzyne</title>
     </head>
 
-    <body onload="init()">
+    <script>var toInit="Users"</script>
+    <body onload="init(toInit)">
 
     <center>
         
@@ -52,9 +53,9 @@
 
     </center>
     
-    <script src="/Turnieje/JavaScripts/initUsers.js"></script>
-    <script src="/Turnieje/JavaScripts/addUsers.js"></script>
-    <script src="/Turnieje/JavaScripts/deleteUsers.js"></script>
+        <script src="/Turnieje/JavaScripts/initFunction.js"></script>
+        <script src="/Turnieje/JavaScripts/addFunction.js"></script>
+        <script src="/Turnieje/JavaScripts/deleteFunction.js"></script>
     
     </body>
 </html>

@@ -7,7 +7,8 @@
         <title>Edytuj turniej</title>
     </head>
 
-    <body onload="init()">
+    <script>var toInit="Teams"</script>
+    <body onload="init(toInit)">
 
     <center>
         
@@ -28,9 +29,9 @@
 
     </center>
     
-    <script src="/Turnieje/JavaScripts/initTeams.js"></script>
-    <script src="/Turnieje/JavaScripts/addTeams.js"></script>
-    <script src="/Turnieje/JavaScripts/deleteTeams.js"></script>
+        <script src="/Turnieje/JavaScripts/initFunction.js"></script>
+        <script src="/Turnieje/JavaScripts/addFunction.js"></script>
+        <script src="/Turnieje/JavaScripts/deleteFunction.js"></script>
     </body>
 </html>
 
