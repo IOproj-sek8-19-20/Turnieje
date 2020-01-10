@@ -21,7 +21,7 @@
             users.add("Daniel Kaleta");
             users.add("Daniel Tarnecki");
             users.add("Piotr Uhl");
-            users.add("Wojtek Woś");
+            users.add("Wojtek Wos");
             users.add("Adam Adamski");
             users.add("Mariusz Drynda");
             boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
