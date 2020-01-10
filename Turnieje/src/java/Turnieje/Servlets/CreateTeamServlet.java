@@ -6,13 +6,13 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
@@ -47,8 +47,25 @@ public class CreateTeamServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String teamName = request.getParameter("teamName");
+        String JSONString = request.getParameter("JSONFromCreateTeam");
+        JSONObject JSON = new JSONObject(JSONString);
 
+        String teamName = JSON.getString("name");
+        
+        JSONArray users = JSON.getJSONArray("usersToAdd");
+        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
+        for(int i=0; i<users.length();i++)
+        {
+            System.out.print(users.getString(i));
+        }
+        
+        JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
+        //wypisanie dodanych dyscyplin w ramach testu czy dziala
+        for(int i=0; i<disciplines.length();i++)
+        {
+            System.out.print(disciplines.getString(i));
+        }
+        
         //Team toAdd = new Team();
         //toAdd.setName(teamName);
         //teamRepository.add(toAdd);

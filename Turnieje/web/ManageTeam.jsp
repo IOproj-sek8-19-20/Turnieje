@@ -37,7 +37,7 @@
         <br/><br/>
 
         <iframe id="AvaibleUsers" src="/Turnieje/Lists/UsersList.jsp"></iframe>
-        <iframe id="ChoosedUsers" src="/Turnieje/Lists/ChoosedUsersList.jsp"></iframe>
+        <iframe id="ChoosedUsers" src="/Turnieje/Lists/UsersList.jsp?Empty=true"></iframe>
 
         <br/><br/>
         

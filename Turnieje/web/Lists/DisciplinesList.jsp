@@ -20,6 +20,7 @@
             disciplines.add("Koszykowka");
             disciplines.add("Szachy podwodne");
             disciplines.add("Bierki");
+            boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
         
         <script>var toFilter="Disciplines"</script>
@@ -33,9 +34,10 @@
         </center>
                 
         <select name="choosedDisciplines" size="7" style="width:100%;" id="choosedDisciplines">
-            <% for(String discipline: disciplines) {%>
+            <% if(emptyList!=true){
+                for(String discipline: disciplines) {%>
                 <option><%= discipline%></option>
-            <%} %>
+            <%}}%>
         </select>
 
         <script src="/Turnieje/JavaScripts/filterFunction.js"></script>
