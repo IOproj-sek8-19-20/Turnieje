@@ -22,7 +22,8 @@
             disciplines.add("Bierki");
         %>
         
-        Nazwa: <input type = "text" name = "searchDiscipline" id="searchDiscipline" onkeyup="myFilterFunction()">
+        <script>var toFilter="Disciplines"</script>
+        Nazwa: <input type = "text" name = "searchDisciplines" id="searchDisciplines" onkeyup="myFilterFunction(toFilter)">
         
         <center>
             <select name="sorting" size="1" style="width:40%;" id="sorting">
@@ -31,63 +32,18 @@
             </select>
         </center>
                 
-        <select name="choosedDiscipline" size="7" style="width:100%;" id="choosedDiscipline">
+        <select name="choosedDisciplines" size="7" style="width:100%;" id="choosedDisciplines">
             <% for(String discipline: disciplines) {%>
                 <option><%= discipline%></option>
             <%} %>
         </select>
 
-        
+        <script src="/Turnieje/JavaScripts/filterFunction.js"></script>
+        <script src="/Turnieje/JavaScripts/sortingFunction.js"></script>
         <script>
             sort = document.getElementById("sorting");
-            sort.addEventListener("change", mySortingFunction);
-            var defaultOrderOptions;
-            
-            function mySortingFunction() {
-                var select, options, i, typeOfSorting;
-                
-                typeOfSorting = sort.options[sort.selectedIndex].value;
-                
-                select = document.getElementById("choosedDiscipline");
-                options = select.getElementsByTagName('option');
-                options = Array.prototype.slice.call(options);
-                
-                if(typeOfSorting.localeCompare("A-Z")==0)
-                {
-                    options.sort(function(a, b)
-                    {
-                      return a.value.localeCompare(b.value);
-                    });
-                }
-                else if(typeOfSorting.localeCompare("Z-A")==0)
-                {
-                    options.sort(function(a, b)
-                    {
-                      return (-1)*a.value.localeCompare(b.value);
-                    });
-                }
-                
-                for (i = 0; i < select.length; i++) {
-                    select.add(options[i])
-                }
-            }
-            
-            function myFilterFunction() {
-                var input, filter, select, options, i, txtValue;
-                input = document.getElementById('searchDiscipline');
-                filter = input.value.toUpperCase();
-                select = document.getElementById("choosedDiscipline");
-                options = select.getElementsByTagName('option');
-
-                for (i = 0; i < select.length; i++) {
-                  txtValue = options[i].value;
-                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    select[i].style.display = "";
-                  } else {
-                    select[i].style.display = "none";
-                  }
-                }
-            }
+            var toSort="Disciplines";
+            sort.addEventListener("change", mySortingFunction.bind(this,toSort),false);  
         </script>
     </body>
 </html>
