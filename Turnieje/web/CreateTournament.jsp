@@ -75,49 +75,10 @@
             </form>
             
             
-            <script>
-                
-                function init()
-                {
-                    var iframe = document.getElementById("AvaibleTeams");   //dobieram sie do iframe
-                    var select = iframe.contentWindow.document.getElementById("choosedTeam");
-                    select.addEventListener("click", addTeam);
-                    
-                    var iframe2 = document.getElementById("ChoosedTeams");   //dobieram sie do iframe
-                    var select2 = iframe2.contentWindow.document.getElementById("choosedTeam");
-                    select2.addEventListener("click", deleteTeam);
-                }
-                
-                function addTeam()
-                {
-                    var iframe = document.getElementById("AvaibleTeams");   //dobieram sie do iframe
-                    var select = iframe.contentWindow.document.getElementById("choosedTeam");   //dobieram sie do listy druzyn
-                    var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-                    
-                    var iframe2 = document.getElementById("ChoosedTeams");   //dobieram sie do iframe
-                    var select2 = iframe2.contentWindow.document.getElementById("choosedTeam");   //dobieram sie do listy druzyn
-                    var option = document.createElement("option");
-                    option.text = options[select.selectedIndex].text;
-                    select2.add(option);
-                    
-                    select.remove(select.selectedIndex);
-                }
-                
-                function deleteTeam()
-                {
-                    var iframe = document.getElementById("ChoosedTeams");   //dobieram sie do iframe
-                    var select = iframe.contentWindow.document.getElementById("choosedTeam");   //dobieram sie do listy druzyn
-                    var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-                    
-                    var iframe2 = document.getElementById("AvaibleTeams");   //dobieram sie do iframe
-                    var select2 = iframe2.contentWindow.document.getElementById("choosedTeam");   //dobieram sie do listy druzyn
-                    var option = document.createElement("option");
-                    option.text = options[select.selectedIndex].text;
-                    select2.add(option);
-                    
-                    select.remove(select.selectedIndex);
-                }
-            </script>
+        <script src="/Turnieje/JavaScripts/initTeams.js"></script>
+        <script src="/Turnieje/JavaScripts/addTeams.js"></script>
+        <script src="/Turnieje/JavaScripts/deleteTeams.js"></script>
+        
         </center>
     </body>
 </html>
