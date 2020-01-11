@@ -16,11 +16,10 @@
 
         <%
             Set<String> teams = new TreeSet<String>();
-            teams.add("Druzyna 1");
-            teams.add("Druzyna 2");
-            teams.add("Druzyna 3");
-            teams.add("Druzyna 4");
-            teams.add("Team 5");
+            for(int i =0; i<1000;i++)
+            {
+            teams.add("Team "+i);
+            }
             boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
         

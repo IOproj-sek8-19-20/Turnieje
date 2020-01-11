@@ -9,9 +9,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Servlet responsible for editing the tournament.
@@ -35,13 +38,36 @@ public class ManageTournamentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String managedTournament = request.getParameter("tournamentName");
+        String JSONString = request.getParameter("JSONFromCreateTournament");
+        JSONObject JSON = new JSONObject(JSONString);
+
+        String tournamentName = JSON.getString("name");
+        String type = JSON.getString("type");
+        String discipline = JSON.getString("discipline");
+        String teamSize = JSON.getString("teamSize");
+        
+        //sprawdzenie czy bangla
+        System.out.print(tournamentName);
+        System.out.print(type);
+        System.out.print(discipline);
+        System.out.print(teamSize);
+        
+
+        JSONArray teams = JSON.getJSONArray("teamsToAdd");
+        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
+        for (int i = 0; i < teams.length(); i++) 
+        {
+            System.out.print(teams.getString(i));
+        }
 
         //Team toEdit = teamRepository.getById(managedTeamID);
         //toEdit.setName(teamName);
         //teamRepository.update(toEdit);
+        
+        Cookie cookie = new Cookie("aboutTournament", JSONString);
+        response.addCookie(cookie);
 
-         response.sendRedirect("TournamentEdited.jsp?tournamentName="+managedTournament);
+        response.sendRedirect("TournamentEdited.jsp?tournamentName="+tournamentName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

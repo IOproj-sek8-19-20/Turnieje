@@ -5,16 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Etworz turniej</title>
+<title>Stworz turniej</title>
 
 </head>
     <script>var toInit="Teams"</script>
     <body onload="init(toInit)">
         <center>
-            <br/>
             
+             <h1>Tworzenie turnieju</h1>
             
-            <form action = "CreateTournament" method="get">
+            <!--<form action = "CreateTournament" method="get">-->
             Nazwa turnieju : <input type = "text" name = "tournamentName" id="tournamentName">
 
             <%
@@ -33,7 +33,7 @@
             
             <br/><br/>
 
-            <iframe src="/Turnieje/Lists/DisciplinesList.jsp"></iframe>
+            <iframe id="AvaibleDisciplines" src="/Turnieje/Lists/DisciplinesList.jsp"></iframe>
             
             <br/><br/>
             
@@ -70,16 +70,23 @@
             
             <br/>
             
+            <!--</form>-->
+            
             <br/><br/>
-                <input type = "submit" value = "Zatwierdz">
-            </form>
+                <input type = "submit" value = "Zatwierdz" onclick="temp()">
+            </center>
             
-            
+        <script> 
+            function temp()
+            {
+                var myVar="Create";
+                submit(myVar);
+            }
+        </script>
         <script src="/Turnieje/JavaScripts/initFunction.js"></script>
         <script src="/Turnieje/JavaScripts/addFunction.js"></script>
         <script src="/Turnieje/JavaScripts/deleteFunction.js"></script>
-        
-        </center>
+        <script src="/Turnieje/JavaScripts/createTournamentSubmit.js"></script>
     </body>
 </html>
 

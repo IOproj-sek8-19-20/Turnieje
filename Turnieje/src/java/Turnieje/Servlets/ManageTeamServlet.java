@@ -13,6 +13,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
@@ -47,12 +49,29 @@ public class ManageTeamServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String managedTeam = request.getParameter("teamName");
+        String JSONString = request.getParameter("JSONFromCreateTeam");
+        JSONObject JSON = new JSONObject(JSONString);
+
+        String teamName = JSON.getString("name");
+        
+        JSONArray users = JSON.getJSONArray("usersToAdd");
+        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
+        for(int i=0; i<users.length();i++)
+        {
+            System.out.print(users.getString(i));
+        }
+        
+        JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
+        //wypisanie dodanych dyscyplin w ramach testu czy dziala
+        for(int i=0; i<disciplines.length();i++)
+        {
+            System.out.print(disciplines.getString(i));
+        }
 
         //Team toEdit = teamRepository.getById(managedTeamID);
         //toEdit.setName(teamName);
         //teamRepository.update(toEdit);
-        response.sendRedirect("TeamEdited.jsp?teamName=" + managedTeam);
+        response.sendRedirect("TeamEdited.jsp?teamName=" + teamName);
 
     }
 
