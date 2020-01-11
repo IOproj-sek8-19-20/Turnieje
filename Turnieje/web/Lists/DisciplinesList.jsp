@@ -40,8 +40,8 @@
             <%}}%>
         </select>
 
-        <script src="/Turnieje/JavaScripts/filterFunction.js"></script>
-        <script src="/Turnieje/JavaScripts/sortingFunction.js"></script>
+        <script src="/Turnieje/JavaScripts/forLists/filterFunction.js"></script>
+        <script src="/Turnieje/JavaScripts/forLists/sortingFunction.js"></script>
         <script>
             sort = document.getElementById("sorting");
             var toSort="Disciplines";

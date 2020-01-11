@@ -1,3 +1,5 @@
+<%@page import="org.json.JSONObject"%>
+<%@page import="org.json.JSONArray"%>
 <%@ page import="java.sql.*" %>
 <%ResultSet resultset =null;%>
 <!DOCTYPE html> <html>
@@ -8,7 +10,24 @@
     </head>
 
     <script>var toInit = "Users", toInit2 = "Disciplines";</script>
-    <body onload="init(toInit);init(toInit2);">
+    <body onload="init(toInit);init(toInit2);setFieldsAndLists();">
+        
+    <%
+        //Pobieram z ciasteczka JSONa w którym mam wszelkie informacje na temat turnieju
+        //Uzyje go do wyswietlania poprawnych informacji na stronie edycji
+        String JSONString=null;
+        JSONObject JSON=null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("aboutTeam")) {
+                    JSONString = cookie.getValue();
+                    JSON = new JSONObject(JSONString);
+                    break;
+                }
+            }
+        }
+    %>
 
     <center>
         
@@ -78,6 +97,80 @@
             var type="Manage";
             submit(type);
         }
+        function setFieldsAndLists()
+            {
+                //Ustawianie dyscyplin juz dodanych
+                iframe = document.getElementById("ChoosedDisciplines");   //dobieram sie do iframe
+                select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
+                
+                <% 
+                    JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
+                    for (int i = 0; i < disciplines.length(); i++) 
+                    {
+                        %>
+                            var option = document.createElement("option");
+                            option.text = "<%= disciplines.getString(i)%>";
+                            select.add(option);
+                        <%
+                    }
+                %>
+                 
+                //Usuniecie dodanych dyscyplin z listy dostepnych
+                iframe = document.getElementById("AvaibleDisciplines");   //dobieram sie do iframe
+                select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
+                options = select.getElementsByTagName('option');
+                
+                <% 
+                    for (int i = 0; i < disciplines.length(); i++) 
+                    {
+                        %>
+                            for (var i = 0; i < select.length; i++) 
+                            {
+                                if(options[i].value == "<%= disciplines.getString(i)%>")
+                                {
+                                    select.remove(i);
+                                }
+                            }
+                        <%
+                    }
+                %>
+                
+                //Ustawianie uzytkownikow, ktorzy sa juz dodani
+                iframe = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
+                select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
+                
+                <% 
+                    JSONArray users = JSON.getJSONArray("usersToAdd");
+                    for (int i = 0; i < users.length(); i++) 
+                    {
+                        %>
+                            var option = document.createElement("option");
+                            option.text = "<%= users.getString(i)%>";
+                            select.add(option);
+                        <%
+                    }
+                %>
+                 
+                //Usuniecie dodanych uzytkownikow z listy dostepnych
+                iframe = document.getElementById("AvaibleUsers");   //dobieram sie do iframe
+                select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
+                options = select.getElementsByTagName('option');
+                
+                <% 
+                    for (int i = 0; i < users.length(); i++) 
+                    {
+                        %>
+                            for (var i = 0; i < select.length; i++) 
+                            {
+                                if(options[i].value == "<%= users.getString(i)%>")
+                                {
+                                    select.remove(i);
+                                }
+                            }
+                        <%
+                    }
+                %>
+            }
     </script>
     </body>
 </html>

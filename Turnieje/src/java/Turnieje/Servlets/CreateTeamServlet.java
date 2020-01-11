@@ -8,6 +8,7 @@ package Turnieje.Servlets;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -69,6 +70,9 @@ public class CreateTeamServlet extends HttpServlet {
         //Team toAdd = new Team();
         //toAdd.setName(teamName);
         //teamRepository.add(toAdd);
+        
+        Cookie cookie = new Cookie("aboutTeam", JSONString);
+        response.addCookie(cookie);
         
         response.sendRedirect("TeamCreated.jsp?teamName=" + teamName);
 

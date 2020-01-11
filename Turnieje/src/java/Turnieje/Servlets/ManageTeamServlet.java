@@ -71,6 +71,10 @@ public class ManageTeamServlet extends HttpServlet {
         //Team toEdit = teamRepository.getById(managedTeamID);
         //toEdit.setName(teamName);
         //teamRepository.update(toEdit);
+        
+        Cookie cookie = new Cookie("aboutTeam", JSONString);
+        response.addCookie(cookie);
+        
         response.sendRedirect("TeamEdited.jsp?teamName=" + teamName);
 
     }

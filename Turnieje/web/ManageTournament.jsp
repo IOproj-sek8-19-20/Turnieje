@@ -10,7 +10,24 @@
     </head>
 
     <script>var toInit="Teams"</script>
-    <body onload="init(toInit);setDiscipline();">
+    <body onload="init(toInit);setFieldsAndLists();">
+        
+    <%
+        //Pobieram z ciasteczka JSONa w którym mam wszelkie informacje na temat turnieju
+        //Uzyje go do wyswietlania poprawnych informacji na stronie edycji
+        String JSONString=null;
+        JSONObject JSON=null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("aboutTournament")) {
+                    JSONString = cookie.getValue();
+                    JSON = new JSONObject(JSONString);
+                    break;
+                }
+            }
+        }
+    %>
 
     <center>
         
@@ -37,7 +54,7 @@
             
             <br/><br/>
             
-            Rozmiar druzyn: <input type="number" id="teamSize" name="teamSize" value="1" min="1">
+            Rozmiar druzyn: <input type="number" id="teamSize" name="teamSize" value="<%= JSON.getString("teamSize") %>" min="1">
             
             <br/><br/>
             
@@ -58,29 +75,18 @@
 
     </center>
     
-    <%
-        String JSONString=null;
-        JSONObject JSON=null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("aboutTournament")) {
-                    JSONString = cookie.getValue();
-                    JSON = new JSONObject(JSONString);
-                    break;
-                }
-            }
-        }
-    %>
-    
         <script> 
+            //Funkcja temp wywoluje tylko funkcje submit z odpowiednim argumentem, aby skrypt 
+            //tworz?cy/edytuj?cy turniej wiedzia?, jaki servlet wywo?a? (edycji lub tworzenia)
             function temp()
             {
                 var myVar="Manage";
                 submit(myVar);
             }
-            function setDiscipline()
+            //Funkcja do ustawienia nazwy, dyscypliny, trybu rozgrywek, rozmiaru druzyn, oraz druzyn w turnieju
+            function setFieldsAndLists()
             {
+                //Ustawianie dyscypliny
                 var iframe = document.getElementById("AvaibleDisciplines");   //dobieram sie do iframe
                 var select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
                 var options = select.getElementsByTagName('option');
@@ -94,9 +100,20 @@
                     }
                 }
                 
+                //Ustawianie trybu rozgrywek
+                var tournamentMode = document.getElementById("tournamentMode"); 
+                options = tournamentMode.getElementsByTagName('option');
+                for (var i = 0; i < tournamentMode.length; i++) 
+                {
+                    if(options[i].value == "<%= JSON.getString("type") %>")
+                    {
+                        tournamentMode.selectedIndex = i;
+                    }
+                }
                 
-                var iframe2 = document.getElementById("ChoosedTeams");   //dobieram sie do iframe
-                var select2 = iframe2.contentWindow.document.getElementById("choosedTeams");   //dobieram sie do listy druzyn
+                //Ustawianie druzyn, ktore sa juz dodane
+                iframe = document.getElementById("ChoosedTeams");   //dobieram sie do iframe
+                select = iframe.contentWindow.document.getElementById("choosedTeams");   //dobieram sie do listy druzyn
                 
                 <% 
                     JSONArray teams = JSON.getJSONArray("teamsToAdd");
@@ -105,31 +122,30 @@
                         %>
                             var option = document.createElement("option");
                             option.text = "<%= teams.getString(i)%>";
-                            select2.add(option);
+                            select.add(option);
                         <%
                     }
                 %>
-                        
-                var iframe3 = document.getElementById("AvaibleTeams");   //dobieram sie do iframe
-                var select3 = iframe3.contentWindow.document.getElementById("choosedTeams");   //dobieram sie do listy druzyn
-                options = select3.getElementsByTagName('option');
+                 
+                //Usuniecie dodanych druzyn z listy dostepnych
+                iframe = document.getElementById("AvaibleTeams");   //dobieram sie do iframe
+                select = iframe.contentWindow.document.getElementById("choosedTeams");   //dobieram sie do listy druzyn
+                options = select.getElementsByTagName('option');
                 
                 <% 
                     for (int i = 0; i < teams.length(); i++) 
                     {
                         %>
-                            for (var i = 0; i < select3.length; i++) 
+                            for (var i = 0; i < select.length; i++) 
                             {
                                 if(options[i].value == "<%= teams.getString(i)%>")
                                 {
-                                    select3.remove(i);
+                                    select.remove(i);
                                 }
                             }
                         <%
                     }
                 %>
-            
-
             }
         </script>
         <script src="/Turnieje/JavaScripts/initFunction.js"></script>
