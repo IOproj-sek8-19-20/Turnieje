@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Servlet responsible for creating the tournament.
@@ -35,7 +37,31 @@ public class CreateTournamentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String tournamentName = request.getParameter("tournamentName");
+        String JSONString = request.getParameter("JSONFromCreateTournament");
+        JSONObject JSON = new JSONObject(JSONString);
+
+        String tournamentName = JSON.getString("name");
+        String type = JSON.getString("type");
+        String startDate = JSON.getString("startDate");
+        String endDate = JSON.getString("endDate");
+        String discipline = JSON.getString("discipline");
+        String teamSize = JSON.getString("teamSize");
+        
+        //sprawdzenie czy bangla
+        System.out.print(tournamentName);
+        System.out.print(type);
+        System.out.print(startDate);
+        System.out.print(endDate);
+        System.out.print(discipline);
+        System.out.print(teamSize);
+        
+
+        JSONArray teams = JSON.getJSONArray("teamsToAdd");
+        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
+        for (int i = 0; i < teams.length(); i++) 
+        {
+            System.out.print(teams.getString(i));
+        }
 
         response.sendRedirect("TournamentCreated.jsp?tournamentName=" + tournamentName);
 
