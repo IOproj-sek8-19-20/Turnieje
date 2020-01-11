@@ -11,8 +11,8 @@
     <script>var toInit="Teams"</script>
     <body onload="init(toInit)">
         <center>
-            <br/>
             
+             <h1>Tworzenie turnieju</h1>
             
             <!--<form action = "CreateTournament" method="get">-->
             Nazwa turnieju : <input type = "text" name = "tournamentName" id="tournamentName">

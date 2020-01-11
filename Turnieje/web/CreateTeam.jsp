@@ -10,7 +10,7 @@
     <body onload="init(toInit);init(toInit2);">
     <center>
 
-        <br/>
+        <h1>Tworzenie druzyny</h1>
 
         <!--form w akutalej wersji nie za bardzo uzyteczny 
         <form action="ManageTeam" method="get" id="myForm"> -->

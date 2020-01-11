@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +64,9 @@ public class CreateTournamentServlet extends HttpServlet {
             System.out.print(teams.getString(i));
         }
 
+        Cookie cookie = new Cookie("aboutTournament", JSONString);
+        response.addCookie(cookie);
+        
         response.sendRedirect("TournamentCreated.jsp?tournamentName=" + tournamentName);
 
     }

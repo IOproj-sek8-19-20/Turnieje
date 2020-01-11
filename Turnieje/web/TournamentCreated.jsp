@@ -12,16 +12,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    
+
     <body>
     <center>
-        <h1> Turniej <%= request.getParameter("tournamentName") %> stworzony</h1>
+        <h1> Turniej <%= request.getParameter("tournamentName")%> stworzony</h1>
     </center>   
-        
-        <script>
-        setTimeout(function() {
-            location.replace("/Turnieje/ManageTournament.jsp?tournamentName="+"<%= request.getParameter("tournamentName") %>"+"");
+
+    <script>
+        setTimeout(function () 
+        {
+                location.replace("/Turnieje/ManageTournament.jsp?tournamentName=" + "<%= request.getParameter("tournamentName")%>");
         }, 2000);
-        </script>
-    </body>
+    </script>
+</body>
 </html>

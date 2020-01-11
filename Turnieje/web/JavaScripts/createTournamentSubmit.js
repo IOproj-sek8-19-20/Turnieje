@@ -51,12 +51,22 @@ function submit(myVar)
     JSONToSend = JSONToSend + " , \"type\": " + "\"" + type + "\"";
 
     //sekcja odpowiedzialna za date rozpoczecia
-    var startDate = document.getElementById("startDate").value; 
-    JSONToSend = JSONToSend + " , \"startDate\": " + "\"" + startDate + "\"";
+    if(document.getElementById("startDate")!=null)
+    {
+        var startDate = document.getElementById("startDate").value; 
+        JSONToSend = JSONToSend + " , \"startDate\": " + "\"" + startDate + "\"";
+    }
 
     //sekcja odpowiedzialna za date zakonczenia
-    var endDate = document.getElementById("endDate").value;  
-    JSONToSend = JSONToSend + " , \"endDate\": " + "\"" + endDate + "\" }";
+    if(document.getElementById("endDate")!=null)
+    {
+        var endDate = document.getElementById("endDate").value;  
+        JSONToSend = JSONToSend + " , \"endDate\": " + "\"" + endDate + "\" }";
+    }
+    else
+    {
+        JSONToSend = JSONToSend + " }";
+    }
 
     console.log(JSONToSend);
     location.replace("/Turnieje/"+myVar+"Tournament?JSONFromCreateTournament=" + JSONToSend);
