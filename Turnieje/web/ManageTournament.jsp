@@ -15,7 +15,7 @@
     <h1>Edytujesz turniej: <%= request.getParameter("tournamentName") %> </h1>
     
     <form action = "ManageTournament" method="get">
-        Nazwa turnieju : <input type = "text" name = "tournamentName" id="teamName">
+        Nazwa turnieju : <input type = "text" name = "tournamentName" id="teamName" value="<%= request.getParameter("tournamentName") %>">
         
         <br/><br/>
 
@@ -24,11 +24,18 @@
 
         <br/><br/>
         
-        <input type = "submit" value = "Zatwierdz">
+        <input type = "submit" value = "Zatwierdz" onclick="temp()">
     </form>
 
     </center>
     
+        <script> 
+            function temp()
+            {
+                var myVar="Manage";
+                submit(myVar);
+            }
+        </script>
         <script src="/Turnieje/JavaScripts/initFunction.js"></script>
         <script src="/Turnieje/JavaScripts/addFunction.js"></script>
         <script src="/Turnieje/JavaScripts/deleteFunction.js"></script>

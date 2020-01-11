@@ -1,8 +1,13 @@
-function submit()
+function submit(myVar)
 {
     //funkcja ta w GET wysyla JSONa zawierajacego nazwe druzyny, tablice jej czlonkow,
     //oraz tablice wybranych dyscyplin.
     //sekcja nazwy druzyny
+    if(document.getElementById("teamName").value=="")
+    {
+        alert("Wprowadz nazwe druzyny!");
+        return;
+    }
     var JSONToSend = "{\"name\":\"" + document.getElementById("teamName").value + "\",";
 
     //sekcja uzytkownikow do dodania
@@ -43,5 +48,5 @@ function submit()
     JSONToSend = JSONToSend + JSONArrayOfDisciplinesToAdd + "] }";
 
     console.log(JSONToSend);
-    location.replace("/Turnieje/CreateTeam?JSONFromCreateTeam=" + JSONToSend);
+    location.replace("/Turnieje/"+myVar+"Team?JSONFromCreateTeam=" + JSONToSend);
 }

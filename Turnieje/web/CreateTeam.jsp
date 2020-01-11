@@ -12,8 +12,8 @@
 
         <br/>
 
-        <!-- form w akutalej wersji nie za bardzo uzyteczny -->
-        <form action = "CreateTeam" method="get" id="myForm">
+        <!--form w akutalej wersji nie za bardzo uzyteczny 
+        <form action="ManageTeam" method="get" id="myForm"> -->
 
             <!-- Nazwa druzyny -->
             Nazwa druzyny : <input type = "text" name = "teamName" id="teamName">
@@ -56,12 +56,19 @@
             <iframe id="ChoosedDisciplines" src="/Turnieje/Lists/DisciplinesList.jsp?Empty=true"></iframe>
 
             <br/><br/>
-        </form>
-
-        <input type = "submit" value = "Zatwierdz" onclick="submit()">
-
+            
+            <input type = "submit" value = "Zatwierdz" onclick="temp()">
+            
+        <!--</form>-->
     </center>
-
+    
+    <script> 
+        function temp()
+        {
+            var myVar="Create";
+            submit(myVar);
+        }
+    </script>
     <script src="/Turnieje/JavaScripts/initFunction.js"></script>
     <script src="/Turnieje/JavaScripts/addFunction.js"></script>
     <script src="/Turnieje/JavaScripts/deleteFunction.js"></script>
