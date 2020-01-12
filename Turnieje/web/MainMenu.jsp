@@ -36,6 +36,19 @@
         <br/><br/>
         
         <input type = "submit" value = "Stworz turniej" onclick="submitTour()">
+        
+        <br/><br/><br/><br/>
+        
+        Turnieje (testowo):
+        
+        <br/><br/>
+        
+        <iframe id="Tournaments" src="/Turnieje/Lists/TournamentsList.jsp"></iframe>
+        
+        <br/><br/>
+        
+        <input type = "submit" value = "Pokaz turniej" onclick="submitShowTour()">
+        
     </center>
         <script>
             function submitTeam()
@@ -45,6 +58,13 @@
             function submitTour()
             {
                 location.replace("/Turnieje/TournamentCreateManage/CreateTournament.jsp");
+            }
+            function submitShowTour()
+            {
+                var iframe = document.getElementById("Tournaments");   //dobieram sie do iframe
+                var select = iframe.contentWindow.document.getElementById("choosedTournaments");   //dobieram sie do listy turnieji
+                var options = select.getElementsByTagName('option');    //pobieram opcje z listy
+                location.replace("/Turnieje/TournamentView.jsp?tournamentName="+options[select.selectedIndex].text);
             }
     </script>
     </body>
