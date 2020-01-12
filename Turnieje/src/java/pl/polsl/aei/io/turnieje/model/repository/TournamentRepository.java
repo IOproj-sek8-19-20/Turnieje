@@ -13,9 +13,16 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
  * Realization of repository interface for tournaments.
  * 
  * @author Piotr Uhl
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class TournamentRepository implements ITournamentRepository {
+    
+    private final DBInterface dbInterface;
+    
+    TournamentRepository(DBInterface dbInterface) {
+	this.dbInterface = dbInterface;
+    }
+    
     @Override
     public boolean add(Tournament tournament) {
 	throw new UnsupportedOperationException("Not implenented yet.");

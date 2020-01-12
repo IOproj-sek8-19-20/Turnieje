@@ -15,9 +15,16 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for users.
  * 
  * @author Piotr Uhl
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class UserRepository implements IUserRepository {
+    
+    private final DBInterface dbInterface;
+    
+    UserRepository(DBInterface dbInterface) {
+	this.dbInterface = dbInterface;
+    }
+    
     @Override
     public boolean add(User user) {
 	throw new UnsupportedOperationException("Not implenented yet.");

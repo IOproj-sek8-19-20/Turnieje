@@ -15,9 +15,16 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
  * Realization of repository interface for teams.
  * 
  * @author Piotr Uhl
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class TeamRepository implements ITeamRepository {
+    
+    private final DBInterface dbInterface;
+    
+    TeamRepository(DBInterface dbInterface) {
+	this.dbInterface = dbInterface;
+    }
+    
     @Override
     public boolean add(Team team) {
 	throw new UnsupportedOperationException("Not implenented yet.");

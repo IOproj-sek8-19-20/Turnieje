@@ -15,9 +15,16 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
  * Realization of repository interface for matches.
  * 
  * @author Piotr Uhl
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class MatchRepository implements IMatchRepository {
+    
+    private final DBInterface dbInterface;
+    
+    MatchRepository(DBInterface dbInterface) {
+	this.dbInterface = dbInterface;
+    }
+    
     @Override
     public boolean addMatch(Match match) {
 	throw new UnsupportedOperationException("Not implenented yet.");
