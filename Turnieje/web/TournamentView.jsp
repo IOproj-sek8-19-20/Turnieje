@@ -2,7 +2,7 @@
 <%ResultSet resultset =null;%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
-<!DOCTYPE html> <html>
+<!DOCTYPE html> 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,35 +10,57 @@
     </head>
 
     <script>var toInit = "Teams";</script>
-    <body onload="init(toInit);">
+    
 
     <center>
         
         <h1>Nazwa turnieju: <%= request.getParameter("tournamentName") %> </h1>
         
         <br/><br/>
-
-        <%-- lista druzyn bioracych udzial w tym turnieju --%>
         
-        <br/><br/>
-
-        <form action = "TournamentBracketView.jsp" method="get">
-            <input type = "submit" value = "Drabinka">
-        </form>
+        Druzyny biorace udzial w tym turnieju:
         
         <br/><br/>
         
-        <form action = "TournamentScheduleView.jsp" method="get">
-            <input type = "submit" value = "Harmonogram">
-        </form>
+        <iframe id="Teams" src="/Turnieje/Lists/TournamentTeamsList.jsp"></iframe>
         
         <br/><br/>
         
-        <form action = "index.html" method="get">
+        <input type = "submit" value = "Pokaz druzyne" onclick="submitShowTeam()">
+        
+        <br/><br/>
+        
+        <input type = "submit" value = "Drabinka" onclick="submitShowBracket()">  
+        
+        <br/><br/>
+        
+        <input type = "submit" value = "Harmonogram" onclick="submitShowSchedule()">    
+        
+        <br/><br/>
+        
+        <form action = "MainMenu.jsp" method="get">
             <input type = "submit" value = "Powrot">
         </form>
 
-    </center>
-    
+        </center>
+        <script>
+        function submitShowBracket()
+            {
+                var name = "<%= request.getParameter("tournamentName")%>"
+                location.replace("/Turnieje/TournamentBracketView.jsp?tournamentName="+name);
+            }
+        function submitShowSchedule()
+            {
+                var name = "<%= request.getParameter("tournamentName")%>"
+                location.replace("/Turnieje/TournamentScheduleView.jsp?tournamentName="+name);
+            }
+        function submitShowTeam()
+            {
+                var iframe = document.getElementById("Teams");   
+                var select = iframe.contentWindow.document.getElementById("choosedTeams");   
+                var options = select.getElementsByTagName('option');    
+                location.replace("/Turnieje/TeamView.jsp?teamName="+options[select.selectedIndex].text);
+            }
+        </script>
     </body>
 </html>
