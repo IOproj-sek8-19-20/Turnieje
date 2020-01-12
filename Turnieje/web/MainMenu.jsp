@@ -12,7 +12,25 @@
         <title>Witamy w serwisie!</title>
     </head>
     <body>
+<%
+    String user = null;
+    if(session.getAttribute("loginUser") == null)
+    {
+        response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+        return;
+    }
+    else 
+    {
+        user = (String) session.getAttribute("loginUser");
+    } 
+
+%>
     <center>
+        
+        Zalogowany jako: <%= user %>
+        
+        <br/><br/>
+        
         <input type = "submit" value = "Stworz druzyne" onclick="submitTeam()">
         
         <br/><br/>

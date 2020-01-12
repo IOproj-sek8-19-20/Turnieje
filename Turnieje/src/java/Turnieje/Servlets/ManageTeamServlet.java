@@ -6,13 +6,13 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
@@ -48,11 +48,13 @@ public class ManageTeamServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        
         String JSONString = request.getParameter("JSONFromCreateTeam");
         JSONObject JSON = new JSONObject(JSONString);
 
         String teamName = JSON.getString("name");
+        String newCaptain = JSON.getString("captain");
+
         
         JSONArray users = JSON.getJSONArray("usersToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
@@ -67,15 +69,59 @@ public class ManageTeamServlet extends HttpServlet {
         {
             System.out.print(disciplines.getString(i));
         }
+        
+        HttpSession session = request.getSession(true);
+        String oldCaptain = (String) session.getAttribute("loginUser");
+        boolean newCaptainCorrect=false;
+        
+        if(oldCaptain.compareTo(newCaptain)==0)
+        {
+            //nic nie trzeba robic, kapitan bez zmian
+        }
+        else
+        {
+            //zmiana kapitana
+            //sprawdzam, czy nowy kapitan znajduje sie w druzynie
+            for(int i=0; i<users.length();i++)
+            {
+                System.out.print(users.getString(i));
+                if(users.getString(i).compareTo(newCaptain)==0)
+                {
+                    //nowy kapitan znajduje sie w druzynie
+                    newCaptainCorrect=true;
+                    break;
+                }
+            }
+            //nowy kapitan nie znajduje sie w druzynie, ustawiam spowrotem dotychczasowego
+            if(newCaptainCorrect==false)
+            {
+                Cookie cookie = new Cookie("aboutTeam", JSONString);
+                response.addCookie(cookie);
+        
+                response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp?teamName=" + teamName);
+                JSON.put("captain", oldCaptain);
+            }
+            else
+            {
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("aboutTeam")) {
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                            break;
+                        }
+                    }
+                }
+                response.sendRedirect("/Turnieje/MainMenu.jsp"); 
+            }
+        }
 
         //Team toEdit = teamRepository.getById(managedTeamID);
         //toEdit.setName(teamName);
         //teamRepository.update(toEdit);
         
-        Cookie cookie = new Cookie("aboutTeam", JSONString);
-        response.addCookie(cookie);
-        
-        response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp?teamName=" + teamName);
+
 
     }
 

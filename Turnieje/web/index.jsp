@@ -5,10 +5,23 @@
 <title>Turnieje</title>
 
 </head>
+<%
+    String user = null;
+    if(session.getAttribute("loginUser") == null)
+    {
+        response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+        return;
+    }
+    else 
+    {
+        response.sendRedirect("http://localhost:8080/Turnieje/MainMenu.jsp");
+    } 
+
+%>
 
     <body>
         <center>
-            
+                        
             <br/>
             <form action="Login.jsp" method="GET">
                 <input type="submit" value="Zaloguj się" />
