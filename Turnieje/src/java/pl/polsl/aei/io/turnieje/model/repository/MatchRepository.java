@@ -5,6 +5,7 @@
  */
 package pl.polsl.aei.io.turnieje.model.repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
@@ -31,15 +32,37 @@ public class MatchRepository implements IMatchRepository {
     
     @Override
     public boolean addMatch(Match match) {
-	throw new UnsupportedOperationException("Not implenented yet.");
-    }
-    @Override
-    public boolean delete(MatchId match) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Matches(tourId, date, finished, winner, team1Id, team2Id) VALUES (?, ?, ?, ?, ?, ?)");
+	    statement.setInt(1, match.getTourId().id);
+	    statement.setDate(2, (java.sql.Date)match.getDate());
+    	    statement.setBoolean(3, match.getFinished());
+	    statement.setInt(4, match.getWinner().id);
+	    statement.setInt(5, match.getTeamId(1).id);
+	    statement.setInt(6, match.getTeamId(1).id);
+	    statement.execute();
+	    return true;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
     @Override
     public boolean delete(Match match) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return delete(match.id);
+    }
+    @Override
+    public boolean delete(MatchId match) {
+	try {
+	    Statement statement = dbInterface.createStatement();
+	    if (statement.executeUpdate(String.format("DELETE FROM Matches WHERE matchId=%d", match.id)) == 0)
+		return false;
+	    else
+		return true;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
     @Override
     public Set<Match> getAll() {
@@ -112,6 +135,41 @@ public class MatchRepository implements IMatchRepository {
     }
     @Override
     public boolean update(Match match) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    boolean ret = false;
+	    Statement statement = dbInterface.createStatement();
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Matches WHERE matchId=%d", match.id.id));
+	    if (rs.next()) {
+		if (match.getTourId().id != rs.getInt("tourId")) {
+		    rs.updateInt("tourId", match.getTourId().id);
+		    ret = true;
+		}
+		if (!match.getDate().equals(rs.getDate("date"))) {
+		    rs.updateDate("date", (java.sql.Date)match.getDate());
+		    ret = true;
+		}
+		if (match.getFinished() != rs.getBoolean("finished")) {
+		    rs.updateBoolean("finished", match.getFinished());
+		    ret = true;
+		}
+		if (match.getWinner().id != rs.getInt("winner")) {
+		    rs.updateInt("winner", match.getWinner().id);
+		    ret = true;
+		}
+		if (match.getTeamId(1).id != rs.getInt("team1Id")) {
+		    rs.updateInt("team1Id", match.getTeamId(1).id);
+		    ret = true;
+		}
+		if (match.getTeamId(2).id != rs.getInt("team1Id")) {
+		    rs.updateInt("team1Id", match.getTeamId(2).id);
+		    ret = true;
+		}
+		rs.updateRow();
+	    }
+	    return ret;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
 }

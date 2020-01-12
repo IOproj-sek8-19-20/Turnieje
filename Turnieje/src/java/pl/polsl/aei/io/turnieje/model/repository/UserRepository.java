@@ -6,9 +6,12 @@
 package pl.polsl.aei.io.turnieje.model.repository;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.TeamId;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
@@ -30,15 +33,34 @@ public class UserRepository implements IUserRepository {
     
     @Override
     public boolean add(User user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    Statement statement = dbInterface.createStatement();
+	    if (user.getActive())
+		statement.executeUpdate(String.format("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('%s', '%s', '%s', '%s', TRUE)", user.getEmail(), user.getPassHash(), user.getFirstName(), user.getLastName()));
+	    else
+		statement.executeUpdate(String.format("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('%s', '%s', '%s', '%s', FALSE)", user.getEmail(), user.getPassHash(), user.getFirstName(), user.getLastName()));
+	    return true;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
     @Override
     public boolean delete(User user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return delete(user.id);
     }
     @Override
     public boolean delete(UserId user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    Statement statement = dbInterface.createStatement();
+	    if (statement.executeUpdate(String.format("DELETE FROM Users WHERE userId=%d", user.id)) == 0)
+		return false;
+	    else
+		return true;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
     @Override
     public Set<User> getAll() {
@@ -86,7 +108,7 @@ public class UserRepository implements IUserRepository {
     public User getById(UserId id) {
 	try {
 	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Users WHERE userId='%d'", id));
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Users WHERE userId=%d", id));
 	    if (rs.next()) {
 		User user = new User(rs.getInt("userId"));
 		user.setEmail(rs.getString("email"));
@@ -130,6 +152,37 @@ public class UserRepository implements IUserRepository {
     }
     @Override
     public boolean update(User user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    boolean ret = false;
+	    Statement statement = dbInterface.createStatement();
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Users WHERE userId=%d", user.id.id));
+	    if (rs.next()) {
+		if (!user.getEmail().equals(rs.getString("email"))) {
+		    rs.updateString("email", user.getEmail());
+		    ret = true;
+		}
+		if (!user.getPassHash().equals(rs.getString("passHash"))) {
+		    rs.updateString("passHash", user.getPassHash());
+		    ret = true;
+		}
+		if (user.getFirstName().equals(rs.getString("firstName"))) {
+		    rs.updateString("firstName", user.getFirstName());
+		    ret = true;
+		}
+		if (user.getLastName().equals(rs.getString("lastName"))) {
+		    rs.updateString("lastName", user.getLastName());
+		    ret = true;
+		}
+		if (user.getActive() == rs.getBoolean("active")) {
+		    rs.updateBoolean("active", user.getActive());
+		    ret = true;
+		}
+		rs.updateRow();
+	    }
+	    return ret;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
 }

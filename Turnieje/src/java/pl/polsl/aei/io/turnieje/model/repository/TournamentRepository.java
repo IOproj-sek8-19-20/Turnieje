@@ -5,6 +5,7 @@
  */
 package pl.polsl.aei.io.turnieje.model.repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
@@ -31,15 +32,39 @@ public class TournamentRepository implements ITournamentRepository {
     
     @Override
     public boolean add(Tournament tournament) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Tournaments(name, startingDate, endingDate, adminId, modeId, discId, teamSize, finished) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+	    statement.setString(1, tournament.getName());
+	    statement.setDate(2, (java.sql.Date)tournament.getStartingDate());
+	    statement.setDate(3, (java.sql.Date)tournament.getEndingDate());
+	    statement.setInt(4, tournament.getAdmin().id);
+	    statement.setInt(5, 0); //todo
+	    statement.setInt(6, 0); //todo
+	    statement.setInt(7, tournament.getTeamSize());
+	    statement.setBoolean(8, tournament.getFinished());
+	    statement.execute();
+	    return true;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
     @Override
     public boolean delete(Tournament tournament) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return delete(tournament.id);
     }
     @Override
     public boolean delete(TournamentId tournament) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    Statement statement = dbInterface.createStatement();
+	    if (statement.executeUpdate(String.format("DELETE FROM Tournaments WHERE tourId=%d", tournament.id)) == 0)
+		return false;
+	    else
+		return true;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
     @Override
     public Set<Tournament> getAll() {
@@ -66,6 +91,43 @@ public class TournamentRepository implements ITournamentRepository {
     }
     @Override
     public boolean update(Tournament tournament) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    boolean ret = false;
+	    Statement statement = dbInterface.createStatement();
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Tournaments WHERE tourId=%d", tournament.id.id));
+	    if (rs.next()) {
+		if (!tournament.getName().equals(rs.getString("name"))) {
+		    rs.updateString("name", tournament.getName());
+		    ret = true;
+		}
+		if (!tournament.getStartingDate().equals(rs.getDate("startingDate"))) {
+		    rs.updateDate("startingDate", (java.sql.Date)tournament.getStartingDate());
+		    ret = true;
+		}
+		if (!tournament.getEndingDate().equals(rs.getDate("endingDate"))) {
+		    rs.updateDate("endingDate", (java.sql.Date)tournament.getEndingDate());
+		    ret = true;
+		}
+		if (tournament.getAdmin().id != rs.getInt("adminId")) {
+		    rs.updateInt("adminId", tournament.getAdmin().id);
+		    ret = true;
+		}
+		//todo: updating modeId
+		//todo: updating discId
+		if (tournament.getTeamSize() != rs.getInt("teamSize")) {
+		    rs.updateInt("teamSize", tournament.getTeamSize());
+		    ret = true;
+		}
+		if (tournament.getFinished() != rs.getBoolean("finished")) {
+		    rs.updateBoolean("finished", tournament.getFinished());
+		    ret = true;
+		}
+		rs.updateRow();
+	    }
+	    return ret;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
 }

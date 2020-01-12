@@ -31,15 +31,31 @@ public class TeamRepository implements ITeamRepository {
     
     @Override
     public boolean add(Team team) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    Statement statement = dbInterface.createStatement();
+	    statement.executeUpdate(String.format("INSERT INTO Teams(name, capId) VALUES ('%s', '%d')", team.getName(), team.getCapitan().id));
+	    return true;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
     @Override
     public boolean delete(Team team) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return delete(team.id);
     }
     @Override
     public boolean delete(TeamId team) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    Statement statement = dbInterface.createStatement();
+	    if (statement.executeUpdate(String.format("DELETE FROM Teams WHERE teamId=%d", team.id)) == 0)
+		return false;
+	    else
+		return true;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
     @Override
     public Set<Team> getAll() {
@@ -101,6 +117,25 @@ public class TeamRepository implements ITeamRepository {
     }
     @Override
     public boolean update(Team team) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	try {
+	    boolean ret = false;
+	    Statement statement = dbInterface.createStatement();
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Teams WHERE teamId=%d", team.id.id));
+	    if (rs.next()) {
+		if (!team.getName().equals(rs.getString("name"))) {
+		    rs.updateString("name", team.getName());
+		    ret = true;
+		}
+		if (team.getCapitan().id != rs.getInt("capId")) {
+		    rs.updateInt("capId", team.getCapitan().id);
+		    ret = true;
+		}
+		rs.updateRow();
+	    }
+	    return ret;
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
     }
 }
