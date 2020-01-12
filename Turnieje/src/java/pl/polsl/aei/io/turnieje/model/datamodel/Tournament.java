@@ -12,7 +12,7 @@ import java.util.Set;
  * Representation of single tournament.
  * 
  * @author Piotr Uhl
- * @version 0.1.0
+ * @version 0.1.1
  */
 public class Tournament {
     //<editor-fold defaultstate="collapsed" desc="Fields">
@@ -26,6 +26,7 @@ public class Tournament {
     Date startingDate;
     Set<TeamInTournament> teams;
     int teamSize;
+    TournamentMode mode;
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Constructors">
     /**
@@ -51,88 +52,138 @@ public class Tournament {
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public boolean addMatch(MatchId match) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (match == null)
+	    return false;
+	return this.matches.add(match);
     }
     public boolean addTeam(TeamInTournament team) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (team == null)
+	    return false;
+	for (TeamInTournament k : this.teams) {
+	    if (k.teamId == team.teamId)
+		return false;
+	}
+	this.teams.add(team);
+	return true;
     }
     public UserId getAdmin() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.adminId;
     }
     public Discipline getDiscipline() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.discipline;
     }
     public Date getEndingDate() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.endingDate;
     }
     public boolean getFinished() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.finished;
     }
     public TournamentId getId() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.id;
     }
     public Set<MatchId> getMatches() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.matches;
     }
     public TournamentMode getMode() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.mode;
     }
     public String getName() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.name;
     }
     public Date getStartingDate() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.startingDate;
     }
     public Set<TeamInTournament> getTeams() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.teams;
     }
     public int getTeamSize() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.teamSize;
     }
     public boolean removeMatch(Match match) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (match == null)
+	    return false;
+	return this.matches.remove(match.id);
     }
     public boolean removeMatch(MatchId match) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (match == null)
+	    return false;
+	return this.matches.remove(match);
     }
     public boolean removeTeam(Team team) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (team == null)
+	    return false;
+	return this.teams.removeIf(k -> k.teamId == team.id);
     }
     public boolean removeTeam(TeamId team) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (team == null)
+	    return false;
+	return this.teams.removeIf(k -> k.teamId == team);
     }
-    public boolean removeteam(TeamInTournament team) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+    public boolean removeTeam(TeamInTournament team) {
+	if (team == null)
+	    return false;
+	if (team.tourId != this.id)
+	    return false;
+	return this.teams.removeIf(k -> k.teamId == team.teamId);
     }
-    public boolean replaceTeam(TeamInTournament team) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+    public boolean updateTeam(TeamInTournament team) {
+	if (team == null)
+	    return false;
+	if (team.tourId != this.id)
+	    return false;
+	if (this.teams.removeIf(k -> k.teamId == team.teamId) == false)
+	    return false;
+	return this.teams.add(team);
     }
     public boolean setAdmin(User val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.adminId = val.id;
+	return true;
     }
     public boolean setAdmin(UserId val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.adminId = val;
+	return true;
     }
     public boolean setDiscipline(Discipline val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.discipline = val;
+	return true;
     }
     public boolean setEndingDate(Date val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.endingDate = val;
+	return true;
     }
     public boolean setFinished(boolean val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	this.finished = val;
+	return true;
     }
     public boolean setMode(TournamentMode val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.mode = val;
+	return true;
     }
     public boolean setName(String val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.name = val;
+	return true;
     }
     public boolean setStartingDate(Date val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.startingDate = val;
+	return true;
     }
     public boolean setTeamSize(int val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	this.teamSize = val;
+	return true;
     }
     //</editor-fold>
 }
