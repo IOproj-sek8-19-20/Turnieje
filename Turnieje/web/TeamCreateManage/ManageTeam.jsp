@@ -13,6 +13,18 @@
     <body onload="init(toInit);init(toInit2);setFieldsAndLists();">
         
     <%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String user = null;
+        if(session.getAttribute("loginUser") == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+        else 
+        {
+            user = (String) session.getAttribute("loginUser");
+        } 
+
         //Pobieram z ciasteczka JSONa w którym mam wszelkie informacje na temat turnieju
         //Uzyje go do wyswietlania poprawnych informacji na stronie edycji
         String JSONString=null;
@@ -81,21 +93,25 @@
     
     <br/><br/>
     
-    <form action = "index.html" method="get">
+    <!--
+    Powrót do menu g?ównego
+    -->
+    <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
         <input type = "submit" value = "Powrot">
     </form>
 
     </center>
     
-    <script src="/Turnieje/JavaScripts/initFunction.js"></script>
-    <script src="/Turnieje/JavaScripts/addFunction.js"></script>
-    <script src="/Turnieje/JavaScripts/deleteFunction.js"></script>
-    <script src="/Turnieje/JavaScripts/createTeamSubmit.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/addFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/deleteFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/submits/createTeamSubmit.js"></script>
     <script>
         function temp()
         {
-            var type="Manage";
-            submit(type);
+            var myVar="Manage";
+            var captain = <%=user%>
+            submit(myVar,captain);
         }
         function setFieldsAndLists()
             {

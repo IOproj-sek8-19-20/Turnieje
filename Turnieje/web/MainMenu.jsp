@@ -12,18 +12,21 @@
         <title>Witamy w serwisie!</title>
     </head>
     <body>
+    <center>
         <input type = "submit" value = "Stworz druzyne" onclick="submitTeam()">
+        
+        <br/><br/>
+        
         <input type = "submit" value = "Stworz turniej" onclick="submitTour()">
+    </center>
         <script>
             function submitTeam()
             {
-                       location.replace("/Turnieje/CreateTeam.jsp");
+                location.replace("/Turnieje/TeamCreateManage/CreateTeam.jsp");
             }
-    </script>
-         <script>
             function submitTour()
             {
-                       location.replace("/Turnieje/CreateTournament.jsp");
+                location.replace("/Turnieje/TournamentCreateManage/CreateTournament.jsp");
             }
     </script>
     </body>

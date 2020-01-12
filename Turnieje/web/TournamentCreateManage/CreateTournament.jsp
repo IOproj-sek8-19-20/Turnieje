@@ -8,6 +8,27 @@
 <title>Stworz turniej</title>
 
 </head>
+<%
+    //Sprawdzanie, czy uzytkownik jest zalogowany
+    String user = null;
+    if(session.getAttribute("loginUser") == null)
+    {
+        response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+        return;
+    }
+    else 
+    {
+        user = (String) session.getAttribute("loginUser");
+    } 
+
+    Date date = new Date();
+    SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+
+    /*Calendar c = Calendar.getInstance();
+    c.setTime(date);
+    c.add(Calendar.DATE, 1);
+    Date DatePlusOne = c.getTime();*/
+%>
     <script>var toInit="Teams"</script>
     <body onload="init(toInit)">
         <center>
@@ -17,15 +38,7 @@
             <!--<form action = "CreateTournament" method="get">-->
             Nazwa turnieju : <input type = "text" name = "tournamentName" id="tournamentName">
 
-            <%
-                Date date = new Date();
-                SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
 
-                /*Calendar c = Calendar.getInstance();
-                c.setTime(date);
-                c.add(Calendar.DATE, 1);
-                Date DatePlusOne = c.getTime();*/
-            %>
             
             <br/><br/>
             
@@ -74,19 +87,30 @@
             
             <br/><br/>
                 <input type = "submit" value = "Zatwierdz" onclick="temp()">
-            </center>
+
+            
+        <!--
+        Powrót do menu g?ównego
+        -->
+        <br/>
+        <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
+            <input type = "submit" value = "Powrot">
+        </form>
+        
+        </center>
             
         <script> 
             function temp()
             {
                 var myVar="Create";
-                submit(myVar);
+                var admin = <%=user%>
+                submit(myVar,admin);
             }
         </script>
-        <script src="/Turnieje/JavaScripts/initFunction.js"></script>
-        <script src="/Turnieje/JavaScripts/addFunction.js"></script>
-        <script src="/Turnieje/JavaScripts/deleteFunction.js"></script>
-        <script src="/Turnieje/JavaScripts/createTournamentSubmit.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/addFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/deleteFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/submits/createTournamentSubmit.js"></script>
     </body>
 </html>
 

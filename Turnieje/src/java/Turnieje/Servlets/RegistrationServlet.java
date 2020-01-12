@@ -3,30 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets.CreateManage;
+package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
- * Servlet responsible for creating the team.
  *
- * @author Daniel Kaleta
- * @version 1.0.0
+ * @author mariu
  */
-@WebServlet(name = "CreateTeamServlet", urlPatterns = {"/CreateTeam"})
-public class CreateTeamServlet extends HttpServlet {
-
-    ITeamRepository teamRepository;
+@WebServlet(name = "RegistrationServlet", urlPatterns = {"/Registration"})
+public class RegistrationServlet extends HttpServlet {
+ITeamRepository teamRepository;
 
     //<editor-fold defaultstate="expanded" desc="init()">
     @Override
@@ -34,7 +30,6 @@ public class CreateTeamServlet extends HttpServlet {
         teamRepository = new TeamRepository();
     }
     //</editor-fold>
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,36 +42,32 @@ public class CreateTeamServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String JSONString = request.getParameter("JSONFromCreateTeam");
+        
+    String JSONString = request.getParameter("JSONFromRegistration");
         JSONObject JSON = new JSONObject(JSONString);
-
-        String teamName = JSON.getString("name");
-        
-        JSONArray users = JSON.getJSONArray("usersToAdd");
-        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
-        for(int i=0; i<users.length();i++)
-        {
-            System.out.print(users.getString(i));
+        String name = JSON.getString("name");
+        String surname = JSON.getString("surname");
+        String email = JSON.getString("email");
+        String password1 = JSON.getString("password1");
+        String password2 = JSON.getString("password2");
+         String checkBox= JSON.getString("checkBox"); //on 
+        String statement ="";
+        if ("".equals(name))
+        {statement="Imie jest puste !";
+           
         }
-        
-        JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
-        //wypisanie dodanych dyscyplin w ramach testu czy dziala
-        for(int i=0; i<disciplines.length();i++)
-        {
-            System.out.print(disciplines.getString(i));
+         if ("".equals(surname))
+        {statement="Nazwisko jest puste !";
+          
         }
-        
-        //Team toAdd = new Team();
-        //toAdd.setName(teamName);
-        //teamRepository.add(toAdd);
-        
-        Cookie cookie = new Cookie("aboutTeam", JSONString);
-        response.addCookie(cookie);
-        
-        response.sendRedirect("TeamCreated.jsp?teamName=" + teamName);
-
+        if (!(password1.equals(password2)))
+        { statement="Hasła są różne!";
+           
+        }
+        // inne sprawdzenia 
+         response.sendRedirect("BadRegistration.jsp?statement="+statement);
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

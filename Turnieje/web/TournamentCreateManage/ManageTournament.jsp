@@ -13,6 +13,18 @@
     <body onload="init(toInit);setFieldsAndLists();">
         
     <%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String user = null;
+        if(session.getAttribute("loginUser") == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+        else 
+        {
+            user = (String) session.getAttribute("loginUser");
+        }
+        
         //Pobieram z ciasteczka JSONa w którym mam wszelkie informacje na temat turnieju
         //Uzyje go do wyswietlania poprawnych informacji na stronie edycji
         String JSONString=null;
@@ -72,6 +84,13 @@
         <br/><br/>
         
         <input type = "submit" value = "Zatwierdz" onclick="temp()">
+        
+        <!--
+        Powrót do menu g?ównego
+        -->
+        <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
+            <input type = "submit" value = "Powrot">
+        </form>
 
     </center>
     
@@ -81,7 +100,8 @@
             function temp()
             {
                 var myVar="Manage";
-                submit(myVar);
+                var admin = <%=user%>
+                submit(myVar,admin);
             }
             //Funkcja do ustawienia nazwy, dyscypliny, trybu rozgrywek, rozmiaru druzyn, oraz druzyn w turnieju
             function setFieldsAndLists()
@@ -148,10 +168,10 @@
                 %>
             }
         </script>
-        <script src="/Turnieje/JavaScripts/initFunction.js"></script>
-        <script src="/Turnieje/JavaScripts/addFunction.js"></script>
-        <script src="/Turnieje/JavaScripts/deleteFunction.js"></script>
-        <script src="/Turnieje/JavaScripts/createTournamentSubmit.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/addFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/deleteFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/submits/createTournamentSubmit.js"></script>
     </body>
 </html>
 

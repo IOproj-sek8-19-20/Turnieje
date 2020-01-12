@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets.CreateManage;
+package Turnieje.Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -67,7 +67,7 @@ public class CreateTournamentServlet extends HttpServlet {
         Cookie cookie = new Cookie("aboutTournament", JSONString);
         response.addCookie(cookie);
         
-        response.sendRedirect("TournamentCreated.jsp?tournamentName=" + tournamentName);
+        response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentCreated.jsp?tournamentName=" + tournamentName);
 
     }
 

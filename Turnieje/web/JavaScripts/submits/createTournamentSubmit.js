@@ -1,4 +1,4 @@
-function submit(myVar)
+function submit(myVar, admin)
 {
     //funkcja ta w GET wysyla JSONa zawierajacego nazwe turnieju, tablice jej druzyn czlonkowskich,
     //oraz wybrana dyscypline.
@@ -9,6 +9,9 @@ function submit(myVar)
         return;
     }
     var JSONToSend = "{\"name\":\"" + document.getElementById("tournamentName").value + "\",";
+    
+    //Administrator turnieju
+    JSONToSend = JSONToSend + "\"admin\":\"" + admin + "\",";
 
     //sekcja druzyn do dodania
     JSONToSend = JSONToSend + " \"teamsToAdd\": [";

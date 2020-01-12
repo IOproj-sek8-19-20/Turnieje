@@ -8,6 +8,19 @@
     <!-- 2 inity, 1 dla list uzytkownikow, 2 dla list dyscyplin-->
     <script>var toInit = "Users", toInit2 = "Disciplines";</script>
     <body onload="init(toInit);init(toInit2);">
+    <%
+        String user = null;
+        if(session.getAttribute("loginUser") == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+        else 
+        {
+            user = (String) session.getAttribute("loginUser");
+        } 
+
+    %>
     <center>
 
         <h1>Tworzenie druzyny</h1>
@@ -19,6 +32,10 @@
             Nazwa druzyny : <input type = "text" name = "teamName" id="teamName">
 
             <br/><br/>
+            
+            Kapitan: <%=user%>
+            
+             <br/><br/>
 
             <!-- Dodawanie zawodników po mailu, ewentualnie do implementacji
             Dodaj zawodnika (nazwa) : <input type = "text" name = "userToAdd" id="userToAdd">
@@ -59,6 +76,13 @@
             
             <input type = "submit" value = "Zatwierdz" onclick="temp()">
             
+        <!--
+        Powrót do menu g?ównego
+        -->
+        <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
+            <input type = "submit" value = "Powrot">
+        </form>
+            
         <!--</form>-->
     </center>
     
@@ -66,13 +90,14 @@
         function temp()
         {
             var myVar="Create";
-            submit(myVar);
+            var captain = "<%= user%>";
+            submit(myVar, captain);
         }
     </script>
-    <script src="/Turnieje/JavaScripts/initFunction.js"></script>
-    <script src="/Turnieje/JavaScripts/addFunction.js"></script>
-    <script src="/Turnieje/JavaScripts/deleteFunction.js"></script>
-    <script src="/Turnieje/JavaScripts/createTeamSubmit.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/addFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/deleteFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/submits/createTeamSubmit.js"></script>
     
     </body>
 </html>
