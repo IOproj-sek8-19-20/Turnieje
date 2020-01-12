@@ -29,7 +29,7 @@ public class UserViewServlet extends HttpServlet {
     
     @Override
     public void init() {
-        //userRepository = new UserRepository();
+        userRepository = new UserRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

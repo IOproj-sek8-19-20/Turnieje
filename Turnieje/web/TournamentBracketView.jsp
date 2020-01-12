@@ -22,11 +22,15 @@
         
         <br><br/>
         
-        <form action = "TournamentView.jsp" method="get">
-            <input type = "submit" value = "Powrot">
-        </form>
+        <input type = "submit" value = "Powrot" onclick="submitShowTournament()">
 
     </center>
-    
+    <script>
+    function submitShowTournament()
+    {
+        var name = "<%= request.getParameter("tournamentName")%>"
+        location.replace("/Turnieje/TournamentView.jsp?tournamentName="+name);
+    }
+    </script>
     </body>
 </html>

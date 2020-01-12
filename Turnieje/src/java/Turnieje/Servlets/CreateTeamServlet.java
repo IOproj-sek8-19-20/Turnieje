@@ -90,7 +90,14 @@ public class CreateTeamServlet extends HttpServlet {
             playerToAdd.teamId = toAdd.getId();
             playerToAdd.userId = userRepository.getByEmail(users.getString(i)).id;
             playerToAdd.joinDate = date;
-            toAdd.addPlayer(playerToAdd);
+            try
+            {
+                toAdd.addPlayer(playerToAdd);
+            }
+            catch(Exception ex)
+            {
+                System.out.println(ex.getMessage());
+            }
         }
                
         
@@ -104,8 +111,14 @@ public class CreateTeamServlet extends HttpServlet {
         }
         
    
-        
-        teamRepository.add(toAdd);
+        try
+        {
+            teamRepository.add(toAdd);
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
         
         Cookie cookie = new Cookie("aboutTeam", JSONString);
         response.addCookie(cookie);
