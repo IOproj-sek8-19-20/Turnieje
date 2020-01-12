@@ -3,7 +3,6 @@
     Created on : 2020-01-09, 20:21:53
     Author     : Daniel Kaleta
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,10 +12,10 @@
     </head>
     
     <body> 
-    <center>
-        <h1> Pomyślna zmiana nazwy druzyny na: <%= request.getParameter("teamName") %></h1>
-    </center>   
-    
+        <center>
+            <h1> Pomyślna zmiana nazwy druzyny na: <%= request.getParameter("teamName") %></h1>
+        </center>   
+
         <script>
         setTimeout(function() 
         {

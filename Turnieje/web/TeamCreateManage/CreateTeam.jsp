@@ -1,9 +1,13 @@
-<!DOCTYPE html> <html>
+<%-- 
+    Document   : CreateTeam
+    Author     : Daniel Kaleta
+--%>
+<!DOCTYPE html> 
+<html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Stworz druzyne</title>
-
     </head>
     <!-- 2 inity, 1 dla list uzytkownikow, 2 dla list dyscyplin-->
     <script>var toInit = "Users", toInit2 = "Disciplines";</script>

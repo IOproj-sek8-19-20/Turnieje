@@ -1,8 +1,12 @@
+<%-- 
+    Document   : ManageTournament
+    Author     : Daniel Kaleta
+--%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
 <%@ page import="java.sql.*" %>
-<%ResultSet resultset =null;%>
-<!DOCTYPE html> <html>
+<!DOCTYPE html> 
+<html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">

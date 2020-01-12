@@ -1,5 +1,5 @@
 <%-- 
-    Document   : DisciplinesList
+    Document   : TeamsList
     Created on : 2020-01-09, 18:28:06
     Author     : Daniel Kaleta
 --%>

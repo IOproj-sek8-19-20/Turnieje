@@ -1,3 +1,5 @@
+//Funkcja odpowiedzialna za przenoszenie pozycji z 
+//listy "wybrane" do listy "do wyboru"
 function deleteFunction(toDelete)
 {
     var iframe = document.getElementById("Choosed"+toDelete);   //dobieram sie do iframe
