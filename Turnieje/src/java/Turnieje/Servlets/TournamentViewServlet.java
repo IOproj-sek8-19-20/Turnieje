@@ -28,7 +28,7 @@ public class TournamentViewServlet extends HttpServlet {
     
     @Override
     public void init() {
-        //teamRepository = new TournamentRepository();
+        teamRepository = new TournamentRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
