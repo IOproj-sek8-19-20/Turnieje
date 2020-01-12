@@ -9,22 +9,29 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
- * Servlet responsible for creating the tournament.
  *
- * @author Daniel Kaleta
- * @version 1.0.0
+ * @author mariu
  */
-@WebServlet(name = "CreateTournamentServlet", urlPatterns = {"/CreateTournament"})
-public class CreateTournamentServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/Login"})
+public class LoginServlet extends HttpServlet {
+ITeamRepository teamRepository;
 
+    //<editor-fold defaultstate="expanded" desc="init()">
+    @Override
+    public void init() {
+        teamRepository = new TeamRepository();
+    }
+    //</editor-fold>
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -36,41 +43,43 @@ public class CreateTournamentServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+         response.setContentType("text/html;charset=UTF-8");
 
-        String JSONString = request.getParameter("JSONFromCreateTournament");
+        String JSONString = request.getParameter("JSONFromLogin");
         JSONObject JSON = new JSONObject(JSONString);
-
-        String tournamentName = JSON.getString("name");
-        String type = JSON.getString("type");
-        String startDate = JSON.getString("startDate");
-        String endDate = JSON.getString("endDate");
-        String discipline = JSON.getString("discipline");
-        String teamSize = JSON.getString("teamSize");
-        
-        //sprawdzenie czy bangla
-        System.out.print(tournamentName);
-        System.out.print(type);
-        System.out.print(startDate);
-        System.out.print(endDate);
-        System.out.print(discipline);
-        System.out.print(teamSize);
-        
-
-        JSONArray teams = JSON.getJSONArray("teamsToAdd");
-        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
-        for (int i = 0; i < teams.length(); i++) 
-        {
-            System.out.print(teams.getString(i));
+        String login = JSON.getString("login");
+        String password = JSON.getString("password");
+        //pomysł :
+        //User user = new User(getByEmail(document.getElementById("login").value;))
+        // if (user != null)
+           //    {
+             ///      if (user.checkpassword(document.getElementById("password").value;))
+            //       {
+             //          location.replace("/Turnieje/MainMenu?JSON");
+            //       }
+            //   }
+            //   else
+           //    {
+           //        location.replace("/Turnieje/BadLogin?JSONFromLogin");
+           //    }
+          //  }
+        //   System.out.print(login);
+         //   System.out.print(password);
+         
+          if ((login.equals("123")) && (password.equals("123"))) //test
+          { HttpSession session = request.getSession(true);
+            Object obj = session.getAttribute("ListOperation");
+            session.setAttribute("loginUser", login);
+             session.setAttribute("passwordUser", password);
+             session.setAttribute("acive","YES"); // sprawdzanie na każdej stornie 
+             //zabrania wpsiania od razu adresu akcji wymagającej logowania
+              response.sendRedirect("MainMenu.jsp");
+          }
+          else
+          {
+             response.sendRedirect("BadLogin.jsp");
         }
-
-        Cookie cookie = new Cookie("aboutTournament", JSONString);
-        response.addCookie(cookie);
-        
-        response.sendRedirect("TournamentCreated.jsp?tournamentName=" + tournamentName);
-
-    }
-
+}
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

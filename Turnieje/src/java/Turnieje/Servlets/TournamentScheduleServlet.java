@@ -8,33 +8,28 @@ package Turnieje.Servlets;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
+import pl.polsl.aei.io.turnieje.model.repository.MatchRepository;
 
 /**
- * Servlet responsible for creating the team.
  *
- * @author Daniel Kaleta
- * @version 1.0.0
+ * @author Wojtek Wos
+ * @verion 1.0.0
  */
-@WebServlet(name = "CreateTeamServlet", urlPatterns = {"/CreateTeam"})
-public class CreateTeamServlet extends HttpServlet {
+@WebServlet(name = "TournamentScheduleServlet", urlPatterns = {"/TournamentSchedule"})
+public class TournamentScheduleServlet extends HttpServlet {
 
-    ITeamRepository teamRepository;
-
-    //<editor-fold defaultstate="expanded" desc="init()">
+    IMatchRepository matchRepository;
+    
     @Override
     public void init() {
-        teamRepository = new TeamRepository();
+        matchRepository = new MatchRepository();
     }
-    //</editor-fold>
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,35 +42,19 @@ public class CreateTeamServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String JSONString = request.getParameter("JSONFromCreateTeam");
+        String JSONString = request.getParameter("JSONFromTournamentView");
         JSONObject JSON = new JSONObject(JSONString);
 
-        String teamName = JSON.getString("name");
+        String tournamentName = JSON.getString("name");
         
-        JSONArray users = JSON.getJSONArray("usersToAdd");
-        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
-        for(int i=0; i<users.length();i++)
+        JSONArray matches = JSON.getJSONArray("matchesInTournament");
+        //wypisanie meczow
+        for(int i=0; i<matches.length();i++)
         {
-            System.out.print(users.getString(i));
+            System.out.print(matches.getString(i));
         }
-        
-        JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
-        //wypisanie dodanych dyscyplin w ramach testu czy dziala
-        for(int i=0; i<disciplines.length();i++)
-        {
-            System.out.print(disciplines.getString(i));
-        }
-        
-        //Team toAdd = new Team();
-        //toAdd.setName(teamName);
-        //teamRepository.add(toAdd);
-        
-        Cookie cookie = new Cookie("aboutTeam", JSONString);
-        response.addCookie(cookie);
-        
-        response.sendRedirect("TeamCreated.jsp?teamName=" + teamName);
 
+        response.sendRedirect("TournamentSchedule.jsp?tournamentName=" + tournamentName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
