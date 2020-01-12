@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
@@ -28,7 +28,8 @@ public class TeamViewServlet extends HttpServlet {
     
     @Override
     public void init() {
-        teamRepository = new TeamRepository();
+	RepositoryProvider provider = RepositoryProvider.getInstance();
+        teamRepository = provider.getTeamRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
-import pl.polsl.aei.io.turnieje.model.repository.MatchRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
@@ -29,7 +29,8 @@ public class TournamentScheduleServlet extends HttpServlet {
     
     @Override
     public void init() {
-        matchRepository = new MatchRepository();
+	RepositoryProvider provider = RepositoryProvider.getInstance();
+        matchRepository = provider.getMatchRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  * Servlet responsible for editing the team.
@@ -32,7 +32,8 @@ public class ManageTeamServlet extends HttpServlet {
     //<editor-fold defaultstate="expanded" desc="init()">
     @Override
     public void init() {
-        teamRepository = new TeamRepository();
+	RepositoryProvider provider = RepositoryProvider.getInstance();
+        teamRepository = provider.getTeamRepository();
     }
     //</editor-fold>
 

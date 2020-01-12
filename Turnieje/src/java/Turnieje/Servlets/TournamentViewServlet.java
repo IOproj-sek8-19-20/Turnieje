@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
-import pl.polsl.aei.io.turnieje.model.repository.TournamentRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
@@ -24,11 +24,12 @@ import pl.polsl.aei.io.turnieje.model.repository.TournamentRepository;
 @WebServlet(name = "TournamentViewServlet", urlPatterns = {"/TournamentView"})
 public class TournamentViewServlet extends HttpServlet {
 
-    ITournamentRepository teamRepository;
+    ITournamentRepository tourRepository;
     
     @Override
     public void init() {
-        teamRepository = new TournamentRepository();
+	RepositoryProvider provider = RepositoryProvider.getInstance();
+        tourRepository = provider.getTournamentRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

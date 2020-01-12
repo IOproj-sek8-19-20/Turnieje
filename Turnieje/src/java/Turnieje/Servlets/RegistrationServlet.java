@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
@@ -27,7 +27,8 @@ ITeamRepository teamRepository;
     //<editor-fold defaultstate="expanded" desc="init()">
     @Override
     public void init() {
-        teamRepository = new TeamRepository();
+	RepositoryProvider provider = RepositoryProvider.getInstance();
+        teamRepository = provider.getTeamRepository();
     }
     //</editor-fold>
     /**

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
-import pl.polsl.aei.io.turnieje.model.repository.UserRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
@@ -29,7 +29,8 @@ public class UserViewServlet extends HttpServlet {
     
     @Override
     public void init() {
-        userRepository = new UserRepository();
+	RepositoryProvider provider = RepositoryProvider.getInstance();
+        userRepository = provider.getUserRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
