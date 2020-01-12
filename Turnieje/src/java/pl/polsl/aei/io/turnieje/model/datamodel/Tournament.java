@@ -6,6 +6,7 @@
 package pl.polsl.aei.io.turnieje.model.datamodel;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -33,14 +34,14 @@ public class Tournament {
      * Parameterless contructor, sets id to 0;
      */
     public Tournament() {
-	this.id = new TournamentId(0);
+	this(0);
     }
     /**
      * Parameterized constructor, sets id to given one.
      * @param id - id of created object
      */
     public Tournament(TournamentId id) {
-	this.id = id;
+	this(id.id);
     }
     /**
      * Parameterized constructor, sets id to given one.
@@ -48,6 +49,8 @@ public class Tournament {
      */
     public Tournament(int id) {
 	this.id = new TournamentId(id);
+	matches = new HashSet<>();
+	teams = new HashSet<>();
     }
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Methods">

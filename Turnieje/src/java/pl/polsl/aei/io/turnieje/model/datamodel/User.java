@@ -5,6 +5,7 @@
  */
 package pl.polsl.aei.io.turnieje.model.datamodel;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,14 +29,15 @@ public class User {
      * Parameterless contructor, sets id to 0;
      */
     public User() {
-	this.id = new UserId(0);
+	this(0);
     }
     /**
      * Parameterized constructor, sets id to given one.
      * @param id - id of created object
      */
     public User(UserId id) {
-	this.id = id;
+	this(id.id);
+	disciplines = new HashSet<>();
     }
     /**
      * Parameterized constructor, sets id to given one.
