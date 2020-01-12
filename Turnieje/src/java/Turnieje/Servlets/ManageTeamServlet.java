@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets.CreateManage;
+package Turnieje.Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,15 +15,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
- * Servlet responsible for creating the tournament.
+ * Servlet responsible for editing the team.
  *
  * @author Daniel Kaleta
  * @version 1.0.0
  */
-@WebServlet(name = "CreateTournamentServlet", urlPatterns = {"/CreateTournament"})
-public class CreateTournamentServlet extends HttpServlet {
+@WebServlet(name = "ManageTeamServlet", urlPatterns = {"/ManageTeam"})
+public class ManageTeamServlet extends HttpServlet {
+
+    ITeamRepository teamRepository;
+
+    //<editor-fold defaultstate="expanded" desc="init()">
+    @Override
+    public void init() {
+        teamRepository = new TeamRepository();
+    }
+    //</editor-fold>
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,36 +49,33 @@ public class CreateTournamentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String JSONString = request.getParameter("JSONFromCreateTournament");
+        String JSONString = request.getParameter("JSONFromCreateTeam");
         JSONObject JSON = new JSONObject(JSONString);
 
-        String tournamentName = JSON.getString("name");
-        String type = JSON.getString("type");
-        String startDate = JSON.getString("startDate");
-        String endDate = JSON.getString("endDate");
-        String discipline = JSON.getString("discipline");
-        String teamSize = JSON.getString("teamSize");
+        String teamName = JSON.getString("name");
         
-        //sprawdzenie czy bangla
-        System.out.print(tournamentName);
-        System.out.print(type);
-        System.out.print(startDate);
-        System.out.print(endDate);
-        System.out.print(discipline);
-        System.out.print(teamSize);
-        
-
-        JSONArray teams = JSON.getJSONArray("teamsToAdd");
+        JSONArray users = JSON.getJSONArray("usersToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
-        for (int i = 0; i < teams.length(); i++) 
+        for(int i=0; i<users.length();i++)
         {
-            System.out.print(teams.getString(i));
+            System.out.print(users.getString(i));
+        }
+        
+        JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
+        //wypisanie dodanych dyscyplin w ramach testu czy dziala
+        for(int i=0; i<disciplines.length();i++)
+        {
+            System.out.print(disciplines.getString(i));
         }
 
-        Cookie cookie = new Cookie("aboutTournament", JSONString);
+        //Team toEdit = teamRepository.getById(managedTeamID);
+        //toEdit.setName(teamName);
+        //teamRepository.update(toEdit);
+        
+        Cookie cookie = new Cookie("aboutTeam", JSONString);
         response.addCookie(cookie);
         
-        response.sendRedirect("TournamentCreated.jsp?tournamentName=" + tournamentName);
+        response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp?teamName=" + teamName);
 
     }
 

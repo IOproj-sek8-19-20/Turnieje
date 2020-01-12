@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets.CreateManage;
+package Turnieje.Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,13 +17,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
- * Servlet responsible for editing the tournament.
+ * Servlet responsible for creating the tournament.
  *
  * @author Daniel Kaleta
  * @version 1.0.0
  */
-@WebServlet(name = "ManageTournamentServlet", urlPatterns = {"/ManageTournament"})
-public class ManageTournamentServlet extends HttpServlet {
+@WebServlet(name = "CreateTournamentServlet", urlPatterns = {"/CreateTournament"})
+public class CreateTournamentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,12 +43,16 @@ public class ManageTournamentServlet extends HttpServlet {
 
         String tournamentName = JSON.getString("name");
         String type = JSON.getString("type");
+        String startDate = JSON.getString("startDate");
+        String endDate = JSON.getString("endDate");
         String discipline = JSON.getString("discipline");
         String teamSize = JSON.getString("teamSize");
         
         //sprawdzenie czy bangla
         System.out.print(tournamentName);
         System.out.print(type);
+        System.out.print(startDate);
+        System.out.print(endDate);
         System.out.print(discipline);
         System.out.print(teamSize);
         
@@ -60,14 +64,11 @@ public class ManageTournamentServlet extends HttpServlet {
             System.out.print(teams.getString(i));
         }
 
-        //Team toEdit = teamRepository.getById(managedTeamID);
-        //toEdit.setName(teamName);
-        //teamRepository.update(toEdit);
-        
         Cookie cookie = new Cookie("aboutTournament", JSONString);
         response.addCookie(cookie);
+        
+        response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentCreated.jsp?tournamentName=" + tournamentName);
 
-        response.sendRedirect("TournamentEdited.jsp?tournamentName="+tournamentName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
