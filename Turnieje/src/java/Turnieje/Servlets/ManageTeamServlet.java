@@ -32,7 +32,7 @@ public class ManageTeamServlet extends HttpServlet {
     //<editor-fold defaultstate="expanded" desc="init()">
     @Override
     public void init() {
-        teamRepository = new TeamRepository();
+        //teamRepository = new TeamRepository();
     }
     //</editor-fold>
 
