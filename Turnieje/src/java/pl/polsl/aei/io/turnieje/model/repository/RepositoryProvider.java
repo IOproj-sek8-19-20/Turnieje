@@ -39,7 +39,7 @@ public class RepositoryProvider {
     private RepositoryProvider() {
 	dbInterface = new DBInterface();
 	try {
-	    dbInterface.open("jdbc:derby://localhost:1527/Turnieje", "root", "0000");
+	    dbInterface.open("jdbc:derby://localhost:1527/Tournaments", "root", "0000");
 	}
 	catch (ClassNotFoundException | SQLException exc) {
 	    instance = null;
