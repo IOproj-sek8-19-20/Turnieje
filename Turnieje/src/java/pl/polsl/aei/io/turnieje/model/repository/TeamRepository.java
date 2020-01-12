@@ -19,7 +19,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for teams.
  * 
  * @author Piotr Uhl
- * @version 0.2.1
+ * @version 0.2.2
  */
 public class TeamRepository implements ITeamRepository {
     
@@ -33,7 +33,7 @@ public class TeamRepository implements ITeamRepository {
     public boolean add(Team team) {
 	try {
 	    Statement statement = dbInterface.createStatement();
-	    statement.executeUpdate(String.format("INSERT INTO Teams(name, capId) VALUES ('%s', '%d')", team.getName(), team.getCapitan().id));
+	    statement.executeUpdate(String.format("INSERT INTO Teams(name, capId) VALUES ('%s', %d)", team.getName(), team.getCapitan().id));
 	    return true;
 	}
 	catch (Exception exc) {
