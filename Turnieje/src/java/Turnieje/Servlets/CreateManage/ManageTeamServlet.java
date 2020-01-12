@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets;
+package Turnieje.Servlets.CreateManage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -18,13 +19,13 @@ import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
- * Servlet responsible for creating the team.
+ * Servlet responsible for editing the team.
  *
  * @author Daniel Kaleta
  * @version 1.0.0
  */
-@WebServlet(name = "CreateTeamServlet", urlPatterns = {"/CreateTeam"})
-public class CreateTeamServlet extends HttpServlet {
+@WebServlet(name = "ManageTeamServlet", urlPatterns = {"/ManageTeam"})
+public class ManageTeamServlet extends HttpServlet {
 
     ITeamRepository teamRepository;
 
@@ -66,15 +67,15 @@ public class CreateTeamServlet extends HttpServlet {
         {
             System.out.print(disciplines.getString(i));
         }
-        
-        //Team toAdd = new Team();
-        //toAdd.setName(teamName);
-        //teamRepository.add(toAdd);
+
+        //Team toEdit = teamRepository.getById(managedTeamID);
+        //toEdit.setName(teamName);
+        //teamRepository.update(toEdit);
         
         Cookie cookie = new Cookie("aboutTeam", JSONString);
         response.addCookie(cookie);
         
-        response.sendRedirect("TeamCreated.jsp?teamName=" + teamName);
+        response.sendRedirect("TeamEdited.jsp?teamName=" + teamName);
 
     }
 
