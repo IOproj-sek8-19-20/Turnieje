@@ -1,7 +1,7 @@
 <%-- 
     Document   : TournamentsList
     Created on : 2020-01-12, 13:39:42
-    Author     : Daniel-PC
+    Author     : Daniel Kaleta
 --%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>

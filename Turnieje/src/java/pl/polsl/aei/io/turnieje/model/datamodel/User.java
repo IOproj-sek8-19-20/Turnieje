@@ -72,6 +72,9 @@ public class User {
     public String getLastName() {
 	return this.lastName;
     }
+    public String getPassHash() {
+	return this.passHash;
+    }
     public boolean removeDiscipline(Discipline discipline) {
 	if (discipline == null) 
 	    return false;

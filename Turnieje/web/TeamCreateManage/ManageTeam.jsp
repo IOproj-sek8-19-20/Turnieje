@@ -1,14 +1,18 @@
+<%-- 
+    Document   : ManageTeam
+    Author     : Daniel Kaleta
+--%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="org.json.JSONArray"%>
 <%@ page import="java.sql.*" %>
-<%ResultSet resultset =null;%>
-<!DOCTYPE html> <html>
+<!DOCTYPE html> 
+<html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edytuj druzyne</title>
     </head>
-
+    <!-- 2 inity, 1 dla list uzytkownikow, 2 dla list dyscyplin-->
     <script>var toInit = "Users", toInit2 = "Disciplines";</script>
     <body onload="init(toInit);init(toInit2);setFieldsAndLists();">
         

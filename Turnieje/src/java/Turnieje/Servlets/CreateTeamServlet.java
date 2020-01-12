@@ -6,6 +6,10 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -14,8 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.PlayerInTeam;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.UserRepository;
 
 /**
  * Servlet responsible for creating the team.
@@ -26,12 +35,22 @@ import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 @WebServlet(name = "CreateTeamServlet", urlPatterns = {"/CreateTeam"})
 public class CreateTeamServlet extends HttpServlet {
 
+    RepositoryProvider repositoryProvider;
+    IUserRepository userRepository;
     ITeamRepository teamRepository;
 
     //<editor-fold defaultstate="expanded" desc="init()">
     @Override
     public void init() {
-        teamRepository = new TeamRepository();
+        repositoryProvider = RepositoryProvider.getInstance();
+        try{
+        teamRepository = repositoryProvider.getTeamRepository();
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex.getMessage());
+        }
+        userRepository = repositoryProvider.getUserRepository();
     }
     //</editor-fold>
 
@@ -47,20 +66,35 @@ public class CreateTeamServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        Date date = new Date();
+        
+        Team toAdd = new Team();
 
         String JSONString = request.getParameter("JSONFromCreateTeam");
         JSONObject JSON = new JSONObject(JSONString);
 
         String teamName = JSON.getString("name");
+        toAdd.setName(teamName);
+        
         String captain = JSON.getString("captain");
         System.out.print(captain);
+        toAdd.setCapitan(userRepository.getByEmail(captain));
         
+        Set<PlayerInTeam> players = new TreeSet<>();
         JSONArray users = JSON.getJSONArray("usersToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
         for(int i=0; i<users.length();i++)
         {
-            System.out.print(users.getString(i));
+            PlayerInTeam playerToAdd = new PlayerInTeam();
+            playerToAdd.teamId = toAdd.getId();
+            playerToAdd.userId = userRepository.getByEmail(users.getString(i)).id;
+            playerToAdd.joinDate = date;
+            toAdd.addPlayer(playerToAdd);
         }
+               
+        
+        
         
         JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
         //wypisanie dodanych dyscyplin w ramach testu czy dziala
@@ -69,9 +103,9 @@ public class CreateTeamServlet extends HttpServlet {
             System.out.print(disciplines.getString(i));
         }
         
-        //Team toAdd = new Team();
-        //toAdd.setName(teamName);
-        //teamRepository.add(toAdd);
+   
+        
+        teamRepository.add(toAdd);
         
         Cookie cookie = new Cookie("aboutTeam", JSONString);
         response.addCookie(cookie);

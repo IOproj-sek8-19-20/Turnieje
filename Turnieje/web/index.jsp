@@ -6,17 +6,12 @@
 
 </head>
 <%
-    String user = null;
-    if(session.getAttribute("loginUser") == null)
-    {
-        response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
-        return;
-    }
-    else 
+    //Jezeli uzytkownik jest zalogowany zostaje przekierowany do MainMenu.jsp
+    //W przeciwnym wypadku bedzie mial mozliwosc zalogowania sie lub zarejestrowania
+    if(session.getAttribute("loginUser") != null)
     {
         response.sendRedirect("http://localhost:8080/Turnieje/MainMenu.jsp");
-    } 
-
+    }
 %>
 
     <body>
@@ -24,13 +19,13 @@
                         
             <br/>
             <form action="Login.jsp" method="GET">
-                <input type="submit" value="Zaloguj się" />
+                <input type="submit" value="Zaloguj sie" />
             </form>
             
             <br/><br/>
             
             <form action="Registration.jsp" method="GET">
-                <input type="submit" value="Zajerestruj się" />
+                <input type="submit" value="Zajerestruj sie" />
             </form>
             
         </center>

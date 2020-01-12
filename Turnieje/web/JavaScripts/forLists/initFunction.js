@@ -1,3 +1,5 @@
+//Funkcja odpowiedzialna tylko za dodanie EventListenerów do list 
+//"do wyboru" oraz "wybrane" z argumentami
 function init(toInit)
 {
     var iframe = document.getElementById("Avaible"+toInit);   //dobieram sie do iframe

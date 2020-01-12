@@ -1,12 +1,15 @@
+<%-- 
+    Document   : CreateTournament
+    Author     : Daniel Kaleta
+--%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <!DOCTYPE html> <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stworz turniej</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stworz turniej</title>
 </head>
 <%
     //Sprawdzanie, czy uzytkownik jest zalogowany

@@ -6,7 +6,6 @@
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
 <%@ page import="java.sql.*" %>
-<%ResultSet resultset =null;%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

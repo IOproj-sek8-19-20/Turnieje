@@ -1,9 +1,8 @@
 <%-- 
     Document   : TournamentEdited
     Created on : 2020-01-09, 20:27:37
-    Author     : Danielowy Eltech
+    Author     : Daniel Kaleta
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,10 +12,10 @@
     </head>
     
     <body> 
-    <center>
-        <h1> Pomyślna zmiana nazwy turnieju na: <%= request.getParameter("tournamentName") %></h1>
-    </center>   
-    
+        <center>
+            <h1> Pomyślna zmiana nazwy turnieju na: <%= request.getParameter("tournamentName") %></h1>
+        </center>   
+
         <script>
         setTimeout(function() 
         {
