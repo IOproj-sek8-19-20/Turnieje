@@ -39,6 +39,11 @@
                 }
             }
         }
+        if(JSON==null)
+        {
+            out.println("<center>BRAK UPRAWNIEN</center>");
+            return;
+        }
     %>
 
     <center>
@@ -53,6 +58,11 @@
         
         <br/><br/>
         
+        <!-- Kapitan -->
+        Kapitan: <input type = "text" name = "captain" id="captain" value="<%= JSON.getString("captain") %>">
+        
+        <br/><br/>
+       
         <!-- Dodawanie zawodników (poza lista raczej zbedne
         Dodaj zawodnika (nazwa) : <input type = "text" name = "userToAdd" id="userToAdd">
 
@@ -110,83 +120,89 @@
         function temp()
         {
             var myVar="Manage";
-            var captain = <%=user%>
+            var captain = document.getElementById("captain").value;
             submit(myVar,captain);
         }
         function setFieldsAndLists()
-            {
-                //Ustawianie dyscyplin juz dodanych
-                iframe = document.getElementById("ChoosedDisciplines");   //dobieram sie do iframe
-                select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
-                
-                <% 
-                    JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
-                    for (int i = 0; i < disciplines.length(); i++) 
-                    {
-                        %>
-                            var option = document.createElement("option");
-                            option.text = "<%= disciplines.getString(i)%>";
-                            select.add(option);
-                        <%
-                    }
-                %>
-                 
-                //Usuniecie dodanych dyscyplin z listy dostepnych
-                iframe = document.getElementById("AvaibleDisciplines");   //dobieram sie do iframe
-                select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
-                options = select.getElementsByTagName('option');
-                
-                <% 
-                    for (int i = 0; i < disciplines.length(); i++) 
-                    {
-                        %>
-                            for (var i = 0; i < select.length; i++) 
+        {
+            //Ustawianie dyscyplin juz dodanych
+            iframe = document.getElementById("ChoosedDisciplines");   //dobieram sie do iframe
+            select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
+
+            <% 
+                JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
+                for (int i = 0; i < disciplines.length(); i++) 
+                {
+                    %>
+                        var option = document.createElement("option");
+                        option.text = "<%= disciplines.getString(i)%>";
+                        select.add(option);
+                    <%
+                }
+            %>
+
+            //Usuniecie dodanych dyscyplin z listy dostepnych
+            iframe = document.getElementById("AvaibleDisciplines");   //dobieram sie do iframe
+            select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
+            options = select.getElementsByTagName('option');
+
+            <% 
+                for (int i = 0; i < disciplines.length(); i++) 
+                {
+                    %>
+                        for (var i = 0; i < select.length; i++) 
+                        {
+                            if(options[i].value == "<%= disciplines.getString(i)%>")
                             {
-                                if(options[i].value == "<%= disciplines.getString(i)%>")
-                                {
-                                    select.remove(i);
-                                }
+                                select.remove(i);
                             }
-                        <%
-                    }
-                %>
-                
-                //Ustawianie uzytkownikow, ktorzy sa juz dodani
-                iframe = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
-                select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
-                
-                <% 
-                    JSONArray users = JSON.getJSONArray("usersToAdd");
-                    for (int i = 0; i < users.length(); i++) 
-                    {
-                        %>
-                            var option = document.createElement("option");
-                            option.text = "<%= users.getString(i)%>";
-                            select.add(option);
-                        <%
-                    }
-                %>
-                 
-                //Usuniecie dodanych uzytkownikow z listy dostepnych
-                iframe = document.getElementById("AvaibleUsers");   //dobieram sie do iframe
-                select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
-                options = select.getElementsByTagName('option');
-                
-                <% 
-                    for (int i = 0; i < users.length(); i++) 
-                    {
-                        %>
-                            for (var i = 0; i < select.length; i++) 
+                        }
+                    <%
+                }
+            %>
+
+            //Ustawianie uzytkownikow, ktorzy sa juz dodani
+            iframe = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
+            select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
+            select.addEventListener("click", deleteFromNewCaptain);
+
+            <% 
+                JSONArray users = JSON.getJSONArray("usersToAdd");
+                for (int i = 0; i < users.length(); i++) 
+                {
+                    %>
+                        var option = document.createElement("option");
+                        option.text = "<%= users.getString(i)%>";
+                        select.add(option);
+                    <%
+                }
+            %>
+
+            //Usuniecie dodanych uzytkownikow z listy dostepnych
+            iframe = document.getElementById("AvaibleUsers");   //dobieram sie do iframe
+            select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
+            options = select.getElementsByTagName('option');
+
+            <% 
+                for (int i = 0; i < users.length(); i++) 
+                {
+                    %>
+                        for (var i = 0; i < select.length; i++) 
+                        {
+                            if(options[i].value == "<%= users.getString(i)%>")
                             {
-                                if(options[i].value == "<%= users.getString(i)%>")
-                                {
-                                    select.remove(i);
-                                }
+                                select.remove(i);
                             }
-                        <%
-                    }
-                %>
-            }
+                        }
+                    <%
+                }
+            %>
+        }
+        function deleteFromNewCaptain()
+        {
+            
+        }
+            
     </script>
     </body>
 </html>
