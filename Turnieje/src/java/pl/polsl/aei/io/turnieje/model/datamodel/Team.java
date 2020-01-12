@@ -11,7 +11,7 @@ import java.util.Set;
  * Representation of single team.
  * 
  * @author Piotr Uhl
- * @version 0.1.0
+ * @version 0.1.1
  */
 public class Team {
     //<editor-fold defaultstate="collapsed" desc="Fields">
@@ -45,55 +45,102 @@ public class Team {
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public boolean addDiscipline(Discipline discipline) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (discipline == null)
+	    return false;
+	this.disciplines.add(discipline);
+	return true;
     }
     public boolean addPlayer(User user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (user == null)
+	    return false;
+	PlayerInTeam playerInTeam = new PlayerInTeam();
+	playerInTeam.teamId = this.id;
+	playerInTeam.userId = user.id;
+	this.players.add(playerInTeam);
+	return true;
     }
     public boolean addPlayer(PlayerInTeam user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (user == null)
+	    return false;
+	for (PlayerInTeam k : this.players) {
+	    if (k.userId == user.userId)
+		return false;
+	}
+	this.players.add(user);
+	return true;
     }
     public boolean addPlayer(UserId user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (user == null)
+	    return false;
+	PlayerInTeam playerInTeam = new PlayerInTeam();
+	playerInTeam.teamId = this.id;
+	playerInTeam.userId = user;
+	this.players.add(playerInTeam);
+	return true;
     }
     public UserId getCapitan() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.capId;
     }
     public Set<Discipline> getDisciplines() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.disciplines;
     }
     public TeamId getId() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.id;
     }
     public String getName() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.name;
     }
     public Set<PlayerInTeam> getPlayers() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.players;
     }
     public boolean removeDiscipline(Discipline discipline) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (discipline == null)
+	    return false;
+	return this.disciplines.remove(discipline);
     }
     public boolean removePlayer(UserId user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (user == null)
+	    return false;
+	return this.players.removeIf(k -> k.userId == user);
     }
     public boolean removePlayer(PlayerInTeam user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (user == null)
+	    return false;
+	if (user.teamId != this.id)
+	    return false;
+	return this.players.removeIf(k -> k.userId == user.userId);
     }
     public boolean removePlayer(User user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (user == null)
+	    return false;
+	return this.players.removeIf(k -> k.userId == user.id);
     }
-    public boolean replacePlayer(PlayerInTeam user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+    public boolean updatePlayer(PlayerInTeam user) {
+	if (user == null)
+	    return false;
+	if (user.teamId != this.id)
+	    return false;
+	if (this.players.removeIf(k -> k.userId == user.userId) == false)
+	    return false;
+	return this.players.add(user);
     }
     public boolean setCapitan(UserId user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (user == null)
+	    return false;
+	this.capId = user;
+	return true;
     }
     public boolean setCapitan(User user) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (user == null)
+	    return false;
+	this.capId = user.id;
+	return true;
     }
     public boolean setName(String name) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (name == null)
+	    return false;
+	this.name = name;
+	return true;
     }
     //</editor-fold>
 }

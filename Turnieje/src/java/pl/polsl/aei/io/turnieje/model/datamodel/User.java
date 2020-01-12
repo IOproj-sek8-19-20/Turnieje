@@ -11,7 +11,7 @@ import java.util.Set;
  * Representation of single user.
  * 
  * @author Piotr Uhl
- * @version 0.1.0
+ * @version 0.1.1
  */
 public class User {
     //<editor-fold defaultstate="collapsed" desc="Fields">
@@ -47,46 +47,63 @@ public class User {
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public boolean addDiscipline(Discipline discipline) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (discipline == null)
+	    return false;
+	return disciplines.add(discipline);
     }
     public boolean checkPassword(String passHash) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.passHash.equals(passHash);
     }
     public boolean getActive() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.active;
     }
     public Set<Discipline> getDisciplines() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.disciplines;
     }
     public String getEmail() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.email;
     }
     public String getFirstName() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.firstName;
     }
     public UserId getId() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.id;
     }
     public String getLastName() {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	return this.lastName;
     }
     public boolean removeDiscipline(Discipline discipline) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (discipline == null) 
+	    return false;
+	return this.disciplines.remove(discipline);
     }
     public boolean setActive(boolean val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	this.active = val;
+	return true;
     }
     public boolean setEmail (String val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.email = val;
+	return true;
     }
     public boolean setFirstName(String val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.firstName = val;
+	return true;
     }
     public boolean setLastName(String val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.lastName = val;
+	return true;
     }
     public boolean setPassHash(String val) {
-	throw new UnsupportedOperationException("Not implenented yet.");
+	if (val == null)
+	    return false;
+	this.passHash = val;
+	return true;
     }
     //</editor-fold>
 }

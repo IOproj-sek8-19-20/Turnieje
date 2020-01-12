@@ -95,5 +95,4 @@ public class TournamentBracketServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
