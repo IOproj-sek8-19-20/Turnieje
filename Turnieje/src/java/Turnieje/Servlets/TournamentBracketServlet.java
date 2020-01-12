@@ -28,7 +28,7 @@ public class TournamentBracketServlet extends HttpServlet {
     
     @Override
     public void init() {
-        matchRepository = new MatchRepository();
+        //matchRepository = new MatchRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
