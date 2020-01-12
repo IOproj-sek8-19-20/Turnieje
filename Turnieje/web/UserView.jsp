@@ -18,7 +18,7 @@
         
         <br><br/>
         
-        <form action = "index.html" method="get">
+        <form action = "MainMenu.jsp" method="get">
             <input type = "submit" value = "Powrot">
         </form>
     </center>

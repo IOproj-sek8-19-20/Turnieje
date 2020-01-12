@@ -28,7 +28,7 @@ public class TeamViewServlet extends HttpServlet {
     
     @Override
     public void init() {
-        //teamRepository = new TeamRepository();
+        teamRepository = new TeamRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

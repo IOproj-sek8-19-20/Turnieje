@@ -22,15 +22,27 @@
 
         <br/><br/>
 
-        <%--  lista uzytkownikow w turnieju z tym id --%>
+        <iframe id="Users" src="/Turnieje/Lists/TeamPlayersList.jsp"></iframe>
         
         <br/><br/>
         
-        <form action = "index.html" method="get">
+        <input type = "submit" value = "Pokaz zawodnika" onclick="submitShowUser()">
+        
+        <br/><br/>
+        
+        <form action = "MainMenu.jsp" method="get">
             <input type = "submit" value = "Powrot">
         </form>
 
     </center>
-    
+    <script>
+    function submitShowUser()
+            {
+                var iframe = document.getElementById("Users");   
+                var select = iframe.contentWindow.document.getElementById("choosedUsers");   
+                var options = select.getElementsByTagName('option');    
+                location.replace("/Turnieje/UserView.jsp?userName="+options[select.selectedIndex].text);
+            }
+    </script>
     </body>
 </html>
