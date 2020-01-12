@@ -7,6 +7,7 @@ package pl.polsl.aei.io.turnieje.model.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -30,5 +31,9 @@ class DBInterface {
     
     public Statement createStatement() throws SQLException {
 	return connection.createStatement();
+    }
+    
+    public PreparedStatement createPreparedStatement(String query) throws SQLException {
+	return connection.prepareStatement(query);
     }
 }
