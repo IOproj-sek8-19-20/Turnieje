@@ -15,10 +15,10 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
  * Repository interface for teams.
  * 
  * @author Piotr Uhl
- * @version 1.0.0
+ * @version 1.0.1
  */
 public interface ITeamRepository {
-    public boolean add(Team team);
+    public TeamId add(Team team);
     public boolean delete(Team team);
     public boolean delete(TeamId team);
     public Set<Team> getAll();

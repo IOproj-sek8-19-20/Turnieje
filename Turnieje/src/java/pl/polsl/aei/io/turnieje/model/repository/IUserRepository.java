@@ -15,10 +15,10 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Repository interface for users.
  * 
  * @author Piotr Uhl
- * @version 1.0.0
+ * @version 1.0.1
  */
 public interface IUserRepository {
-    public boolean add(User user);
+    public UserId add(User user);
     public boolean delete(User user);
     public boolean delete(UserId user);
     public Set<User> getAll();

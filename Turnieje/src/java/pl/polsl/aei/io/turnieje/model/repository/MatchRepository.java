@@ -20,7 +20,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
  * Realization of repository interface for matches.
  * 
  * @author Piotr Uhl
- * @version 0.2.1
+ * @version 0.2.2
  */
 public class MatchRepository implements IMatchRepository {
     
@@ -31,9 +31,9 @@ public class MatchRepository implements IMatchRepository {
     }
     
     @Override
-    public boolean addMatch(Match match) {
+    public MatchId addMatch(Match match) {
 	try {
-	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Matches(tourId, date, finished, winner, team1Id, team2Id) VALUES (?, ?, ?, ?, ?, ?)");
+	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Matches(tourId, date, finished, winner, team1Id, team2Id) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	    statement.setInt(1, match.getTourId().id);
 	    statement.setDate(2, (java.sql.Date)match.getDate());
     	    statement.setBoolean(3, match.getFinished());
@@ -41,11 +41,16 @@ public class MatchRepository implements IMatchRepository {
 	    statement.setInt(5, match.getTeamId(1).id);
 	    statement.setInt(6, match.getTeamId(1).id);
 	    statement.execute();
-	    return true;
+	    
+	    ResultSet rs = statement.getGeneratedKeys();
+	    if (rs.next()) {
+	       return new MatchId(rs.getInt(1));
+	    } 
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);
 	}
+	return null;
     }
     @Override
     public boolean delete(Match match) {

@@ -6,12 +6,9 @@
 package pl.polsl.aei.io.turnieje.model.repository;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.TeamId;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
@@ -21,7 +18,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for users.
  * 
  * @author Piotr Uhl
- * @version 0.2.1
+ * @version 0.2.2
  */
 public class UserRepository implements IUserRepository {
     
@@ -32,18 +29,22 @@ public class UserRepository implements IUserRepository {
     }
     
     @Override
-    public boolean add(User user) {
+    public UserId add(User user) {
 	try {
 	    Statement statement = dbInterface.createStatement();
 	    if (user.getActive())
-		statement.executeUpdate(String.format("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('%s', '%s', '%s', '%s', TRUE)", user.getEmail(), user.getPassHash(), user.getFirstName(), user.getLastName()));
+		statement.executeUpdate(String.format("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('%s', '%s', '%s', '%s', TRUE)", user.getEmail(), user.getPassHash(), user.getFirstName(), user.getLastName()), Statement.RETURN_GENERATED_KEYS);
 	    else
-		statement.executeUpdate(String.format("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('%s', '%s', '%s', '%s', FALSE)", user.getEmail(), user.getPassHash(), user.getFirstName(), user.getLastName()));
-	    return true;
+		statement.executeUpdate(String.format("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('%s', '%s', '%s', '%s', FALSE)", user.getEmail(), user.getPassHash(), user.getFirstName(), user.getLastName()), Statement.RETURN_GENERATED_KEYS);
+	    ResultSet rs = statement.getGeneratedKeys();
+	    if (rs.next()) {
+	       return new UserId(rs.getInt(1));
+	    } 
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);
 	}
+	return null;
     }
     @Override
     public boolean delete(User user) {

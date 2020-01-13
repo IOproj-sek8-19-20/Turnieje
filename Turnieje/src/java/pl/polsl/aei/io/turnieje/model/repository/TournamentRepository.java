@@ -20,7 +20,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for tournaments.
  * 
  * @author Piotr Uhl
- * @version 0.2.1
+ * @version 0.2.2
  */
 public class TournamentRepository implements ITournamentRepository {
     
@@ -31,9 +31,9 @@ public class TournamentRepository implements ITournamentRepository {
     }
     
     @Override
-    public boolean add(Tournament tournament) {
+    public TournamentId add(Tournament tournament) {
 	try {
-	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Tournaments(name, startingDate, endingDate, adminId, modeId, discId, teamSize, finished) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Tournaments(name, startingDate, endingDate, adminId, modeId, discId, teamSize, finished) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	    statement.setString(1, tournament.getName());
 	    statement.setDate(2, (java.sql.Date)tournament.getStartingDate());
 	    statement.setDate(3, (java.sql.Date)tournament.getEndingDate());
@@ -43,11 +43,15 @@ public class TournamentRepository implements ITournamentRepository {
 	    statement.setInt(7, tournament.getTeamSize());
 	    statement.setBoolean(8, tournament.getFinished());
 	    statement.execute();
-	    return true;
+	    ResultSet rs = statement.getGeneratedKeys();
+	    if (rs.next()) {
+	       return new TournamentId(rs.getInt(1));
+	    }
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);
 	}
+	return null;
     }
     @Override
     public boolean delete(Tournament tournament) {
