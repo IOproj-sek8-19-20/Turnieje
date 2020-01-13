@@ -20,9 +20,9 @@ import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
  *
- * @author mariu
+ * @author Daniel Tarnecki
  */
-@WebServlet(name = "AccountDelete", urlPatterns = {"/Login"})
+@WebServlet(name = "AccountDelete", urlPatterns = {"/1"})
 public class AccountDelete extends HttpServlet {
 ITeamRepository teamRepository;
 

@@ -20,9 +20,9 @@ import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
  *
- * @author mariu
+ * @author Daniel Tarnecki
  */
-@WebServlet(name = "PasswordChanged", urlPatterns = {"/Login"})
+@WebServlet(name = "PasswordChanged", urlPatterns = {"/6"})
 public class PasswordChanged extends HttpServlet {
 ITeamRepository teamRepository;
 
