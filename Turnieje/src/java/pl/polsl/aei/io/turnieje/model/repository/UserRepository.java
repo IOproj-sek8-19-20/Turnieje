@@ -111,7 +111,7 @@ public class UserRepository implements IUserRepository {
     public User getById(UserId id) {
 	try {
 	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Users WHERE userId=%d", id));
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Users WHERE userId=%d", id.id));
 	    if (rs.next()) {
 		User user = new User(rs.getInt("userId"));
 		user.setEmail(rs.getString("email"));

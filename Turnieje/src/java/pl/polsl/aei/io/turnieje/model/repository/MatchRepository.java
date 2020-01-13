@@ -95,7 +95,7 @@ public class MatchRepository implements IMatchRepository {
     public Match getById(MatchId id) {
 	try {
 	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Matches WHERE matchId=%d", id));
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Matches WHERE matchId=%d", id.id));
 	    if (rs.next()) {
 		Match match = new Match(rs.getInt("matchId"));
 		match.setTourId(new TournamentId(rs.getInt("tourId")));
