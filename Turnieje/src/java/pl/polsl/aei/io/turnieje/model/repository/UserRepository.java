@@ -18,7 +18,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for users.
  * 
  * @author Piotr Uhl
- * @version 0.2.2
+ * @version 0.2.3
  */
 public class UserRepository implements IUserRepository {
     
@@ -76,6 +76,7 @@ public class UserRepository implements IUserRepository {
 		user.setFirstName(rs.getString("firstName"));
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
+		set.add(user);
 	    }
 	    return set;
 	}

@@ -19,7 +19,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for teams.
  * 
  * @author Piotr Uhl
- * @version 0.2.3
+ * @version 0.2.4
  */
 public class TeamRepository implements ITeamRepository {
     
@@ -71,6 +71,7 @@ public class TeamRepository implements ITeamRepository {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));
 		team.setCapitan(new UserId(rs.getInt("capId")));
+		set.add(team);
 	    }
 	    return set;
 	}

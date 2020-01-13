@@ -20,7 +20,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
  * Realization of repository interface for matches.
  * 
  * @author Piotr Uhl
- * @version 0.2.2
+ * @version 0.2.3
  */
 public class MatchRepository implements IMatchRepository {
     
@@ -83,6 +83,7 @@ public class MatchRepository implements IMatchRepository {
 		match.setWinner(new TeamId(rs.getInt("winner")));
 		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
 		match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
+		set.add(match);
 	    }
 	    return set;
 	}

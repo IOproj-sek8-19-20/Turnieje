@@ -20,7 +20,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for tournaments.
  * 
  * @author Piotr Uhl
- * @version 0.2.2
+ * @version 0.2.3
  */
 public class TournamentRepository implements ITournamentRepository {
     
@@ -86,6 +86,7 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setDiscipline(Discipline.NONE); //temp, todo
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
+		set.add(tournament);
 	    }
 	    return set;
 	}
