@@ -16,4 +16,7 @@ public abstract class Id {
     public Id(int id) {
 	this.id = id;
     }
+    public Id(String id) throws NumberFormatException {
+	this(Integer.parseInt(id));
+    }
 }
