@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets;
+package Turnieje.Servlets.DanielKaleta;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -16,10 +16,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.PlayerInTeam;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
+import pl.polsl.aei.io.turnieje.model.datamodel.TeamId;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -39,7 +41,6 @@ public class CreateTeamServlet extends HttpServlet {
     IUserRepository userRepository;
     ITeamRepository teamRepository;
 
-    //<editor-fold defaultstate="expanded" desc="init()">
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
@@ -52,7 +53,6 @@ public class CreateTeamServlet extends HttpServlet {
         }
         userRepository = repositoryProvider.getUserRepository();
     }
-    //</editor-fold>
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -99,9 +99,6 @@ public class CreateTeamServlet extends HttpServlet {
                 System.out.println(ex.getMessage());
             }
         }
-               
-        
-        
         
         JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
         //wypisanie dodanych dyscyplin w ramach testu czy dziala
@@ -120,10 +117,10 @@ public class CreateTeamServlet extends HttpServlet {
             System.out.println(ex.getMessage());
         }
         
-        Cookie cookie = new Cookie("aboutTeam", JSONString);
-        response.addCookie(cookie);
+        HttpSession session = request.getSession(true);
+        session.setAttribute("actualTeam", toAdd);
         
-        response.sendRedirect("/Turnieje/TeamCreateManage/TeamCreated.jsp?teamName=" + teamName);
+        response.sendRedirect("/Turnieje/TeamCreateManage/TeamCreated.jsp?teamId=" + "1");
 
     }
 

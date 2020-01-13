@@ -13,6 +13,7 @@
     <script>var toInit = "Users", toInit2 = "Disciplines";</script>
     <body onload="init(toInit);init(toInit2);">
     <%
+        //Sprawdzanie zalogowania
         String user = null;
         if(session.getAttribute("loginUser") == null)
         {

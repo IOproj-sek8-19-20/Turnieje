@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets;
+package Turnieje.Servlets.DanielKaleta;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

@@ -2,6 +2,10 @@
     Document   : ManageTeam
     Author     : Daniel Kaleta
 --%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Team"%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.TeamId"%>
+<%@page import="pl.polsl.aei.io.turnieje.model.repository.ITeamRepository"%>
+<%@page import="pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="org.json.JSONArray"%>
 <%@ page import="java.sql.*" %>
@@ -28,8 +32,23 @@
         {
             user = (String) session.getAttribute("loginUser");
         } 
+        
+        Team acutalTeam = (Team) session.getAttribute("actualTeam");
+        
+        String TeamCreatedIdString = request.getParameter("teamId");
+        RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
+        ITeamRepository teamRepository = repositoryProvider.getTeamRepository();
+        TeamId TeamCreatedId = new TeamId(Integer.parseInt(TeamCreatedIdString));
+        try
+        {
+            Team TeamCreated = teamRepository.getById(TeamCreatedId);
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex.getMessage());
+        }
 
-        //Pobieram z ciasteczka JSONa w którym mam wszelkie informacje na temat turnieju
+        //Pobieram z ciasteczka JSONa w którym mam wszelkie informacje na temat druzyny
         //Uzyje go do wyswietlania poprawnych informacji na stronie edycji
         String JSONString=null;
         JSONObject JSON=null;
@@ -52,13 +71,13 @@
 
     <center>
         
-    <h1>Edytujesz druzyne: <%= request.getParameter("teamName") %> </h1>
+    <h1>Edytujesz druzyne: <%= acutalTeam.getName() %> </h1>
     
     
     <!--<form action = "ManageTeam" method="get">-->
         
         <!-- Nazwa druzyny -->
-        Nazwa druzyny : <input type = "text" name = "teamName" id="teamName" value="<%= request.getParameter("teamName") %>">
+        Nazwa druzyny : <input type = "text" name = "teamName" id="teamName" value="<%= acutalTeam.getName() %>">
         
         <br/><br/>
         

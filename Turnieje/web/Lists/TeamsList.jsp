@@ -3,6 +3,9 @@
     Created on : 2020-01-09, 18:28:06
     Author     : Daniel Kaleta
 --%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Team"%>
+<%@page import="pl.polsl.aei.io.turnieje.model.repository.ITeamRepository"%>
+<%@page import="pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider"%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,11 +18,10 @@
     <body>
 
         <%
-            Set<String> teams = new TreeSet<String>();
-            for(int i =0; i<1000;i++)
-            {
-            teams.add("Team "+i);
-            }
+            RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
+            ITeamRepository teamRepository = repositoryProvider.getTeamRepository();
+            Set<Team> teams = teamRepository.getAll();
+
             boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
         
@@ -35,8 +37,8 @@
                 
         <select name="choosedTeams" size="7" style="width:100%;" id="choosedTeams">
             <% if(emptyList!=true){
-                for(String team: teams) {%>
-                <option><%= team%></option>
+                for(Team team: teams) {%>
+                <option><%= team.getName()%></option>
             <%}}%>
         </select>
 

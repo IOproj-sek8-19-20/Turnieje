@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets;
+package Turnieje.Servlets.DanielKaleta;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
@@ -27,14 +29,22 @@ import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 @WebServlet(name = "ManageTeamServlet", urlPatterns = {"/ManageTeam"})
 public class ManageTeamServlet extends HttpServlet {
 
+    RepositoryProvider repositoryProvider;
+    IUserRepository userRepository;
     ITeamRepository teamRepository;
 
-    //<editor-fold defaultstate="expanded" desc="init()">
     @Override
     public void init() {
-        //teamRepository = new TeamRepository();
+        repositoryProvider = RepositoryProvider.getInstance();
+        try{
+        teamRepository = repositoryProvider.getTeamRepository();
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex.getMessage());
+        }
+        userRepository = repositoryProvider.getUserRepository();
     }
-    //</editor-fold>
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
