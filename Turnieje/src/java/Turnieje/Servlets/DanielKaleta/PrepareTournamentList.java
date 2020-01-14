@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
+import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
@@ -26,12 +28,12 @@ import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 public class PrepareTournamentList extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
-    ITeamRepository teamRepository;
+    ITournamentRepository tournamentRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
-        teamRepository = repositoryProvider.getTeamRepository();
+        tournamentRepository = repositoryProvider.getTournamentRepository();
     }
 
     /**
@@ -47,10 +49,10 @@ public class PrepareTournamentList extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        Set<Team> allTeams = teamRepository.getAll();
+        Set<Tournament> allTournaments = tournamentRepository.getAll();
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("teamsToShow", allTeams);
+        session.setAttribute("tournamentsToShow", allTournaments);
         
         response.sendRedirect("/Turnieje/ShowTournaments.jsp");
     }

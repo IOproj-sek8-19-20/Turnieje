@@ -92,8 +92,8 @@ public class CreateTournamentServlet extends HttpServlet {
         Date startDate=null;
         Date endDate=null;
         try {
-            startDate = new SimpleDateFormat("dd-MM-yyyy").parse(startDateString);
-            endDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDateString);
+            startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateString);
+            endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateString);
         } catch (ParseException ex) {
             Logger.getLogger(CreateTournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

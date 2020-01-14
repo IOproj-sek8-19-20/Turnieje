@@ -3,6 +3,7 @@
     Created on : 2020-01-12, 13:39:42
     Author     : Daniel Kaleta
 --%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Tournament"%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,11 +16,7 @@
     <body>
 
         <%
-            Set<String> tournaments = new TreeSet<String>();
-            tournaments.add("Turniej 1");
-            tournaments.add("Turniej 2");
-            tournaments.add("Turniej 3");
-            tournaments.add("Turniej 4");
+            Set<Tournament> tournaments = (Set<Tournament>) session.getAttribute("tournamentsToShow");
         %>
         
         <script>var toFilter="Tournaments"</script>
@@ -33,8 +30,8 @@
         </center>
                 
         <select name="choosedTournaments" size="7" style="width:100%;" id="choosedTournaments">
-            <%for(String tournament: tournaments) {%>
-                <option><%= tournament%></option>
+            <%for(Tournament tournament: tournaments) {%>
+                <option><%= tournament.getName()%></option>
             <%}%>
         </select>
 
