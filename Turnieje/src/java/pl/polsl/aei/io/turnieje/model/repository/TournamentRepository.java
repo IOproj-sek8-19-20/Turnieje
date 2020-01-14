@@ -94,6 +94,59 @@ public class TournamentRepository implements ITournamentRepository {
 	    throw new RuntimeException(exc);
 	}
     }
+    
+    @Override
+    public Tournament getById(TournamentId id) {
+	try {
+	    Statement statement = dbInterface.createStatement();
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Tournaments WHERE tourId=%d", id.id));
+	    if (rs.next()) {
+		Tournament tournament = new Tournament(rs.getInt("tourId"));
+		tournament.setName(rs.getString("name"));
+		tournament.setStartingDate(rs.getDate("startingDate"));
+		tournament.setEndingDate(rs.getDate("endingDate"));
+		tournament.setAdmin(new UserId(rs.getInt("adminId")));
+		tournament.setMode(TournamentMode.NONE); //temp, todo
+		tournament.setDiscipline(Discipline.NONE); //temp, todo
+		tournament.setTeamSize(rs.getInt("teamSize"));
+		tournament.setFinished(rs.getBoolean("finished"));
+		return tournament;
+	    }
+	    else {
+		return null;
+	    }
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
+    }
+    
+    @Override
+    public Tournament getByName(String name) {
+	try {
+	    Statement statement = dbInterface.createStatement();
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Tournaments WHERE name='%s'", name));
+	    if (rs.next()) {
+		Tournament tournament = new Tournament(rs.getInt("tourId"));
+		tournament.setName(rs.getString("name"));
+		tournament.setStartingDate(rs.getDate("startingDate"));
+		tournament.setEndingDate(rs.getDate("endingDate"));
+		tournament.setAdmin(new UserId(rs.getInt("adminId")));
+		tournament.setMode(TournamentMode.NONE); //temp, todo
+		tournament.setDiscipline(Discipline.NONE); //temp, todo
+		tournament.setTeamSize(rs.getInt("teamSize"));
+		tournament.setFinished(rs.getBoolean("finished"));
+		return tournament;
+	    }
+	    else {
+		return null;
+	    }
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
+    }
+    
     @Override
     public boolean update(Tournament tournament) {
 	try {

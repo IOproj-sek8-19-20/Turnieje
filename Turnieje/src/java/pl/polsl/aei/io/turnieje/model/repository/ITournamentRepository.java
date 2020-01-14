@@ -20,5 +20,7 @@ public interface ITournamentRepository {
     public boolean delete(Tournament tournament);
     public boolean delete(TournamentId tournament);
     public Set<Tournament> getAll();
+    public Tournament getById(TournamentId id);
+    public Tournament getByName(String name);
     public boolean update(Tournament tournament);
 }
