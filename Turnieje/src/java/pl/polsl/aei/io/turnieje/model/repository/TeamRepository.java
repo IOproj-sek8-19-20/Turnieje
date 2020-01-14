@@ -84,7 +84,25 @@ public class TeamRepository implements ITeamRepository {
 	try {
 	    Statement statement = dbInterface.createStatement();
 	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Teams WHERE teamId=%d", id.id));
-	    Set<Team> set = new HashSet<>();
+	    if (rs.next()) {
+		Team team = new Team(rs.getInt("teamId"));
+		team.setName(rs.getString("name"));
+		team.setCapitan(new UserId(rs.getInt("capId")));
+		return team;
+	    }
+	    else {
+		return null;
+	    }
+	}
+	catch (Exception exc) {
+	    throw new RuntimeException(exc);
+	}
+    }
+    @Override
+    public Team getByName(String name) {
+	try {
+	    Statement statement = dbInterface.createStatement();
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Teams WHERE name='%s'", name));
 	    if (rs.next()) {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));

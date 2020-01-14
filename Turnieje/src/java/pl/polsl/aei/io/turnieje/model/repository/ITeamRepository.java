@@ -23,6 +23,7 @@ public interface ITeamRepository {
     public boolean delete(TeamId team);
     public Set<Team> getAll();
     public Team getById(TeamId id);
+    public Team getByName(String name);
     public Set<Team> getByTournament(Tournament tournament);
     public Set<Team> getByTournament(TournamentId tournament);
     public boolean update(Team team);
