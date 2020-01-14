@@ -35,7 +35,7 @@ public class MatchRepository implements IMatchRepository {
 	try {
 	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Matches(tourId, date, finished, winner, team1Id, team2Id) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	    statement.setInt(1, match.getTourId().id);
-	    statement.setDate(2, (java.sql.Date)match.getDate());
+	    statement.setDate(2, new java.sql.Date(match.getDate().getTime()));
     	    statement.setBoolean(3, match.getFinished());
 	    statement.setInt(4, match.getWinner().id);
 	    statement.setInt(5, match.getTeamId(1).id);
@@ -151,7 +151,7 @@ public class MatchRepository implements IMatchRepository {
 		    ret = true;
 		}
 		if (!match.getDate().equals(rs.getDate("date"))) {
-		    rs.updateDate("date", (java.sql.Date)match.getDate());
+		    rs.updateDate("date", new java.sql.Date(match.getDate().getTime()));
 		    ret = true;
 		}
 		if (match.getFinished() != rs.getBoolean("finished")) {

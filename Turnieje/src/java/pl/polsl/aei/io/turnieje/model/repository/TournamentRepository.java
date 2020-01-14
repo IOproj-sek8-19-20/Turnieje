@@ -35,8 +35,8 @@ public class TournamentRepository implements ITournamentRepository {
 	try {
 	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Tournaments(name, startingDate, endingDate, adminId, modeId, discId, teamSize, finished) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	    statement.setString(1, tournament.getName());
-	    statement.setDate(2, (java.sql.Date)tournament.getStartingDate());
-	    statement.setDate(3, (java.sql.Date)tournament.getEndingDate());
+	    statement.setDate(2, new java.sql.Date(tournament.getStartingDate().getTime()));
+	    statement.setDate(2, new java.sql.Date(tournament.getEndingDate().getTime()));
 	    statement.setInt(4, tournament.getAdmin().id);
 	    statement.setInt(5, 1); //todo
 	    statement.setInt(6, 1); //todo
@@ -106,11 +106,11 @@ public class TournamentRepository implements ITournamentRepository {
 		    ret = true;
 		}
 		if (!tournament.getStartingDate().equals(rs.getDate("startingDate"))) {
-		    rs.updateDate("startingDate", (java.sql.Date)tournament.getStartingDate());
+		    rs.updateDate("startingDate", new java.sql.Date(tournament.getStartingDate().getTime()));
 		    ret = true;
 		}
 		if (!tournament.getEndingDate().equals(rs.getDate("endingDate"))) {
-		    rs.updateDate("endingDate", (java.sql.Date)tournament.getEndingDate());
+		    rs.updateDate("endingDate", new java.sql.Date(tournament.getEndingDate().getTime()));
 		    ret = true;
 		}
 		if (tournament.getAdmin().id != rs.getInt("adminId")) {
