@@ -12,8 +12,15 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  * Servlet responsible for creating the tournament.
@@ -23,6 +30,17 @@ import org.json.JSONObject;
  */
 @WebServlet(name = "CreateTournamentServlet", urlPatterns = {"/CreateTournament"})
 public class CreateTournamentServlet extends HttpServlet {
+    
+    RepositoryProvider repositoryProvider;
+    ITournamentRepository tournamentRepository;
+    ITeamRepository teamRepository;
+
+    @Override
+    public void init() {
+        repositoryProvider = RepositoryProvider.getInstance();
+        teamRepository = repositoryProvider.getTeamRepository();
+        tournamentRepository = repositoryProvider.getTournamentRepository();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,6 +54,8 @@ public class CreateTournamentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession(true);
 
         String JSONString = request.getParameter("JSONFromCreateTournament");
         JSONObject JSON = new JSONObject(JSONString);
@@ -54,6 +74,22 @@ public class CreateTournamentServlet extends HttpServlet {
         System.out.print(endDate);
         System.out.print(discipline);
         System.out.print(teamSize);
+        
+        User admin = (User) session.getAttribute("loggedUser");
+        
+        Tournament newTournament = new Tournament();
+        newTournament.setName(tournamentName);
+        newTournament.setTeamSize(Integer.parseInt(teamSize));
+        newTournament.setAdmin(admin);
+        
+        try
+        {
+            tournamentRepository.add(newTournament);
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex.getMessage());
+        }
         
 
         JSONArray teams = JSON.getJSONArray("teamsToAdd");

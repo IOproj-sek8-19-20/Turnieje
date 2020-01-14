@@ -15,7 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 
 /**
@@ -24,14 +27,16 @@ import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/Login"})
 public class LoginServlet extends HttpServlet {
-ITeamRepository teamRepository;
+    
+    RepositoryProvider repositoryProvider;
+    IUserRepository userRepository;
 
-    //<editor-fold defaultstate="expanded" desc="init()">
     @Override
     public void init() {
-        //teamRepository = new TeamRepository();
+        repositoryProvider = RepositoryProvider.getInstance();
+        userRepository = repositoryProvider.getUserRepository();
     }
-    //</editor-fold>
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -50,7 +55,7 @@ ITeamRepository teamRepository;
         String login = JSON.getString("login");
         String password = JSON.getString("password");
         //pomysł :
-        //User user = new User(getByEmail(document.getElementById("login").value;))
+        User user = userRepository.getByEmail(login);
         // if (user != null)
            //    {
              ///      if (user.checkpassword(document.getElementById("password").value;))
@@ -66,18 +71,24 @@ ITeamRepository teamRepository;
         //   System.out.print(login);
          //   System.out.print(password);
          
-          if ((login.equals("123")) && (password.equals("123"))) //test
-          { HttpSession session = request.getSession(true);
+        if ((login.equals("123")) && (password.equals("123"))) //test
+        { 
+            HttpSession session = request.getSession(true);
             Object obj = session.getAttribute("ListOperation");
             session.setAttribute("loginUser", login);
-             session.setAttribute("passwordUser", password);
-             session.setAttribute("acive","YES"); // sprawdzanie na każdej stornie 
-             //zabrania wpsiania od razu adresu akcji wymagającej logowania
-              response.sendRedirect("MainMenu.jsp");
-          }
-          else
-          {
-             response.sendRedirect("BadLogin.jsp");
+            session.setAttribute("passwordUser", password);
+            
+            session.setAttribute("loggedUser", user);
+            //Jezeli ta postac przejdzie to pakowanie do sesji loginu, hasla, a chyba
+            //nawet active jest zbedne, bo mozna wyciagnac wszystko z obiektu user
+            //oraz sprawdzac czy jest nullem
+            session.setAttribute("acive","YES"); // sprawdzanie na każdej stornie 
+            //zabrania wpsiania od razu adresu akcji wymagającej logowania
+            response.sendRedirect("MainMenu.jsp");
+        }
+        else
+        {
+            response.sendRedirect("BadLogin.jsp");
         }
 }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

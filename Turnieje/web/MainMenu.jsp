@@ -31,40 +31,29 @@
         
         <br/><br/>
         
-        <input type = "submit" value = "Stworz druzyne" onclick="submitTeam()">
+        <input type = "submit" value = "Stworz druzyne" onclick="submitCreateTeam()">
         
         <br/><br/>
         
-        <input type = "submit" value = "Stworz turniej" onclick="submitTour()">
+        <input type = "submit" value = "Stworz turniej" onclick="submitCreateTournament()">
         
         <br/><br/><br/><br/>
         
-        Turnieje (testowo):
-        
-        <br/><br/>
-        
-        <iframe id="Tournaments" src="/Turnieje/Lists/TournamentsList.jsp"></iframe>
-        
-        <br/><br/>
-        
-        <input type = "submit" value = "Pokaz turniej" onclick="submitShowTour()">
+        <input type = "submit" value = "Pokaz turnieje" onclick="submitShowTournaments()">
         
     </center>
         <script>
-            function submitTeam()
+            function submitCreateTeam()
             {
                 location.replace("/Turnieje/PrepareCreateTeamServlet");
             }
-            function submitTour()
+            function submitCreateTournament()
             {
                 location.replace("/Turnieje/PrepareCreateTournamentServlet");
             }
-            function submitShowTour()
+            function submitShowTournaments()
             {
-                var iframe = document.getElementById("Tournaments");   //dobieram sie do iframe
-                var select = iframe.contentWindow.document.getElementById("choosedTournaments");   //dobieram sie do listy turnieji
-                var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-                location.replace("/Turnieje/TournamentView.jsp?tournamentName="+options[select.selectedIndex].text);
+                location.replace("/Turnieje/PrepareTournamentList");
             }
     </script>
     </body>
