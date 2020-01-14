@@ -126,9 +126,6 @@ public class CreateTournamentServlet extends HttpServlet {
             System.out.print(teams.getString(i));
         }
 
-        Cookie cookie = new Cookie("aboutTournament", JSONString);
-        response.addCookie(cookie);
-        
         response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentCreated.jsp?tournamentName=" + tournamentName);
 
     }

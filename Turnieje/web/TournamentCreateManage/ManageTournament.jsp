@@ -2,6 +2,7 @@
     Document   : ManageTournament
     Author     : Daniel Kaleta
 --%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Tournament"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
 <%@ page import="java.sql.*" %>
@@ -31,25 +32,14 @@
         
         //Pobieram z ciasteczka JSONa w którym mam wszelkie informacje na temat turnieju
         //Uzyje go do wyswietlania poprawnych informacji na stronie edycji
-        String JSONString=null;
-        JSONObject JSON=null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("aboutTournament")) {
-                    JSONString = cookie.getValue();
-                    JSON = new JSONObject(JSONString);
-                    break;
-                }
-            }
-        }
+        Tournament toEdit = (Tournament) session.getAttribute("tournamentToEdit");
     %>
 
     <center>
         
-    <h1>Edytujesz turniej: <%= request.getParameter("tournamentName") %> </h1>
+    <h1>Edytujesz turniej: <%= toEdit.getName() %> </h1>
     
-        Nazwa turnieju : <input type = "text" name = "tournamentName" id="tournamentName" value="<%= request.getParameter("tournamentName") %>">
+        Nazwa turnieju : <input type = "text" name = "tournamentName" id="tournamentName" value="<%= toEdit.getName() %>">
         
         <br/><br/>
         
@@ -70,7 +60,7 @@
             
             <br/><br/>
             
-            Rozmiar druzyn: <input type="number" id="teamSize" name="teamSize" value="<%= JSON.getString("teamSize") %>" min="1">
+            Rozmiar druzyn: <input type="number" id="teamSize" name="teamSize" value="<%= toEdit.getTeamSize() %>" min="1">
             
             <br/><br/>
             
@@ -115,7 +105,7 @@
                 var select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
                 var options = select.getElementsByTagName('option');
                 
-                var actualDiscipline = "<%= JSON.getString("discipline") %>";
+                var actualDiscipline = "<%= toEdit.getDiscipline().name() %>";
                 
                 for ( var i = 0; i < select.length; i++ ) 
                 {
@@ -129,47 +119,11 @@
                 options = tournamentMode.getElementsByTagName('option');
                 for (var i = 0; i < tournamentMode.length; i++) 
                 {
-                    if(options[i].value == "<%= JSON.getString("type") %>")
+                    if(options[i].value == "<%= toEdit.getMode().name() %>")
                     {
                         tournamentMode.selectedIndex = i;
                     }
                 }
-                
-                //Ustawianie druzyn, ktore sa juz dodane
-                iframe = document.getElementById("ChoosedTeams");   //dobieram sie do iframe
-                select = iframe.contentWindow.document.getElementById("choosedTeams");   //dobieram sie do listy druzyn
-                
-                <% 
-                    JSONArray teams = JSON.getJSONArray("teamsToAdd");
-                    for (int i = 0; i < teams.length(); i++) 
-                    {
-                        %>
-                            var option = document.createElement("option");
-                            option.text = "<%= teams.getString(i)%>";
-                            select.add(option);
-                        <%
-                    }
-                %>
-                 
-                //Usuniecie dodanych druzyn z listy dostepnych
-                iframe = document.getElementById("AvaibleTeams");   //dobieram sie do iframe
-                select = iframe.contentWindow.document.getElementById("choosedTeams");   //dobieram sie do listy druzyn
-                options = select.getElementsByTagName('option');
-                
-                <% 
-                    for (int i = 0; i < teams.length(); i++) 
-                    {
-                        %>
-                            for (var i = 0; i < select.length; i++) 
-                            {
-                                if(options[i].value == "<%= teams.getString(i)%>")
-                                {
-                                    select.remove(i);
-                                }
-                            }
-                        <%
-                    }
-                %>
             }
         </script>
     <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>
