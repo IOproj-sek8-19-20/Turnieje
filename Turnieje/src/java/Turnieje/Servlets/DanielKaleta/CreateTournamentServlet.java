@@ -6,6 +6,12 @@
 package Turnieje.Servlets.DanielKaleta;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -15,7 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
+import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
@@ -62,25 +70,44 @@ public class CreateTournamentServlet extends HttpServlet {
 
         String tournamentName = JSON.getString("name");
         String type = JSON.getString("type");
-        String startDate = JSON.getString("startDate");
-        String endDate = JSON.getString("endDate");
+        String startDateString = JSON.getString("startDate");
+        String endDateString = JSON.getString("endDate");
         String discipline = JSON.getString("discipline");
         String teamSize = JSON.getString("teamSize");
         
         //sprawdzenie czy bangla
         System.out.print(tournamentName);
         System.out.print(type);
-        System.out.print(startDate);
-        System.out.print(endDate);
+        System.out.print(startDateString);
+        System.out.print(endDateString);
         System.out.print(discipline);
         System.out.print(teamSize);
         
         User admin = (User) session.getAttribute("loggedUser");
+        //rozwiazanie tymczasowe
+        /*LocalDate localDate = LocalDate.now();
+        Date startDate= java.sql.Date.valueOf( localDate );
+        Date endDate=java.sql.Date.valueOf( localDate );*/
+        
+        Date startDate=null;
+        Date endDate=null;
+        try {
+            startDate = new SimpleDateFormat("dd-MM-yyyy").parse(startDateString);
+            endDate = new SimpleDateFormat("dd-MM-yyyy").parse(endDateString);
+        } catch (ParseException ex) {
+            Logger.getLogger(CreateTournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
         Tournament newTournament = new Tournament();
         newTournament.setName(tournamentName);
         newTournament.setTeamSize(Integer.parseInt(teamSize));
         newTournament.setAdmin(admin);
+        newTournament.setDiscipline(Discipline.NONE);
+        newTournament.setMode(TournamentMode.NONE);
+        newTournament.setFinished(false);
+        newTournament.setStartingDate(startDate);
+        newTournament.setEndingDate(endDate);
         
         try
         {
