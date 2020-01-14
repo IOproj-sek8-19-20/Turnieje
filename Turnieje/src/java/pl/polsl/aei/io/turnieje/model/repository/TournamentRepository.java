@@ -38,8 +38,8 @@ public class TournamentRepository implements ITournamentRepository {
 	    statement.setDate(2, (java.sql.Date)tournament.getStartingDate());
 	    statement.setDate(3, (java.sql.Date)tournament.getEndingDate());
 	    statement.setInt(4, tournament.getAdmin().id);
-	    statement.setInt(5, 0); //todo
-	    statement.setInt(6, 0); //todo
+	    statement.setInt(5, 1); //todo
+	    statement.setInt(6, 1); //todo
 	    statement.setInt(7, tournament.getTeamSize());
 	    statement.setBoolean(8, tournament.getFinished());
 	    statement.execute();
