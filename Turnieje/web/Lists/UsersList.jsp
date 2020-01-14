@@ -3,26 +3,21 @@
     Created on : 2020-01-08, 13:20:06
     Author     : Daniel Kaleta
 --%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
-<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Users list</title>
     </head>
     <body>
 
         <%
-            Set<String> users = new TreeSet<String>();
-            users.add("Daniel Kaleta");
-            users.add("Daniel Tarnecki");
-            users.add("Piotr Uhl");
-            users.add("Wojtek Wos");
-            users.add("Adam Adamski");
-            users.add("Mariusz Drynda");
+            Set<User> usersToShow = (Set<User>) session.getAttribute("usersToShow");
+
             boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
         
@@ -38,8 +33,8 @@
                 
         <select name="choosedUsers" size="7" style="width:100%;" id="choosedUsers">
             <% if(emptyList!=true){
-                for(String user: users) {%>
-                <option><%= user%></option>
+                for(User user: usersToShow) {%>
+                <option><%= user.getEmail()%></option>
             <%}}%>
         </select>
 

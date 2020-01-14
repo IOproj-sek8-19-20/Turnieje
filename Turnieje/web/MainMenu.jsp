@@ -53,11 +53,11 @@
         <script>
             function submitTeam()
             {
-                location.replace("/Turnieje/TeamCreateManage/CreateTeam.jsp");
+                location.replace("/Turnieje/PrepareCreateTeamServlet");
             }
             function submitTour()
             {
-                location.replace("/Turnieje/TournamentCreateManage/CreateTournament.jsp");
+                location.replace("/Turnieje/PrepareCreateTournamentServlet");
             }
             function submitShowTour()
             {

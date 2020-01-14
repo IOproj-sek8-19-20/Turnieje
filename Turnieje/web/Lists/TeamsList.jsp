@@ -4,8 +4,6 @@
     Author     : Daniel Kaleta
 --%>
 <%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Team"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.repository.ITeamRepository"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider"%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,9 +16,7 @@
     <body>
 
         <%
-            RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
-            ITeamRepository teamRepository = repositoryProvider.getTeamRepository();
-            Set<Team> teams = teamRepository.getAll();
+            Set<Team> teamsToShow = (Set<Team>) session.getAttribute("teamsToShow");
 
             boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
@@ -37,7 +33,7 @@
                 
         <select name="choosedTeams" size="7" style="width:100%;" id="choosedTeams">
             <% if(emptyList!=true){
-                for(Team team: teams) {%>
+                for(Team team: teamsToShow) {%>
                 <option><%= team.getName()%></option>
             <%}}%>
         </select>
