@@ -8,13 +8,13 @@ package Turnieje.Servlets.DanielKaleta;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
@@ -66,13 +66,11 @@ public class ManageTournamentServlet extends HttpServlet {
         Tournament toEdit = (Tournament) session.getAttribute("tournamentToEdit");
         
         toEdit.setName(tournamentName);
-        toEdit.setMode(TournamentMode.NONE);
-        
+        toEdit.setMode(TournamentMode.valueOf(type));
+        toEdit.setDiscipline(Discipline.valueOf(discipline));
+        toEdit.setTeamSize(Integer.parseInt(teamSize));
         
         tournamentRepository.update(toEdit);
-        
-        
-        
 
         JSONArray teams = JSON.getJSONArray("teamsToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala

@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
+import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
@@ -27,11 +29,13 @@ public class PrepareManageTournament extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
     ITournamentRepository tournamentRepository;
+    ITeamRepository teamRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         tournamentRepository = repositoryProvider.getTournamentRepository();
+        teamRepository = repositoryProvider.getTeamRepository();
     }
 
 
@@ -49,8 +53,10 @@ public class PrepareManageTournament extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         Tournament toEdit = tournamentRepository.getByName(request.getParameter("tournamentName"));
+        Set<Team> allTeams = teamRepository.getAll();
         
         HttpSession session = request.getSession(true);
+        session.setAttribute("teamsToShow", allTeams);
         session.setAttribute("tournamentToEdit", toEdit);
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp");
