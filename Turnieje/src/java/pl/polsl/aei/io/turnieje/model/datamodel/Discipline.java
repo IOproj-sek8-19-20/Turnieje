@@ -12,5 +12,9 @@ package pl.polsl.aei.io.turnieje.model.datamodel;
  * @version 0.1.0
  */
 public enum Discipline {
-    NONE
+    NONE,
+    Bierki,
+    Pilka_nozna,
+    Koszykowka,
+    Szachy_podwodne
 }

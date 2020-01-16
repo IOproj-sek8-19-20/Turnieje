@@ -12,8 +12,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
+import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
+import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  * Servlet responsible for editing the tournament.
@@ -23,6 +29,17 @@ import org.json.JSONObject;
  */
 @WebServlet(name = "ManageTournamentServlet", urlPatterns = {"/ManageTournament"})
 public class ManageTournamentServlet extends HttpServlet {
+    
+    RepositoryProvider repositoryProvider;
+    ITournamentRepository tournamentRepository;
+    ITeamRepository teamRepository;
+
+    @Override
+    public void init() {
+        repositoryProvider = RepositoryProvider.getInstance();
+        teamRepository = repositoryProvider.getTeamRepository();
+        tournamentRepository = repositoryProvider.getTournamentRepository();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,15 +58,20 @@ public class ManageTournamentServlet extends HttpServlet {
         JSONObject JSON = new JSONObject(JSONString);
 
         String tournamentName = JSON.getString("name");
-        String type = JSON.getString("type");
-        String discipline = JSON.getString("discipline");
+        String type = JSON.getString("type").replaceAll(" ", "_");
+        String discipline = JSON.getString("discipline").replaceAll(" ", "_");
         String teamSize = JSON.getString("teamSize");
         
-        //sprawdzenie czy bangla
-        System.out.print(tournamentName);
-        System.out.print(type);
-        System.out.print(discipline);
-        System.out.print(teamSize);
+        HttpSession session = request.getSession(true);
+        Tournament toEdit = (Tournament) session.getAttribute("tournamentToEdit");
+        
+        toEdit.setName(tournamentName);
+        toEdit.setMode(TournamentMode.NONE);
+        
+        
+        tournamentRepository.update(toEdit);
+        
+        
         
 
         JSONArray teams = JSON.getJSONArray("teamsToAdd");
@@ -62,9 +84,6 @@ public class ManageTournamentServlet extends HttpServlet {
         //Team toEdit = teamRepository.getById(managedTeamID);
         //toEdit.setName(teamName);
         //teamRepository.update(toEdit);
-        
-        Cookie cookie = new Cookie("aboutTournament", JSONString);
-        response.addCookie(cookie);
 
         response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentEdited.jsp?tournamentName="+tournamentName);
     }

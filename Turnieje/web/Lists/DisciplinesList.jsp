@@ -20,6 +20,7 @@
             disciplines.add("Koszykowka");
             disciplines.add("Szachy podwodne");
             disciplines.add("Bierki");
+            disciplines.add("NONE");
             boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
         

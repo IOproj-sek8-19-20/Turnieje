@@ -8,13 +8,11 @@ package Turnieje.Servlets.DanielKaleta;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +25,6 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
-import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
@@ -67,13 +64,27 @@ public class CreateTournamentServlet extends HttpServlet {
 
         String JSONString = request.getParameter("JSONFromCreateTournament");
         JSONObject JSON = new JSONObject(JSONString);
-
-        String tournamentName = JSON.getString("name");
-        String type = JSON.getString("type");
-        String startDateString = JSON.getString("startDate");
-        String endDateString = JSON.getString("endDate");
-        String discipline = JSON.getString("discipline");
-        String teamSize = JSON.getString("teamSize");
+        
+        String tournamentName = null;
+        String type = null;
+        String startDateString = null;
+        String endDateString = null;
+        String discipline = null;
+        String teamSize = null;
+        
+        try
+        {
+            tournamentName = JSON.getString("name");
+            type = JSON.getString("type").replaceAll(" ", "_");
+            startDateString = JSON.getString("startDate");
+            endDateString = JSON.getString("endDate");
+            discipline = JSON.getString("discipline").replaceAll(" ", "_");
+            teamSize = JSON.getString("teamSize");
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex.getMessage());
+        }
         
         //sprawdzenie czy bangla
         System.out.print(tournamentName);
@@ -103,8 +114,8 @@ public class CreateTournamentServlet extends HttpServlet {
         newTournament.setName(tournamentName);
         newTournament.setTeamSize(Integer.parseInt(teamSize));
         newTournament.setAdmin(admin);
-        newTournament.setDiscipline(Discipline.NONE);
-        newTournament.setMode(TournamentMode.NONE);
+        newTournament.setDiscipline(Discipline.valueOf(discipline));
+        newTournament.setMode(TournamentMode.valueOf(type));
         newTournament.setFinished(false);
         newTournament.setStartingDate(startDate);
         newTournament.setEndingDate(endDate);

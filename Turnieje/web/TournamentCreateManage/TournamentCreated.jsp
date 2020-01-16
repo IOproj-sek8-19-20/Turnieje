@@ -20,7 +20,7 @@
         <script>
             setTimeout(function () 
             {
-                    location.replace("/Turnieje/TournamentCreateManage/ManageTournament.jsp?tournamentName=" + "<%= request.getParameter("tournamentName")%>");
+                    location.replace("/Turnieje/PrepareManageTournament?tournamentName=" + "<%= request.getParameter("tournamentName")%>");
             }, 2000);
         </script>
     </body>

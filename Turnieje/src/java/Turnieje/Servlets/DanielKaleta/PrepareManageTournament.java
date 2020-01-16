@@ -48,7 +48,6 @@ public class PrepareManageTournament extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        Set<Tournament> allTournaments = tournamentRepository.getAll();
         Tournament toEdit = tournamentRepository.getByName(request.getParameter("tournamentName"));
         
         HttpSession session = request.getSession(true);
