@@ -43,7 +43,7 @@
 
     <center>
         
-    <h1>Edytujesz druzyne: <%= acutalTeam.getName() %> </h1>
+    <h1>Edytujesz druzyne: <%= acutalTeam.getName()%> o ID <%= acutalTeam.getId().id %>  </h1>
     
     
     <!--<form action = "ManageTeam" method="get">-->

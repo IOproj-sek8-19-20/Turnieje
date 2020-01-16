@@ -26,7 +26,7 @@
 
         <script>
         setTimeout(function() {
-            location.replace("/Turnieje/TeamCreateManage/ManageTeam.jsp?teamId="+"<%= request.getParameter("teamId") %>"+"");
+            location.replace("/Turnieje/TeamCreateManage/ManageTeam.jsp");
         }, 2000);
         </script>
     </body>

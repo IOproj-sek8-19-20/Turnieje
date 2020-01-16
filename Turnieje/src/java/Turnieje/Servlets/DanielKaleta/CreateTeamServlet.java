@@ -109,8 +109,10 @@ public class CreateTeamServlet extends HttpServlet {
             System.out.println(ex.getMessage());
         }
         
+        Team toAddWithCorrectID = teamRepository.getByName(toAdd.getName());
+        
         HttpSession session = request.getSession(true);
-        session.setAttribute("actualTeam", toAdd);
+        session.setAttribute("actualTeam", toAddWithCorrectID);
         
         response.sendRedirect("/Turnieje/TeamCreateManage/TeamCreated.jsp");
         }
