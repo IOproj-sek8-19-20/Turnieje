@@ -2,6 +2,9 @@
     Document   : ManageTeam
     Author     : Daniel Kaleta
 --%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Discipline"%>
+<%@page import="java.util.Set"%>
 <%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Team"%>
 <%@page import="pl.polsl.aei.io.turnieje.model.datamodel.TeamId"%>
 <%@page import="pl.polsl.aei.io.turnieje.model.repository.ITeamRepository"%>
@@ -33,40 +36,8 @@
             user = (String) session.getAttribute("loginUser");
         } 
         
-        Team acutalTeam = (Team) session.getAttribute("actualTeam");
-        
-        String TeamCreatedIdString = request.getParameter("teamId");
-        RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
-        ITeamRepository teamRepository = repositoryProvider.getTeamRepository();
-        TeamId TeamCreatedId = new TeamId(Integer.parseInt(TeamCreatedIdString));
-        try
-        {
-            Team TeamCreated = teamRepository.getById(TeamCreatedId);
-        }
-        catch(Exception ex)
-        {
-            System.out.print(ex.getMessage());
-        }
-
-        //Pobieram z ciasteczka JSONa w którym mam wszelkie informacje na temat druzyny
-        //Uzyje go do wyswietlania poprawnych informacji na stronie edycji
-        String JSONString=null;
-        JSONObject JSON=null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("aboutTeam")) {
-                    JSONString = cookie.getValue();
-                    JSON = new JSONObject(JSONString);
-                    break;
-                }
-            }
-        }
-        if(JSON==null)
-        {
-            out.println("<center>BRAK UPRAWNIEN</center>");
-            return;
-        }
+        Team acutalTeam = (Team) session.getAttribute("teamToEdit");
+        User captain = (User) session.getAttribute("loggedUser");
     %>
 
     <center>
@@ -82,7 +53,7 @@
         <br/><br/>
         
         <!-- Kapitan -->
-        Kapitan: <input type = "text" name = "captain" id="captain" value="<%= JSON.getString("captain") %>">
+        Kapitan: <input type = "text" name = "captain" id="captain" value="<%= captain.getEmail() %>">
         
         <br/><br/>
        
@@ -153,12 +124,12 @@
             select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
 
             <% 
-                JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
-                for (int i = 0; i < disciplines.length(); i++) 
+                Set<Discipline> teamDisciplines = acutalTeam.getDisciplines();
+                for (Discipline discipline: teamDisciplines)
                 {
                     %>
                         var option = document.createElement("option");
-                        option.text = "<%= disciplines.getString(i)%>";
+                        option.text = "<%= discipline.name() %>";
                         select.add(option);
                     <%
                 }
@@ -170,49 +141,12 @@
             options = select.getElementsByTagName('option');
 
             <% 
-                for (int i = 0; i < disciplines.length(); i++) 
+                for (Discipline discipline: teamDisciplines) 
                 {
                     %>
                         for (var i = 0; i < select.length; i++) 
                         {
-                            if(options[i].value == "<%= disciplines.getString(i)%>")
-                            {
-                                select.remove(i);
-                            }
-                        }
-                    <%
-                }
-            %>
-
-            //Ustawianie uzytkownikow, ktorzy sa juz dodani
-            iframe = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
-            select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
-            select.addEventListener("click", deleteFromNewCaptain);
-
-            <% 
-                JSONArray users = JSON.getJSONArray("usersToAdd");
-                for (int i = 0; i < users.length(); i++) 
-                {
-                    %>
-                        var option = document.createElement("option");
-                        option.text = "<%= users.getString(i)%>";
-                        select.add(option);
-                    <%
-                }
-            %>
-
-            //Usuniecie dodanych uzytkownikow z listy dostepnych
-            iframe = document.getElementById("AvaibleUsers");   //dobieram sie do iframe
-            select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
-            options = select.getElementsByTagName('option');
-
-            <% 
-                for (int i = 0; i < users.length(); i++) 
-                {
-                    %>
-                        for (var i = 0; i < select.length; i++) 
-                        {
-                            if(options[i].value == "<%= users.getString(i)%>")
+                            if(options[i].value == "<%= discipline.name() %>")
                             {
                                 select.remove(i);
                             }

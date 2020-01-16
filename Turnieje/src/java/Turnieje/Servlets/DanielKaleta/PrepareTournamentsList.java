@@ -25,7 +25,7 @@ import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
  * @author Daniel-Laptop
  */
 @WebServlet(name = "PrepareTournamentList", urlPatterns = {"/PrepareTournamentList"})
-public class PrepareTournamentList extends HttpServlet {
+public class PrepareTournamentsList extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
     ITournamentRepository tournamentRepository;

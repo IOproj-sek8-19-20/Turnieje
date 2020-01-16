@@ -41,6 +41,10 @@
         
         <input type = "submit" value = "Pokaz turnieje" onclick="submitShowTournaments()">
         
+        <br/><br/>
+        
+        <input type = "submit" value = "Pokaz druzyny" onclick="submitShowTeams()">
+        
     </center>
         <script>
             function submitCreateTeam()
@@ -54,6 +58,10 @@
             function submitShowTournaments()
             {
                 location.replace("/Turnieje/PrepareTournamentList");
+            }
+            function submitShowTeams()
+            {
+                location.replace("/Turnieje/PrepareTeamsList");
             }
     </script>
     </body>

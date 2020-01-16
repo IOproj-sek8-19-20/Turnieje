@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -36,13 +37,7 @@ public class ManageTeamServlet extends HttpServlet {
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
-        try{
         teamRepository = repositoryProvider.getTeamRepository();
-        }
-        catch(Exception ex)
-        {
-            System.out.print(ex.getMessage());
-        }
         userRepository = repositoryProvider.getUserRepository();
     }
 
@@ -64,7 +59,12 @@ public class ManageTeamServlet extends HttpServlet {
 
         String teamName = JSON.getString("name");
         String newCaptain = JSON.getString("captain");
-
+        
+        HttpSession session = request.getSession(true);
+        Team toEdit = (Team) session.getAttribute("teamToEdit");
+        
+        toEdit.setName(teamName);
+        teamRepository.update(toEdit);
         
         JSONArray users = JSON.getJSONArray("usersToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
@@ -80,13 +80,13 @@ public class ManageTeamServlet extends HttpServlet {
             System.out.print(disciplines.getString(i));
         }
         
-        HttpSession session = request.getSession(true);
         String oldCaptain = (String) session.getAttribute("loginUser");
         boolean newCaptainCorrect=false;
         
         if(oldCaptain.compareTo(newCaptain)==0)
         {
             //nic nie trzeba robic, kapitan bez zmian
+            response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp?teamName=" + teamName);
         }
         else
         {
@@ -126,13 +126,6 @@ public class ManageTeamServlet extends HttpServlet {
                 response.sendRedirect("/Turnieje/MainMenu.jsp"); 
             }
         }
-
-        //Team toEdit = teamRepository.getById(managedTeamID);
-        //toEdit.setName(teamName);
-        //teamRepository.update(toEdit);
-        
-
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

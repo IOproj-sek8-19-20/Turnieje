@@ -30,8 +30,6 @@
             user = (String) session.getAttribute("loginUser");
         }
         
-        //Pobieram z ciasteczka JSONa w którym mam wszelkie informacje na temat turnieju
-        //Uzyje go do wyswietlania poprawnych informacji na stronie edycji
         Tournament toEdit = (Tournament) session.getAttribute("tournamentToEdit");
     %>
 
@@ -80,7 +78,7 @@
         <input type = "submit" value = "Zatwierdz" onclick="temp()">
         
         <!--
-        Powrót do menu g?ównego
+        Powrót do menu glownego
         -->
         <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
             <input type = "submit" value = "Powrot">

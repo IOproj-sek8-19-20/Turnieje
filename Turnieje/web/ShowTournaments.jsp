@@ -25,6 +25,15 @@
         
         <input type = "submit" value = "Edytuj turniej" onclick="submitEditTour()">
         
+        <br/><br/>
+        
+        <!--
+        Powrót do menu glownego
+        -->
+        <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
+            <input type = "submit" value = "Powrot">
+        </form>
+        
     </center>
         
     <script>

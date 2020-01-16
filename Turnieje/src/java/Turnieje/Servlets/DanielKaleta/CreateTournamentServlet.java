@@ -136,6 +136,8 @@ public class CreateTournamentServlet extends HttpServlet {
         {
             System.out.print(teams.getString(i));
         }
+        
+        session.setAttribute("tournamentToEdit", newTournament);
 
         response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentCreated.jsp?tournamentName=" + tournamentName);
 
