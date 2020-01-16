@@ -17,7 +17,7 @@
 
         <%
             Set<Team> teamsToShow = (Set<Team>) session.getAttribute("teamsToShow");
-
+            
             boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
         

@@ -56,6 +56,9 @@ public class CreateTeamServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        try
+        {
+        
         Date date = new Date();
         
         Team toAdd = new Team();
@@ -109,7 +112,12 @@ public class CreateTeamServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("actualTeam", toAdd);
         
-        response.sendRedirect("/Turnieje/TeamCreateManage/TeamCreated.jsp?teamId=" + "1");
+        response.sendRedirect("/Turnieje/TeamCreateManage/TeamCreated.jsp");
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex.getMessage());
+        }
 
     }
 

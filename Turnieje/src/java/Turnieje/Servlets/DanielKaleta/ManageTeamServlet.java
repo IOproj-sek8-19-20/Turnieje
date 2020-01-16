@@ -54,6 +54,7 @@ public class ManageTeamServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        System.out.print("test");
         String JSONString = request.getParameter("JSONFromCreateTeam");
         JSONObject JSON = new JSONObject(JSONString);
 
@@ -61,7 +62,10 @@ public class ManageTeamServlet extends HttpServlet {
         String newCaptain = JSON.getString("captain");
         
         HttpSession session = request.getSession(true);
-        Team toEdit = (Team) session.getAttribute("teamToEdit");
+        Team toEdit = (Team) session.getAttribute("actualTeam");
+        if(toEdit==null){
+            System.out.println("toEdit jest nullem");
+        }
         
         toEdit.setName(teamName);
         teamRepository.update(toEdit);
@@ -80,13 +84,15 @@ public class ManageTeamServlet extends HttpServlet {
             System.out.print(disciplines.getString(i));
         }
         
-        String oldCaptain = (String) session.getAttribute("loginUser");
+        response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp");
+        
+        /*String oldCaptain = (String) session.getAttribute("loginUser");
         boolean newCaptainCorrect=false;
         
         if(oldCaptain.compareTo(newCaptain)==0)
         {
             //nic nie trzeba robic, kapitan bez zmian
-            response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp?teamName=" + teamName);
+            response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp");
         }
         else
         {
@@ -125,7 +131,7 @@ public class ManageTeamServlet extends HttpServlet {
                 }
                 response.sendRedirect("/Turnieje/MainMenu.jsp"); 
             }
-        }
+        }*/
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

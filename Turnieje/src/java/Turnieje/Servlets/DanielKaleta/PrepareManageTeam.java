@@ -55,7 +55,8 @@ public class PrepareManageTeam extends HttpServlet {
         
         HttpSession session = request.getSession(true);
         session.setAttribute("usersToShow", allUser);
-        session.setAttribute("teamToEdit", toEdit);
+
+        session.setAttribute("actualTeam", toEdit);
         
         response.sendRedirect("/Turnieje/TeamCreateManage/ManageTeam.jsp");
     }

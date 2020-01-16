@@ -6,7 +6,6 @@
 package Turnieje.Servlets.DanielKaleta;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
-import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
@@ -54,7 +52,7 @@ public class PrepareCreateTeamServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("usersToShow", allUsers);
         
-        response.sendRedirect("/Turnieje/TeamCreateManage/CreateTeam.jsp?=");
+        response.sendRedirect("/Turnieje/TeamCreateManage/CreateTeam.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

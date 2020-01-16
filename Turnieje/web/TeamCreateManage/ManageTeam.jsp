@@ -36,7 +36,8 @@
             user = (String) session.getAttribute("loginUser");
         } 
         
-        Team acutalTeam = (Team) session.getAttribute("teamToEdit");
+        Team acutalTeam = (Team) session.getAttribute("actualTeam");
+        
         User captain = (User) session.getAttribute("loggedUser");
     %>
 

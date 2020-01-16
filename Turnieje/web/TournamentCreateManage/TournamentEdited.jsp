@@ -13,7 +13,7 @@
     
     <body> 
         <center>
-            <h1> Pomyślna zmiana nazwy turnieju na: <%= request.getParameter("tournamentName") %></h1>
+            <h1> Pomyślna edycja turnieju <%= request.getParameter("tournamentName") %></h1>
         </center>   
 
         <script>
