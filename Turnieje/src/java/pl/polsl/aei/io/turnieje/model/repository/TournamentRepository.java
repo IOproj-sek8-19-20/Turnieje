@@ -20,7 +20,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for tournaments.
  * 
  * @author Piotr Uhl
- * @version 0.2.3
+ * @version 0.2.4
  */
 public class TournamentRepository implements ITournamentRepository {
     
@@ -150,16 +150,14 @@ public class TournamentRepository implements ITournamentRepository {
     @Override
     public boolean update(Tournament tournament) {
 	try {
-	    PreparedStatement statement = dbInterface.createPreparedStatement("UPDATE TABLE Tournaments SET name=?, startingDate=?, endingDate=?, adminId=?, modeId=?, discId=?, teamSize=?, finished=? WHERE tourId=?");
+	    PreparedStatement statement = dbInterface.createPreparedStatement("UPDATE Tournaments SET name=?, startingDate=?, endingDate=?, adminId=?, modeId=?, discId=?, teamSize=?, finished=? WHERE tourId=?");
 	    statement.setInt(9, tournament.id.id);
 	    statement.setString(1, tournament.getName());
 	    statement.setDate(2, new java.sql.Date(tournament.getStartingDate().getTime()));
 	    statement.setDate(3, new java.sql.Date(tournament.getEndingDate().getTime()));
 	    statement.setInt(4, tournament.getAdmin().id);
-	    statement.setInt(5, 1);
-	    statement.setInt(6, 1);
-	    //todo: updating modeId
-	    //todo: updating discId
+	    statement.setInt(5, 1); //todo: updating modeId
+	    statement.setInt(6, 1); //todo: updating discId
 	    statement.setInt(7, tournament.getTeamSize());
 	    statement.setBoolean(8, tournament.getFinished());
 	    return statement.executeUpdate() > 0;
