@@ -5,6 +5,7 @@
  */
 package pl.polsl.aei.io.turnieje.model.repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
@@ -156,33 +157,14 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean update(User user) {
 	try {
-	    boolean ret = false;
-	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Users WHERE userId=%d", user.id.id));
-	    if (rs.next()) {
-		if (!user.getEmail().equals(rs.getString("email"))) {
-		    rs.updateString("email", user.getEmail());
-		    ret = true;
-		}
-		if (!user.getPassHash().equals(rs.getString("passHash"))) {
-		    rs.updateString("passHash", user.getPassHash());
-		    ret = true;
-		}
-		if (user.getFirstName().equals(rs.getString("firstName"))) {
-		    rs.updateString("firstName", user.getFirstName());
-		    ret = true;
-		}
-		if (user.getLastName().equals(rs.getString("lastName"))) {
-		    rs.updateString("lastName", user.getLastName());
-		    ret = true;
-		}
-		if (user.getActive() == rs.getBoolean("active")) {
-		    rs.updateBoolean("active", user.getActive());
-		    ret = true;
-		}
-		rs.updateRow();
-	    }
-	    return ret;
+	    PreparedStatement statement = dbInterface.createPreparedStatement("UPDATE Users SET email=?, passhash=?, firstname=?, lastname=?, active=? WHERE userId=?");
+	    statement.setInt(6, user.id.id);
+	    statement.setString(1, user.getEmail());
+	    statement.setString(2, user.getPassHash());
+	    statement.setString(3, user.getFirstName());
+	    statement.setString(4, user.getLastName());
+	    statement.setBoolean(5, user.getActive());
+	    return statement.executeUpdate() > 0;
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);

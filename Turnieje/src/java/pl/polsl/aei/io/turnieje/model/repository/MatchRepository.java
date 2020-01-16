@@ -142,37 +142,16 @@ public class MatchRepository implements IMatchRepository {
     @Override
     public boolean update(Match match) {
 	try {
-	    boolean ret = false;
-	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Matches WHERE matchId=%d", match.id.id));
-	    if (rs.next()) {
-		if (match.getTourId().id != rs.getInt("tourId")) {
-		    rs.updateInt("tourId", match.getTourId().id);
-		    ret = true;
-		}
-		if (!match.getDate().equals(rs.getDate("date"))) {
-		    rs.updateDate("date", new java.sql.Date(match.getDate().getTime()));
-		    ret = true;
-		}
-		if (match.getFinished() != rs.getBoolean("finished")) {
-		    rs.updateBoolean("finished", match.getFinished());
-		    ret = true;
-		}
-		if (match.getWinner().id != rs.getInt("winner")) {
-		    rs.updateInt("winner", match.getWinner().id);
-		    ret = true;
-		}
-		if (match.getTeamId(1).id != rs.getInt("team1Id")) {
-		    rs.updateInt("team1Id", match.getTeamId(1).id);
-		    ret = true;
-		}
-		if (match.getTeamId(2).id != rs.getInt("team1Id")) {
-		    rs.updateInt("team1Id", match.getTeamId(2).id);
-		    ret = true;
-		}
-		rs.updateRow();
-	    }
-	    return ret;
+	    PreparedStatement statement = dbInterface.createPreparedStatement("UPDATE Matches SET tourId=?, matchDate=?, finished=?, winner=?, team1Id=?, team2Id=? WHERE matchId=?");
+	    statement.setInt(7, match.id.id);
+	    statement.setInt(1, match.getTourId().id);
+	    statement.setDate(2, new java.sql.Date(match.getDate().getTime()));
+	    statement.setBoolean(3, match.getFinished());
+	    if (match.getWinner() != null)
+		statement.setInt(4, match.getWinner().id);
+	    statement.setInt(5, match.getTeamId(1).id);
+	    statement.setInt(6, match.getTeamId(2).id);
+	    return statement.executeUpdate() > 0;
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);

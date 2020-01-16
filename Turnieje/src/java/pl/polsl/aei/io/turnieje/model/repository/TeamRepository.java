@@ -5,6 +5,7 @@
  */
 package pl.polsl.aei.io.turnieje.model.repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
@@ -141,21 +142,11 @@ public class TeamRepository implements ITeamRepository {
     @Override
     public boolean update(Team team) {
 	try {
-	    boolean ret = false;
-	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Teams WHERE teamId=%d", team.id.id));
-	    if (rs.next()) {
-		if (!team.getName().equals(rs.getString("name"))) {
-		    rs.updateString("name", team.getName());
-		    ret = true;
-		}
-		if (team.getCapitan().id != rs.getInt("capId")) {
-		    rs.updateInt("capId", team.getCapitan().id);
-		    ret = true;
-		}
-		rs.updateRow();
-	    }
-	    return ret;
+	    PreparedStatement statement = dbInterface.createPreparedStatement("UPDATE Teams SET name=?, capId=? WHERE teamId=?");
+	    statement.setInt(3, team.id.id);
+	    statement.setString(1, team.getName());
+	    statement.setInt(2, team.getCapitan().id);
+	    return statement.executeUpdate() > 0;
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);
