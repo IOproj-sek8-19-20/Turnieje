@@ -150,39 +150,19 @@ public class TournamentRepository implements ITournamentRepository {
     @Override
     public boolean update(Tournament tournament) {
 	try {
-	    boolean ret = false;
-	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Tournaments WHERE tourId=%d", tournament.id.id));
-	    if (rs.next()) {
-		if (!tournament.getName().equals(rs.getString("name"))) {
-		    rs.updateString("name", tournament.getName());
-		    ret = true;
-		}
-		if (!tournament.getStartingDate().equals(rs.getDate("startingDate"))) {
-		    rs.updateDate("startingDate", new java.sql.Date(tournament.getStartingDate().getTime()));
-		    ret = true;
-		}
-		if (!tournament.getEndingDate().equals(rs.getDate("endingDate"))) {
-		    rs.updateDate("endingDate", new java.sql.Date(tournament.getEndingDate().getTime()));
-		    ret = true;
-		}
-		if (tournament.getAdmin().id != rs.getInt("adminId")) {
-		    rs.updateInt("adminId", tournament.getAdmin().id);
-		    ret = true;
-		}
-		//todo: updating modeId
-		//todo: updating discId
-		if (tournament.getTeamSize() != rs.getInt("teamSize")) {
-		    rs.updateInt("teamSize", tournament.getTeamSize());
-		    ret = true;
-		}
-		if (tournament.getFinished() != rs.getBoolean("finished")) {
-		    rs.updateBoolean("finished", tournament.getFinished());
-		    ret = true;
-		}
-		rs.updateRow();
-	    }
-	    return ret;
+	    PreparedStatement statement = dbInterface.createPreparedStatement("UPDATE TABLE Tournaments SET name=?, startingDate=?, endingDate=?, adminId=?, modeId=?, discId=?, teamSize=?, finished=? WHERE tourId=?");
+	    statement.setInt(9, tournament.id.id);
+	    statement.setString(1, tournament.getName());
+	    statement.setDate(2, new java.sql.Date(tournament.getStartingDate().getTime()));
+	    statement.setDate(3, new java.sql.Date(tournament.getEndingDate().getTime()));
+	    statement.setInt(4, tournament.getAdmin().id);
+	    statement.setInt(5, 1);
+	    statement.setInt(6, 1);
+	    //todo: updating modeId
+	    //todo: updating discId
+	    statement.setInt(7, tournament.getTeamSize());
+	    statement.setBoolean(8, tournament.getFinished());
+	    return statement.executeUpdate() > 0;
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);
