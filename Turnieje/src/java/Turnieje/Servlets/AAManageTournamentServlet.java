@@ -6,11 +6,6 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,26 +20,29 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
- * Servlet responsible for creating the tournament.
+ * Servlet responsible for editing the tournament.
  *
  * @author Daniel Kaleta
  * @version 1.0.0
  */
-@WebServlet(name = "CreateTournamentServlet", urlPatterns = {"/CreateTournament"})
-public class CreateTournamentServlet extends HttpServlet {
+@WebServlet(name = "ManageTournamentServlet", urlPatterns = {"/ManageTournament"})
+public class AAManageTournamentServlet extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
     ITournamentRepository tournamentRepository;
     ITeamRepository teamRepository;
+    IUserRepository userRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         teamRepository = repositoryProvider.getTeamRepository();
         tournamentRepository = repositoryProvider.getTournamentRepository();
+        userRepository = repositoryProvider.getUserRepository();
     }
 
     /**
@@ -59,76 +57,37 @@ public class CreateTournamentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession(true);
 
         String JSONString = request.getParameter("JSONFromCreateTournament");
         JSONObject JSON = new JSONObject(JSONString);
+
+        String tournamentName = JSON.getString("name");
+        String type = JSON.getString("type").replaceAll(" ", "_");
+        String discipline = JSON.getString("discipline").replaceAll(" ", "_");
+        String teamSize = JSON.getString("teamSize");
+        String admin = JSON.getString("admin");
         
-        String tournamentName = null;
-        String type = null;
-        String startDateString = null;
-        String endDateString = null;
-        String discipline = null;
-        String teamSize = null;
+        HttpSession session = request.getSession(true);
+        Tournament toEdit = (Tournament) session.getAttribute("tournamentToEdit");
         
-        try
+        User oldAdmin = (User) session.getAttribute("loggedUser");
+        User newAdmin = userRepository.getByEmail(admin);
+        
+        if(newAdmin.id == oldAdmin.id)
         {
-            tournamentName = JSON.getString("name");
-            type = JSON.getString("type").replaceAll(" ", "_");
-            startDateString = JSON.getString("startDate");
-            endDateString = JSON.getString("endDate");
-            discipline = JSON.getString("discipline").replaceAll(" ", "_");
-            teamSize = JSON.getString("teamSize");
+            //brak zmiany administratora
         }
-        catch(Exception ex)
+        else
         {
-            System.out.print(ex.getMessage());
+            toEdit.setAdmin(newAdmin);
         }
         
-        //sprawdzenie czy bangla
-        System.out.print(tournamentName);
-        System.out.print(type);
-        System.out.print(startDateString);
-        System.out.print(endDateString);
-        System.out.print(discipline);
-        System.out.print(teamSize);
+        toEdit.setName(tournamentName);
+        toEdit.setMode(TournamentMode.valueOf(type));
+        toEdit.setDiscipline(Discipline.valueOf(discipline));
+        toEdit.setTeamSize(Integer.parseInt(teamSize));
         
-        User admin = (User) session.getAttribute("loggedUser");
-        //rozwiazanie tymczasowe
-        /*LocalDate localDate = LocalDate.now();
-        Date startDate= java.sql.Date.valueOf( localDate );
-        Date endDate=java.sql.Date.valueOf( localDate );*/
-        
-        Date startDate=null;
-        Date endDate=null;
-        try {
-            startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateString);
-            endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateString);
-        } catch (ParseException ex) {
-            Logger.getLogger(CreateTournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        Tournament newTournament = new Tournament();
-        newTournament.setName(tournamentName);
-        newTournament.setTeamSize(Integer.parseInt(teamSize));
-        newTournament.setAdmin(admin);
-        newTournament.setDiscipline(Discipline.valueOf(discipline));
-        newTournament.setMode(TournamentMode.valueOf(type));
-        newTournament.setFinished(false);
-        newTournament.setStartingDate(startDate);
-        newTournament.setEndingDate(endDate);
-        
-        try
-        {
-            tournamentRepository.add(newTournament);
-        }
-        catch(Exception ex)
-        {
-            System.out.print(ex.getMessage());
-        }
-        
+        tournamentRepository.update(toEdit);
 
         JSONArray teams = JSON.getJSONArray("teamsToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
@@ -136,11 +95,12 @@ public class CreateTournamentServlet extends HttpServlet {
         {
             System.out.print(teams.getString(i));
         }
-        
-        session.setAttribute("tournamentToEdit", newTournament);
 
-        response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentCreated.jsp?tournamentName=" + tournamentName);
+        //Team toEdit = teamRepository.getById(managedTeamID);
+        //toEdit.setName(teamName);
+        //teamRepository.update(toEdit);
 
+        response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentEdited.jsp?tournamentName="+tournamentName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -3,41 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets.DanielKaleta;
+package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
-import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
-import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
- * Servlet responsible for editing the tournament.
  *
- * @author Daniel Kaleta
- * @version 1.0.0
+ * @author Daniel-Laptop
  */
-@WebServlet(name = "ManageTournamentServlet", urlPatterns = {"/ManageTournament"})
-public class ManageTournamentServlet extends HttpServlet {
+@WebServlet(name = "PrepareTournamentsList", urlPatterns = {"/PrepareTournamentsList"})
+public class AAPrepareTournamentsList extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
     ITournamentRepository tournamentRepository;
-    ITeamRepository teamRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
-        teamRepository = repositoryProvider.getTeamRepository();
         tournamentRepository = repositoryProvider.getTournamentRepository();
     }
 
@@ -54,36 +46,12 @@ public class ManageTournamentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String JSONString = request.getParameter("JSONFromCreateTournament");
-        JSONObject JSON = new JSONObject(JSONString);
-
-        String tournamentName = JSON.getString("name");
-        String type = JSON.getString("type").replaceAll(" ", "_");
-        String discipline = JSON.getString("discipline").replaceAll(" ", "_");
-        String teamSize = JSON.getString("teamSize");
+        Set<Tournament> allTournaments = tournamentRepository.getAll();
         
         HttpSession session = request.getSession(true);
-        Tournament toEdit = (Tournament) session.getAttribute("tournamentToEdit");
+        session.setAttribute("tournamentsToShow", allTournaments);
         
-        toEdit.setName(tournamentName);
-        toEdit.setMode(TournamentMode.valueOf(type));
-        toEdit.setDiscipline(Discipline.valueOf(discipline));
-        toEdit.setTeamSize(Integer.parseInt(teamSize));
-        
-        tournamentRepository.update(toEdit);
-
-        JSONArray teams = JSON.getJSONArray("teamsToAdd");
-        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
-        for (int i = 0; i < teams.length(); i++) 
-        {
-            System.out.print(teams.getString(i));
-        }
-
-        //Team toEdit = teamRepository.getById(managedTeamID);
-        //toEdit.setName(teamName);
-        //teamRepository.update(toEdit);
-
-        response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentEdited.jsp?tournamentName="+tournamentName);
+        response.sendRedirect("/Turnieje/ShowTournaments.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

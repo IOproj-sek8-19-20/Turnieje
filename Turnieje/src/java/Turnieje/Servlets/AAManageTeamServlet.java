@@ -3,33 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets.DanielKaleta;
+package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
+ * Servlet responsible for editing the team.
  *
- * @author Daniel-Laptop
+ * @author Daniel Kaleta
+ * @version 1.0.0
  */
-@WebServlet(name = "PrepareCreateTeamServlet", urlPatterns = {"/PrepareCreateTeamServlet"})
-public class PrepareCreateTeamServlet extends HttpServlet {
-    
+@WebServlet(name = "ManageTeamServlet", urlPatterns = {"/ManageTeam"})
+public class AAManageTeamServlet extends HttpServlet {
+
     RepositoryProvider repositoryProvider;
     IUserRepository userRepository;
+    ITeamRepository teamRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
+        teamRepository = repositoryProvider.getTeamRepository();
         userRepository = repositoryProvider.getUserRepository();
     }
 
@@ -45,14 +52,44 @@ public class PrepareCreateTeamServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         
-        Set<User> allUsers = userRepository.getAll();
+        String JSONString = request.getParameter("JSONFromCreateTeam");
+        JSONObject JSON = new JSONObject(JSONString);
+
+        String teamName = JSON.getString("name");
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("usersToShow", allUsers);
+        User oldCaptain = (User) session.getAttribute("loggedUser");
+        User newCaptain = userRepository.getByEmail(JSON.getString("captain"));
+        Team toEdit = (Team) session.getAttribute("actualTeam");
         
-        response.sendRedirect("/Turnieje/TeamCreateManage/CreateTeam.jsp");
+        if(newCaptain.id == oldCaptain.id)
+        {
+            //brak zmiany kapitana
+        }
+        else
+        {
+            toEdit.setCapitan(newCaptain);
+        }
+        
+        toEdit.setName(teamName);
+        teamRepository.update(toEdit);
+        
+        JSONArray users = JSON.getJSONArray("usersToAdd");
+        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
+        for(int i=0; i<users.length();i++)
+        {
+            System.out.print(users.getString(i));
+        }
+        
+        JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
+        //wypisanie dodanych dyscyplin w ramach testu czy dziala
+        for(int i=0; i<disciplines.length();i++)
+        {
+            System.out.print(disciplines.getString(i));
+        }
+        
+        response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

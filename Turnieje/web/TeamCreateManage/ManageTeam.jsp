@@ -54,7 +54,7 @@
         <br/><br/>
         
         <!-- Kapitan -->
-        Kapitan: <input type = "text" name = "captain" id="captain" value="<%= captain.getEmail() %>">
+        Kapitan: <input type = "text" name = "captain" id="captain" value="<%= acutalTeam.getCapitan().id %>">
         
         <br/><br/>
        

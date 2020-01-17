@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets.DanielKaleta;
+package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,25 +14,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
-import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
  * @author Daniel-Laptop
  */
-@WebServlet(name = "PrepareTournamentList", urlPatterns = {"/PrepareTournamentList"})
-public class PrepareTournamentsList extends HttpServlet {
+@WebServlet(name = "PrepareCreateTournamentServlet", urlPatterns = {"/PrepareCreateTournamentServlet"})
+public class AAPrepareCreateTournamentServlet extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
-    ITournamentRepository tournamentRepository;
+    ITeamRepository teamRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
-        tournamentRepository = repositoryProvider.getTournamentRepository();
+        teamRepository = repositoryProvider.getTeamRepository();
     }
 
     /**
@@ -48,13 +45,13 @@ public class PrepareTournamentsList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        Set<Tournament> allTournaments = tournamentRepository.getAll();
+        
+        Set<Team> allTeams = teamRepository.getAll();
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("tournamentsToShow", allTournaments);
+        session.setAttribute("teamsToShow", allTeams);
         
-        response.sendRedirect("/Turnieje/ShowTournaments.jsp");
+        response.sendRedirect("/Turnieje/TournamentCreateManage/CreateTournament.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

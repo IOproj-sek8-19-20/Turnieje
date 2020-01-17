@@ -41,6 +41,11 @@
         
         <br/><br/>
         
+        <!-- Administrator -->
+        Administrator: <input type = "text" name = "admin" id="admin" value="<%= toEdit.getAdmin().id %>">
+        
+        <br/><br/>
+        
         Dyscyplina: 
             
         <br/><br/>
@@ -93,7 +98,7 @@
             {
                 var myVar="Manage";
                 var admin = <%=user%>
-                submit(myVar,admin);
+                submit(myVar);
             }
             //Funkcja do ustawienia nazwy, dyscypliny, trybu rozgrywek, rozmiaru druzyn, oraz druzyn w turnieju
             function setFieldsAndLists()

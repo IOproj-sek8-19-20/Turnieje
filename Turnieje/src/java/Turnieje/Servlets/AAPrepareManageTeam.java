@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets.DanielKaleta;
+package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,29 +14,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
-import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
- * @author Daniel-Laptop
+ * @author Danielowy Eltech
  */
-@WebServlet(name = "PrepareManageTournament", urlPatterns = {"/PrepareManageTournament"})
-public class PrepareManageTournament extends HttpServlet {
+@WebServlet(name = "PrepareManageTeam", urlPatterns = {"/PrepareManageTeam"})
+public class AAPrepareManageTeam extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
-    ITournamentRepository tournamentRepository;
     ITeamRepository teamRepository;
+    IUserRepository userRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
-        tournamentRepository = repositoryProvider.getTournamentRepository();
         teamRepository = repositoryProvider.getTeamRepository();
+        userRepository = repositoryProvider.getUserRepository();
     }
-
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -51,15 +49,16 @@ public class PrepareManageTournament extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        Tournament toEdit = tournamentRepository.getByName(request.getParameter("tournamentName"));
-        Set<Team> allTeams = teamRepository.getAll();
+        
+        Team toEdit = teamRepository.getByName(request.getParameter("teamName"));
+        Set<User> allUser = userRepository.getAll();
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("teamsToShow", allTeams);
-        session.setAttribute("tournamentToEdit", toEdit);
+        session.setAttribute("usersToShow", allUser);
+
+        session.setAttribute("actualTeam", toEdit);
         
-        response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp");
+        response.sendRedirect("/Turnieje/TeamCreateManage/ManageTeam.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

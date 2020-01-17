@@ -6,40 +6,30 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.Set;
-import java.util.TreeSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import pl.polsl.aei.io.turnieje.model.datamodel.PlayerInTeam;
-import pl.polsl.aei.io.turnieje.model.datamodel.Team;
-import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
- * Servlet responsible for creating the team.
  *
- * @author Daniel Kaleta
- * @version 1.0.0
+ * @author Daniel-Laptop
  */
-@WebServlet(name = "CreateTeamServlet", urlPatterns = {"/CreateTeam"})
-public class CreateTeamServlet extends HttpServlet {
-
+@WebServlet(name = "PrepareCreateTeamServlet", urlPatterns = {"/PrepareCreateTeamServlet"})
+public class AAPrepareCreateTeamServlet extends HttpServlet {
+    
     RepositoryProvider repositoryProvider;
     IUserRepository userRepository;
-    ITeamRepository teamRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
-        teamRepository = repositoryProvider.getTeamRepository();
         userRepository = repositoryProvider.getUserRepository();
     }
 
@@ -55,72 +45,14 @@ public class CreateTeamServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        try
-        {
-        
-        Date date = new Date();
-        
-        Team toAdd = new Team();
 
-        String JSONString = request.getParameter("JSONFromCreateTeam");
-        JSONObject JSON = new JSONObject(JSONString);
-
-        String teamName = JSON.getString("name");
-        toAdd.setName(teamName);
         
-        String captain = JSON.getString("captain");
-        System.out.print(captain);
-        toAdd.setCapitan(userRepository.getByEmail(captain));
-        
-        Set<PlayerInTeam> players = new TreeSet<>();
-        JSONArray users = JSON.getJSONArray("usersToAdd");
-        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
-        for(int i=0; i<users.length();i++)
-        {
-            PlayerInTeam playerToAdd = new PlayerInTeam();
-            playerToAdd.teamId = toAdd.getId();
-            playerToAdd.userId = userRepository.getByEmail(users.getString(i)).id;
-            playerToAdd.joinDate = date;
-            try
-            {
-                toAdd.addPlayer(playerToAdd);
-            }
-            catch(Exception ex)
-            {
-                System.out.println(ex.getMessage());
-            }
-        }
-        
-        JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
-        //wypisanie dodanych dyscyplin w ramach testu czy dziala
-        for(int i=0; i<disciplines.length();i++)
-        {
-            System.out.print(disciplines.getString(i));
-        }
-        
-   
-        try
-        {
-            teamRepository.add(toAdd);
-        }
-        catch(Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
-        
-        Team toAddWithCorrectID = teamRepository.getByName(toAdd.getName());
+        Set<User> allUsers = userRepository.getAll();
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("actualTeam", toAddWithCorrectID);
+        session.setAttribute("usersToShow", allUsers);
         
-        response.sendRedirect("/Turnieje/TeamCreateManage/TeamCreated.jsp");
-        }
-        catch(Exception ex)
-        {
-            System.out.print(ex.getMessage());
-        }
-
+        response.sendRedirect("/Turnieje/TeamCreateManage/CreateTeam.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

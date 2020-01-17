@@ -4,6 +4,7 @@
     Author     : mariu
 --%>
 
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,21 +14,16 @@
     </head>
     <body>
 <%
-    String user = null;
-    if(session.getAttribute("loginUser") == null)
+    User loggedUser = (User) session.getAttribute("loggedUser");
+    if(loggedUser == null)
     {
         response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
         return;
     }
-    else 
-    {
-        user = (String) session.getAttribute("loginUser");
-    } 
-
 %>
     <center>
         
-        Zalogowany jako: <%= user %>
+        Zalogowany jako: <%= loggedUser.getEmail() %>
         
         <br/><br/>
         
@@ -45,6 +41,14 @@
         
         <input type = "submit" value = "Pokaz druzyny" onclick="submitShowTeams()">
         
+        <br/><br/>
+        
+        <input type = "submit" value = "Pokaz moje turnieje" onclick="submitShowMyTournaments()">
+        
+        <br/><br/>
+        
+        <input type = "submit" value = "Pokaz moje druzyny" onclick="submitShowMyTeams()">
+        
     </center>
         <script>
             function submitCreateTeam()
@@ -57,11 +61,19 @@
             }
             function submitShowTournaments()
             {
-                location.replace("/Turnieje/PrepareTournamentList");
+                location.replace("/Turnieje/PrepareTournamentsList");
             }
             function submitShowTeams()
             {
                 location.replace("/Turnieje/PrepareTeamsList");
+            }
+            function submitShowMyTournaments()
+            {
+                location.replace("/Turnieje/PrepareTournamentsList?onlyMine=true");
+            }
+            function submitShowMyTeams()
+            {
+                location.replace("/Turnieje/PrepareTeamsList?onlyMine=true");
             }
     </script>
     </body>

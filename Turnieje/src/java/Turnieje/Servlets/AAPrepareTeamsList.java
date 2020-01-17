@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Turnieje.Servlets.DanielKaleta;
+package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
@@ -22,7 +24,7 @@ import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
  * @author Danielowy Eltech
  */
 @WebServlet(name = "PrepareTeamsList", urlPatterns = {"/PrepareTeamsList"})
-public class PrepareTeamsList extends HttpServlet {
+public class AAPrepareTeamsList extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
     ITeamRepository teamRepository;
@@ -45,11 +47,39 @@ public class PrepareTeamsList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        HttpSession session = request.getSession(true);
+        boolean onlyMine = Boolean.parseBoolean(request.getParameter("onlyMine"));
+        System.out.print(onlyMine);
 
         Set<Team> allTeams = teamRepository.getAll();
         
-        HttpSession session = request.getSession(true);
-        session.setAttribute("teamsToShow", allTeams);
+        if(onlyMine==true)
+        {
+            User captain = (User) session.getAttribute("loggedUser");
+            Set<Team> myTeams = new HashSet<>();
+            
+            for(Team team: allTeams)
+            {
+                if(team.getCapitan().id ==captain.getId().id)
+                {
+                    try
+                    {
+                        myTeams.add(team);
+                    }
+                    catch(Exception ex)
+                    {
+                        System.out.print(ex.getMessage());
+                    }
+                    System.out.println("Dodaje druzyne " + team.getName());
+                }
+            }
+            session.setAttribute("teamsToShow", myTeams);
+        }
+        else
+        {
+            session.setAttribute("teamsToShow", allTeams);
+        }
         
         response.sendRedirect("/Turnieje/ShowTeams.jsp");
     }
