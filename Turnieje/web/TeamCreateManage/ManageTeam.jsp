@@ -2,6 +2,7 @@
     Document   : ManageTeam
     Author     : Daniel Kaleta
 --%>
+<%@page import="pl.polsl.aei.io.turnieje.model.repository.IUserRepository"%>
 <%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
 <%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Discipline"%>
 <%@page import="java.util.Set"%>
@@ -37,7 +38,12 @@
         } 
         
         Team acutalTeam = (Team) session.getAttribute("actualTeam");
+        //
         
+        RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
+        IUserRepository userRepository = repositoryProvider.getUserRepository();
+    
+        //aktualnie nie do konca, zeby byl jakis podglad po edycji kapitana
         User captain = (User) session.getAttribute("loggedUser");
     %>
 
@@ -54,7 +60,7 @@
         <br/><br/>
         
         <!-- Kapitan -->
-        Kapitan: <input type = "text" name = "captain" id="captain" value="<%= acutalTeam.getCapitan().id %>">
+        Kapitan: <input type = "text" name = "captain" id="captain" value="<%= userRepository.getById(acutalTeam.getCapitan()).getEmail() %>">
         
         <br/><br/>
        
@@ -74,7 +80,7 @@
         <br/><br/>
 
         <iframe id="AvaibleUsers" src="/Turnieje/Lists/UsersList.jsp"></iframe>
-        <iframe id="ChoosedUsers" src="/Turnieje/Lists/UsersList.jsp?Empty=true"></iframe>
+        <iframe id="ChoosedUsers" src="/Turnieje/Lists/UsersList.jsp?inTeam=true"></iframe>
 
         <br/><br/>
 

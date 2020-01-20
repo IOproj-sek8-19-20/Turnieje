@@ -72,14 +72,13 @@ public class AAManageTeamServlet extends HttpServlet {
             toEdit.setCapitan(newCaptain);
         }
         
-        toEdit.setName(teamName);
-        teamRepository.update(toEdit);
-        
         JSONArray users = JSON.getJSONArray("usersToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
         for(int i=0; i<users.length();i++)
         {
             System.out.print(users.getString(i));
+            User toAdd = userRepository.getByEmail(users.getString(i));
+            toEdit.addPlayer(toAdd);
         }
         
         JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
@@ -88,6 +87,9 @@ public class AAManageTeamServlet extends HttpServlet {
         {
             System.out.print(disciplines.getString(i));
         }
+        
+        toEdit.setName(teamName);
+        teamRepository.update(toEdit);
         
         response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp");
     }

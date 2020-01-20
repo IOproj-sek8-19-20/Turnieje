@@ -16,9 +16,10 @@
     <body>
 
         <%
-            Set<User> usersToShow = (Set<User>) session.getAttribute("usersToShow");
+            Set<User> allUsers = (Set<User>) session.getAttribute("allUsers");
+            Set<User> usersInTeam = (Set<User>) session.getAttribute("usersInTeam");
 
-            boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
+            boolean inTeam = Boolean.parseBoolean(request.getParameter("inTeam"));
         %>
         
         <script>var toFilter="Users"</script>
@@ -32,8 +33,12 @@
         </center>
                 
         <select name="choosedUsers" size="7" style="width:100%;" id="choosedUsers">
-            <% if(emptyList!=true){
-                for(User user: usersToShow) {%>
+            <% if(inTeam!=true){
+                for(User user: allUsers) {%>
+                <option><%= user.getEmail()%></option>
+            <%}}
+            else{
+                for(User user: usersInTeam) {%>
                 <option><%= user.getEmail()%></option>
             <%}}%>
         </select>

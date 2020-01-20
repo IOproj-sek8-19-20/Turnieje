@@ -51,10 +51,18 @@ public class AAPrepareManageTeam extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         Team toEdit = teamRepository.getByName(request.getParameter("teamName"));
-        Set<User> allUser = userRepository.getAll();
+        
+        Set<User> allUsers = userRepository.getAll();
+        Set<User> usersInTeam = userRepository.getByTeam(toEdit.getId());
+        
+        for (User user: usersInTeam)
+        {
+            allUsers.remove(user);
+        }
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("usersToShow", allUser);
+        session.setAttribute("allUsers", allUsers);
+        session.setAttribute("usersInTeam", usersInTeam);
 
         session.setAttribute("actualTeam", toEdit);
         

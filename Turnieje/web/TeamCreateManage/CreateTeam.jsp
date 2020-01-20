@@ -60,7 +60,7 @@
             <br/><br/>
 
             <iframe id="AvaibleUsers" src="/Turnieje/Lists/UsersList.jsp"></iframe>
-            <iframe id="ChoosedUsers" src="/Turnieje/Lists/UsersList.jsp?Empty=true"></iframe>
+            <iframe id="ChoosedUsers" src="/Turnieje/Lists/UsersList.jsp?inTeam=true"></iframe>
 
             <br/><br/>
 
