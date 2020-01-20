@@ -6,6 +6,7 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -45,13 +47,14 @@ public class AAPrepareCreateTeamServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         
         Set<User> allUsers = userRepository.getAll();
+        Set<User> usersInTeam = new HashSet<>();
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("usersToShow", allUsers);
-        
+        session.setAttribute("allUsers", allUsers);
+        session.setAttribute("usersInTeam", usersInTeam);
+
         response.sendRedirect("/Turnieje/TeamCreateManage/CreateTeam.jsp");
     }
 

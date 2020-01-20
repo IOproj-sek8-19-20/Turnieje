@@ -93,8 +93,10 @@ public class AACreateTeamServlet extends HttpServlet {
             playerInTeam.teamId = toAddWithCorrectID.id;
             playerInTeam.userId = newPlayer.id;
             playerInTeam.joinDate = date;
-            teamToAdd.addPlayer(playerInTeam);
+            toAddWithCorrectID.addPlayer(playerInTeam);
         }
+        
+        teamRepository.update(toAddWithCorrectID);
         
         HttpSession session = request.getSession(true);
         session.setAttribute("actualTeam", toAddWithCorrectID);
