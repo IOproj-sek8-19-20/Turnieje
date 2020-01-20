@@ -43,15 +43,17 @@ public class TeamRepository implements ITeamRepository {
 	    if (rs.next()) {
 		ret = new TeamId(rs.getInt(1));
 		for (PlayerInTeam k : team.getPlayers()) {
+                    PreparedStatement statement2;
 		    if (k.joinDate != null) {
-			statement = dbInterface.createPreparedStatement("INSERT INTO PlayersInTeam(teamId, userId, joinDate) VALUES (?, ?, ?)");
-			statement.setDate(3, new java.sql.Date(k.joinDate.getTime()));
+			statement2 = dbInterface.createPreparedStatement("INSERT INTO PlayersInTeam(teamId, userId, joinDate) VALUES (?, ?, ?)");
+			statement2.setDate(3, new java.sql.Date(k.joinDate.getTime()));
  		    }
 		    else {
-		       statement = dbInterface.createPreparedStatement("INSERT INTO PlayersInTeam(teamId, userId) VALUES (?, ?)");
+		       statement2 = dbInterface.createPreparedStatement("INSERT INTO PlayersInTeam(teamId, userId) VALUES (?, ?)");
 		    }
-		    statement.setInt(1, k.teamId.id);
-		    statement.setInt(2, k.userId.id);
+		    statement2.setInt(1, k.teamId.id);
+		    statement2.setInt(2, k.userId.id);
+                    statement2.execute();
 		}
 	    }
 	}
@@ -93,7 +95,8 @@ public class TeamRepository implements ITeamRepository {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));
 		team.setCapitan(new UserId(rs.getInt("capId")));
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
+                Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 		    while (rs2.next()) {
 			PlayerInTeam pit = new PlayerInTeam();
 			pit.teamId = team.id;
@@ -101,8 +104,10 @@ public class TeamRepository implements ITeamRepository {
 			pit.joinDate = rs2.getDate("joinDate");
 			team.addPlayer(pit);
 		    }
+                   rs2.close();
 		set.add(team);
 	    }
+            rs.close();
 	    return set;
 	}
 	catch (Exception exc) {
@@ -118,7 +123,8 @@ public class TeamRepository implements ITeamRepository {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));
 		team.setCapitan(new UserId(rs.getInt("capId")));
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
+                Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 		while (rs2.next()) {
 		    PlayerInTeam pit = new PlayerInTeam();
 		    pit.teamId = team.id;
@@ -145,7 +151,8 @@ public class TeamRepository implements ITeamRepository {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));
 		team.setCapitan(new UserId(rs.getInt("capId")));
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
+                Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 		while (rs2.next()) {
 		    PlayerInTeam pit = new PlayerInTeam();
 		    pit.teamId = team.id;
@@ -177,7 +184,8 @@ public class TeamRepository implements ITeamRepository {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));
 		team.setCapitan(new UserId(rs.getInt("capId")));
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
+                Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 		while (rs2.next()) {
 		    PlayerInTeam pit = new PlayerInTeam();
 		    pit.teamId = team.id;
