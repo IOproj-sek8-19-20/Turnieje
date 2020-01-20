@@ -249,6 +249,7 @@ public class TeamRepository implements ITeamRepository {
 	    prepStatement.setInt(3, team.id.id);
 	    prepStatement.setString(1, team.getName());
 	    prepStatement.setInt(2, team.getCapitan().id);
+	    rs.close();
 	    return prepStatement.executeUpdate() > 0;
 	}
 	catch (Exception exc) {
