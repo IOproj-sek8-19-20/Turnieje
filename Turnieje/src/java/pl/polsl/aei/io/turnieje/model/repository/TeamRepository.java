@@ -206,7 +206,7 @@ public class TeamRepository implements ITeamRepository {
 	    Statement statement = dbInterface.createStatement();
 	    ResultSet rs = statement.executeQuery(String.format("SELECT userId, teamId FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 	    while (rs.next()) {
-		int currentId = rs.getInt("usreId");
+		int currentId = rs.getInt("userId");
 		boolean del = true;
 		for (PlayerInTeam k : team.getPlayers()) {
 		    if (currentId == k.userId.id) {
