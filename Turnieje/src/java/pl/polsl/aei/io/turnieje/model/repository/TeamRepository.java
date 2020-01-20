@@ -93,7 +93,7 @@ public class TeamRepository implements ITeamRepository {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));
 		team.setCapitan(new UserId(rs.getInt("capId")));
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=&d", team.id.id));
+		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 		    while (rs2.next()) {
 			PlayerInTeam pit = new PlayerInTeam();
 			pit.teamId = team.id;
@@ -118,7 +118,7 @@ public class TeamRepository implements ITeamRepository {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));
 		team.setCapitan(new UserId(rs.getInt("capId")));
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=&d", team.id.id));
+		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 		while (rs2.next()) {
 		    PlayerInTeam pit = new PlayerInTeam();
 		    pit.teamId = team.id;
@@ -145,7 +145,7 @@ public class TeamRepository implements ITeamRepository {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));
 		team.setCapitan(new UserId(rs.getInt("capId")));
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=&d", team.id.id));
+		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 		while (rs2.next()) {
 		    PlayerInTeam pit = new PlayerInTeam();
 		    pit.teamId = team.id;
@@ -177,7 +177,7 @@ public class TeamRepository implements ITeamRepository {
 		Team team = new Team(rs.getInt("teamId"));
 		team.setName(rs.getString("name"));
 		team.setCapitan(new UserId(rs.getInt("capId")));
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=&d", team.id.id));
+		ResultSet rs2 = statement.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 		while (rs2.next()) {
 		    PlayerInTeam pit = new PlayerInTeam();
 		    pit.teamId = team.id;
