@@ -11,6 +11,7 @@ INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('bedres2
 INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('cedres3@email.com', '3333', 'Imie3', 'Nazwisko3', TRUE);
 INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('dres4@email.com', '4444', 'Imie4', 'Nazwisko4', TRUE);
 INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('abdres5@email.com', '5555', 'Imie5', 'Nazwisko5', TRUE);
+INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('123', '123', 'Tester', 'Testowy', TRUE);
 
 INSERT INTO Teams(name, capId) VALUES ('Team1', 1);
 INSERT INTO Teams(name, capId) VALUES ('Team2', 2);
