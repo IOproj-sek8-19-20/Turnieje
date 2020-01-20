@@ -45,12 +45,12 @@ CREATE TABLE Matches (
 	matchDate DATE,
 	finished BOOLEAN,
 	winner INTEGER,
-	Teams1Id INTEGER,
-	Teams2Id INTEGER,
+	team1Id INTEGER,
+	team2Id INTEGER,
 	CONSTRAINT Matches_tourId_fk FOREIGN KEY (tourId) REFERENCES Tournaments(tourId),
 	CONSTRAINT Matches_winner_fk FOREIGN KEY (winner) REFERENCES Teams(teamId),
-	CONSTRAINT Matches_Teams1Id_fk FOREIGN KEY (winner) REFERENCES Teams(teamId),
-	CONSTRAINT Matches_Teams2Id_fk FOREIGN KEY (winner) REFERENCES Teams(teamId)
+	CONSTRAINT Matches_Team1Id_fk FOREIGN KEY (team1Id) REFERENCES Teams(teamId),
+	CONSTRAINT Matches_Team2Id_fk FOREIGN KEY (team2Id) REFERENCES Teams(teamId)
 );
 
 CREATE TABLE PlayersInTeams (
