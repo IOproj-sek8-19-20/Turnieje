@@ -204,7 +204,7 @@ public class TeamRepository implements ITeamRepository {
     public boolean update(Team team) {
 	try {
 	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT userId, teamId FROM PlayersInTeams WHERE teamId=%d", team.id.id));
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 	    while (rs.next()) {
 		int currentId = rs.getInt("userId");
 		boolean del = true;
