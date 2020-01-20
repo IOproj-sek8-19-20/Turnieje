@@ -224,7 +224,7 @@ public class TeamRepository implements ITeamRepository {
 		    statement.executeUpdate(String.format("DELETE FROM PlayersInTeams WHERE teamId=%d AND userId=%d", team.id, currentId));
 	    }
 	    for (PlayerInTeam k : team.getPlayers()) {
-		rs.first();
+		rs.absolute(0); 
 		boolean add = true;
 		while (rs.next()) {
 		    if (k.userId.id == rs.getInt("userId")) {
