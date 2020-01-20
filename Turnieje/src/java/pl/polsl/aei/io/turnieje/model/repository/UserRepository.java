@@ -147,6 +147,7 @@ public class UserRepository implements IUserRepository {
 		user.setFirstName(rs.getString("firstName"));
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
+		set.add(user);
 	    }
 	    return set;
 	}
