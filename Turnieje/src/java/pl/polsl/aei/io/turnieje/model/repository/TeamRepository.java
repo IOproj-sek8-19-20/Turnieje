@@ -220,8 +220,10 @@ public class TeamRepository implements ITeamRepository {
 			}
 		    }
 		}
-		if (del)
-		    statement.executeUpdate(String.format("DELETE FROM PlayersInTeams WHERE teamId=%d AND userId=%d", team.id.id, currentId));
+		if (del) {
+		    Statement statement2 = dbInterface.createStatement();
+		    statement2.executeUpdate(String.format("DELETE FROM PlayersInTeams WHERE teamId=%d AND userId=%d", team.id.id, currentId));
+		}
 	    }
 	    for (PlayerInTeam k : team.getPlayers()) {
 		rs.absolute(0); 
