@@ -57,7 +57,14 @@ public class AAPrepareManageTeam extends HttpServlet {
         
         for (User user: usersInTeam)
         {
-            allUsers.remove(user);
+            for (User user2: allUsers)
+            {
+                if(user.id.id==user2.id.id)
+                {
+                    allUsers.remove(user2);
+                    break;
+                }
+            }
         }
         
         HttpSession session = request.getSession(true);

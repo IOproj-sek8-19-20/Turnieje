@@ -6,6 +6,9 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.PlayerInTeam;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
@@ -53,6 +57,8 @@ public class AAManageTeamServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        Date date = new Date();
+        
         String JSONString = request.getParameter("JSONFromCreateTeam");
         JSONObject JSON = new JSONObject(JSONString);
 
@@ -72,13 +78,19 @@ public class AAManageTeamServlet extends HttpServlet {
             toEdit.setCapitan(newCaptain);
         }
         
+        //testowo narazie usuwam wszystkich i na nowo uzupelniam
+        toEdit.getPlayers().clear();
+        
         JSONArray users = JSON.getJSONArray("usersToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
         for(int i=0; i<users.length();i++)
         {
-            System.out.print(users.getString(i));
-            User toAdd = userRepository.getByEmail(users.getString(i));
-            toEdit.addPlayer(toAdd);
+            User newPlayer = userRepository.getByEmail(users.getString(i));
+            PlayerInTeam playerInTeam = new PlayerInTeam();	
+            playerInTeam.teamId = toEdit.id;
+            playerInTeam.userId = newPlayer.id;
+            playerInTeam.joinDate = date;
+            toEdit.addPlayer(playerInTeam);
         }
         
         JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
@@ -90,6 +102,7 @@ public class AAManageTeamServlet extends HttpServlet {
         
         toEdit.setName(teamName);
         teamRepository.update(toEdit);
+        session.setAttribute("actualTeam", toEdit);
         
         response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp");
     }
