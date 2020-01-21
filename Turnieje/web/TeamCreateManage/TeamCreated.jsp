@@ -26,7 +26,7 @@
 
         <script>
         setTimeout(function() {
-            location.replace("/Turnieje/TeamCreateManage/ManageTeam.jsp");
+            location.replace("/Turnieje/PrepareManageTeam?teamName=<%= acutalTeam.getName() %>")
         }, 2000);
         </script>
     </body>

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.PlayerInTeam;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
@@ -94,10 +95,17 @@ public class AAManageTeamServlet extends HttpServlet {
         }
         
         JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
-        //wypisanie dodanych dyscyplin w ramach testu czy dziala
         for(int i=0; i<disciplines.length();i++)
         {
             System.out.print(disciplines.getString(i));
+            for(Discipline discipline: Discipline.values())
+            {
+                String temp = discipline.toString();
+                if(disciplines.getString(i).equals(discipline.toString()))
+                {
+                    toEdit.addDiscipline(discipline);
+                }
+            }
         }
         
         toEdit.setName(teamName);

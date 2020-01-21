@@ -3,6 +3,9 @@
     Created on : 2020-01-09, 17:00:06
     Author     : Daniel Kaleta
 --%>
+<%@page import="java.util.HashSet"%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Discipline"%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Team"%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,13 +18,31 @@
     <body>
 
         <%
-            Set<String> disciplines = new TreeSet<String>();
-            disciplines.add("Pilka nozna");
-            disciplines.add("Koszykowka");
-            disciplines.add("Szachy podwodne");
-            disciplines.add("Bierki");
-            disciplines.add("NONE");
-            boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
+            Team actualTeam = (Team) session.getAttribute("actualTeam");
+            Set<Discipline> teamDisciplines = new HashSet<Discipline>();
+            Set<Discipline> notTeamDisciplines = new HashSet<Discipline>();
+            
+            if(actualTeam!=null)
+            {
+                teamDisciplines = actualTeam.getDisciplines();
+                for(Discipline discipline: Discipline.values())
+                {
+                    if(teamDisciplines.contains(discipline))
+                    {
+                        continue;
+                    }
+                    notTeamDisciplines.add(discipline);
+                }
+            }
+            else
+            {
+                for(Discipline discipline: Discipline.values())
+                {
+                    notTeamDisciplines.add(discipline);
+                }
+            }
+            
+            boolean added = Boolean.parseBoolean(request.getParameter("added"));
         %>
         
         <script>var toFilter="Disciplines"</script>
@@ -35,9 +56,13 @@
         </center>
                 
         <select name="choosedDisciplines" size="7" style="width:100%;" id="choosedDisciplines">
-            <% if(emptyList!=true){
-                for(String discipline: disciplines) {%>
-                <option><%= discipline%></option>
+            <% if(added!=true){
+                for(Discipline discipline: notTeamDisciplines) {%>
+                <option><%= discipline.toString() %></option>
+            <%}}
+            else{
+                for(Discipline discipline: teamDisciplines) {%>
+                <option><%= discipline.toString() %></option>
             <%}}%>
         </select>
 

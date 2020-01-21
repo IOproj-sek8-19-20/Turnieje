@@ -4,9 +4,81 @@
         <servlet-name>CreateTeamServlet</servlet-name>
         <servlet-class>Turnieje.Servlets.AACreateTeamServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManageTeamServlet</servlet-name>
+        <servlet-class>Turnieje.Servlets.AAManageTeamServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateTournamentServlet</servlet-name>
+        <servlet-class>Turnieje.Servlets.AACreateTournamentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageTournamentServlet</servlet-name>
+        <servlet-class>Turnieje.Servlets.AAManageTournamentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrepareCreateTeamServlet</servlet-name>
+        <servlet-class>Turnieje.Servlets.AAPrepareCreateTeamServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrepareCreateTournamentServlet</servlet-name>
+        <servlet-class>Turnieje.Servlets.AAPrepareCreateTournamentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrepareManageTeam</servlet-name>
+        <servlet-class>Turnieje.Servlets.AAPrepareManageTeam</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrepareManageTournament</servlet-name>
+        <servlet-class>Turnieje.Servlets.AAPrepareManageTournament</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrepareTeamsList</servlet-name>
+        <servlet-class>Turnieje.Servlets.AAPrepareTeamsList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrepareTournamentsList</servlet-name>
+        <servlet-class>Turnieje.Servlets.AAPrepareTournamentsList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateTeamServlet</servlet-name>
         <url-pattern>/CreateTeam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageTeamServlet</servlet-name>
+        <url-pattern>/ManageTeam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateTournamentServlet</servlet-name>
+        <url-pattern>/CreateTournament</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageTournamentServlet</servlet-name>
+        <url-pattern>/ManageTournament</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrepareCreateTeamServlet</servlet-name>
+        <url-pattern>/PrepareCreateTeamServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrepareCreateTournamentServlet</servlet-name>
+        <url-pattern>/PrepareCreateTournamentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrepareManageTeam</servlet-name>
+        <url-pattern>/PrepareManageTeam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrepareManageTournament</servlet-name>
+        <url-pattern>/PrepareManageTournament</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrepareTeamsList</servlet-name>
+        <url-pattern>/PrepareTeamsList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrepareTournamentsList</servlet-name>
+        <url-pattern>/PrepareTournamentsList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
