@@ -28,37 +28,37 @@
         <br/><br/>
         
         <a href="/Turnieje/PrepareCreateTeamServlet">
-        <input type = "submit" value = "Stworz druzyne" >
+        <input type = "submit" value = "Stwórz drużynę" >
         </a>
         
         <br/><br/>
          
         <a href="/Turnieje/PrepareCreateTournamentServlet">
-        <input type = "submit" value = "Stworz turniej">
+        <input type = "submit" value = "Stwórz turniej">
         </a>
         
         <br/><br/><br/><br/>
          
         <a href="/Turnieje/PrepareTournamentsList">
-        <input type = "submit" value = "Pokaz turnieje">
+        <input type = "submit" value = "Pokaż turnieje">
         </a>
         
         <br/><br/>
          
         <a href="/Turnieje/PrepareTeamsList">
-        <input type = "submit" value = "Pokaz druzyny">
+        <input type = "submit" value = "Pokaż drużyny">
         </a>
         
         <br/><br/>
          
         <a href="/Turnieje/PrepareTournamentsList?onlyMine=true">
-        <input type = "submit" value = "Pokaz moje turnieje">
+        <input type = "submit" value = "Pokaż moje turnieje">
         </a>
         
         <br/><br/>
          
         <a href="/Turnieje/PrepareTeamsList?onlyMine=true">
-        <input type = "submit" value = "Pokaz moje druzyny">
+        <input type = "submit" value = "Pokaż moje drużyny">
         </a>
 
         

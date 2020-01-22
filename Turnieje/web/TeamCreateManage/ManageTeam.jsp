@@ -2,23 +2,17 @@
     Document   : ManageTeam
     Author     : Daniel Kaleta
 --%>
-<%@page import="pl.polsl.aei.io.turnieje.model.repository.IUserRepository"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
 <%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Discipline"%>
 <%@page import="java.util.Set"%>
 <%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Team"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.TeamId"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.repository.ITeamRepository"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider"%>
-<%@page import="org.json.JSONObject"%>
-<%@page import="org.json.JSONArray"%>
-<%@ page import="java.sql.*" %>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edytuj druzyne</title>
+        <title>Edytuj dru偶yn臋</title>
     </head>
     <!-- 2 inity, 1 dla list uzytkownikow, 2 dla list dyscyplin-->
     <script>var toInit = "Users", toInit2 = "Disciplines";</script>
@@ -26,19 +20,13 @@
         
     <%
         //Sprawdzanie, czy uzytkownik jest zalogowany
-        String user = null;
         if(session.getAttribute("loginUser") == null)
         {
             response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
             return;
         }
-        else 
-        {
-            user = (String) session.getAttribute("loginUser");
-        } 
         
         Team acutalTeam = (Team) session.getAttribute("actualTeam");
-        //
     
         //aktualnie nie do konca, zeby byl jakis podglad po edycji kapitana
         User captain = (User) session.getAttribute("actualTeamCaptain");
@@ -46,13 +34,13 @@
 
     <center>
         
-    <h1>Edytujesz druzyne: <%= acutalTeam.getName()%> o ID <%= acutalTeam.getId().id %>  </h1>
+    <h1>Edytujesz dru偶yn臋: <%= acutalTeam.getName()%> o ID <%= acutalTeam.getId().id %>  </h1>
     
     
     <!--<form action = "ManageTeam" method="get">-->
         
         <!-- Nazwa druzyny -->
-        Nazwa druzyny : <input type = "text" name = "teamName" id="teamName" value="<%= acutalTeam.getName() %>">
+        Nazwa dru偶yny : <input type = "text" name = "teamName" id="teamName" value="<%= acutalTeam.getName() %>">
         
         <br/><br/>
         
@@ -61,16 +49,16 @@
         
         <br/><br/>
        
-        <!-- Dodawanie zawodnik體 (poza lista raczej zbedne
+        <!-- Dodawanie zawodnik贸w (poza lista raczej zbedne
         Dodaj zawodnika (nazwa) : <input type = "text" name = "userToAdd" id="userToAdd">
 
         <br/><br/>-->
 
-        Edytuj zawodnikow (wybierz z listy) :
+        Edytuj zawodnik贸w (wybierz z listy) :
 
         <br/>
 
-        Dostepni: 
+        Dost臋pni: 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         Dodani:
 
@@ -85,7 +73,7 @@
 
         <br/>
 
-        Dostepne: 
+        Dost臋pne: 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
         Dodane:
 
@@ -97,15 +85,15 @@
         <br/><br/>
     <!--</form>-->
     
-    <input type = "submit" value = "Zatwierdz" onclick="temp()">
+    <input type = "submit" value = "Zatwierd藕" onclick="temp()">
     
     <br/><br/>
     
     <!--
-    Powr髏 do menu g?體nego
+    Powr贸t do menu g?贸wnego
     -->
     <form action = "http://localhost:8080/Turnieje/MainMenu.jsp" method="get">
-        <input type = "submit" value = "Powrot">
+        <input type = "submit" value = "Powr贸t">
     </form>
 
     </center>
@@ -118,8 +106,7 @@
         function temp()
         {
             var myVar="Manage";
-            var captain = document.getElementById("captain").value;
-            submit(myVar,captain);
+            submit(myVar);
         }
         function setFieldsAndLists()
         {

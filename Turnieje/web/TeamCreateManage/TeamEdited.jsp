@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Druzyna zedytowana</title>
+        <title>Drużyna zedytowana</title>
     </head>
     <%
         Team editedTeam = (Team) session.getAttribute("actualTeam");
@@ -17,7 +17,7 @@
     
     <body> 
         <center>
-            <h1> Pomyślna edycja druzyny <%= editedTeam.getName() %></h1>
+            <h1> Pomyślna edycja drużyny <%= editedTeam.getName() %></h1>
         </center>   
 
         <script>

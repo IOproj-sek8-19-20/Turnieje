@@ -2,12 +2,13 @@
     Document   : CreateTeam
     Author     : Daniel Kaleta
 --%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Stworz druzyne</title>
+        <title>Stw贸rz dru偶yn臋</title>
     </head>
     <!-- 2 inity, 1 dla list uzytkownikow, 2 dla list dyscyplin-->
     <script>var toInit = "Users", toInit2 = "Disciplines";</script>
@@ -28,7 +29,7 @@
     %>
     <center>
 
-        <h1>Tworzenie druzyny</h1>
+        <h1>Tworzenie dru偶yny</h1>
 
         <!--form w akutalej wersji nie za bardzo uzyteczny 
         <form action="ManageTeam" method="get" id="myForm"> -->
@@ -42,18 +43,18 @@
             
              <br/><br/>
 
-            <!-- Dodawanie zawodnik體 po mailu, ewentualnie do implementacji
+            <!-- Dodawanie zawodnik贸w po mailu, ewentualnie do implementacji
             Dodaj zawodnika (nazwa) : <input type = "text" name = "userToAdd" id="userToAdd">
 
             <br/><br/>-->
             
-            <!-- Dodawanie zawodnik體 -->
+            <!-- Dodawanie zawodnik贸w -->
 
-            Dodaj zawodnika (wybierz z listy) :
+            Dodaj zawodnik贸w (wybierz z listy) :
 
             <br/>
 
-            Dostepni: 
+            Dost臋pni: 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
             Dodani:
 
@@ -68,7 +69,7 @@
 
             <br/>
 
-            Dostepne: 
+            Dost臋pne: 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
             Dodane:
 
@@ -79,13 +80,13 @@
 
             <br/><br/>
             
-            <input type = "submit" value = "Zatwierdz" onclick="temp()">
+            <input type = "submit" value = "Zatwierd藕" onclick="temp()">
             
         <!--
-        Powr髏 do menu g?體nego
+        Powr贸t do menu g?贸wnego
         -->
         <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
-            <input type = "submit" value = "Powrot">
+            <input type = "submit" value = "Powr贸t">
         </form>
             
         <!--</form>-->
@@ -95,8 +96,7 @@
         function temp()
         {
             var myVar="Create";
-            var captain = "<%= user%>";
-            submit(myVar, captain);
+            submit(myVar);
         }
     </script>
     <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>

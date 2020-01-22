@@ -5,7 +5,7 @@
 <%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Tournament"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
-<%@ page import="java.sql.*" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html>
     <head>
@@ -63,11 +63,11 @@
             
             <br/><br/>
             
-            Rozmiar druzyn: <input type="number" id="teamSize" name="teamSize" value="<%= toEdit.getTeamSize() %>" min="1">
+            Rozmiar drużyn: <input type="number" id="teamSize" name="teamSize" value="<%= toEdit.getTeamSize() %>" min="1">
             
             <br/><br/>
             
-            Druzyny 
+            Drużyny 
             <br/>
             Do dodania: 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -83,7 +83,7 @@
         <input type = "submit" value = "Zatwierdz" onclick="temp()">
         
         <!--
-        Powr�t do menu glownego
+        Powrót do menu glownego
         -->
         <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
             <input type = "submit" value = "Powrot">
@@ -97,7 +97,6 @@
             function temp()
             {
                 var myVar="Manage";
-                var admin = <%=user%>
                 submit(myVar);
             }
             //Funkcja do ustawienia nazwy, dyscypliny, trybu rozgrywek, rozmiaru druzyn, oraz druzyn w turnieju

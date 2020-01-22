@@ -1,4 +1,4 @@
-function submit(myVar, captain)
+function submit(myVar)
 {
     //funkcja ta w GET wysyla JSONa zawierajacego nazwe druzyny, tablice jej czlonkow,
     //oraz tablice wybranych dyscyplin.
@@ -11,7 +11,7 @@ function submit(myVar, captain)
     var JSONToSend = "{\"name\":\"" + document.getElementById("teamName").value + "\",";
     
     //kapitan druzyny
-    JSONToSend = JSONToSend + "\"captain\":\"" + captain + "\",";
+    JSONToSend = JSONToSend + "\"captain\":\"" + document.getElementById("captain").value + "\",";
 
     //sekcja uzytkownikow do dodania
     JSONToSend = JSONToSend + " \"usersToAdd\": [";

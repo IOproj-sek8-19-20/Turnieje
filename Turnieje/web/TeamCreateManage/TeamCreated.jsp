@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Druzyna utworzona</title
+        <title>Drużyna utworzona</title
     </head>
     
     <%
@@ -21,7 +21,7 @@
     
     <body>
         <center>
-            <h1> Druzyna o ID: <%= acutalTeam.getId().id %>, nazwie <%= acutalTeam.getName() %> dodana</h1>
+            <h1> Drużyna o ID: <%= acutalTeam.getId().id %>, nazwie <%= acutalTeam.getName() %> dodana</h1>
         </center>   
 
         <script>

@@ -5,11 +5,12 @@
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stworz turniej</title>
+    <title>Stwórz turniej</title>
 </head>
 <%
     //Sprawdzanie, czy uzytkownik jest zalogowany
@@ -61,19 +62,19 @@
             
             <br/><br/>
             
-            Rozmiar druzyn: <input type="number" id="teamSize" name="teamSize" value="1" min="1">
+            Rozmiar drużyn: <input type="number" id="teamSize" name="teamSize" value="1" min="1">
             
             <br/><br/>
         
-            Data rozpoczecia: <input type="date" id="startDate" name="startDate" value="<%=ft.format(date)%>" min="<%=ft.format(date)%>">
+            Data rozpoczęcia: <input type="date" id="startDate" name="startDate" value="<%=ft.format(date)%>" min="<%=ft.format(date)%>">
             
             <br/><br/>
             
-            Data zakonczenia: <input type="date" id="endDate" name="endDate" value="<%=ft.format(date)%>" min="<%=ft.format(date)%>">
+            Data zakończenia: <input type="date" id="endDate" name="endDate" value="<%=ft.format(date)%>" min="<%=ft.format(date)%>">
             
             <br/><br/>
             
-            Druzyny 
+            Drużyny 
             <br/>
             Do dodania: 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -93,7 +94,7 @@
 
             
         <!--
-        Powr�t do menu g?�wnego
+        Powrót do menu g?ównego
         -->
         <br/>
         <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
@@ -106,8 +107,7 @@
             function temp()
             {
                 var myVar="Create";
-                var admin = <%=user%>
-                submit(myVar,admin);
+                submit(myVar);
             }
         </script>
     <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>
