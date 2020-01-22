@@ -39,12 +39,9 @@
         
         Team acutalTeam = (Team) session.getAttribute("actualTeam");
         //
-        
-        RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
-        IUserRepository userRepository = repositoryProvider.getUserRepository();
     
         //aktualnie nie do konca, zeby byl jakis podglad po edycji kapitana
-        User captain = (User) session.getAttribute("loggedUser");
+        User captain = (User) session.getAttribute("actualTeamCaptain");
     %>
 
     <center>
@@ -60,7 +57,7 @@
         <br/><br/>
         
         <!-- Kapitan -->
-        Kapitan: <input type = "text" name = "captain" id="captain" value="<%= userRepository.getById(acutalTeam.getCapitan()).getEmail() %>">
+        Kapitan (email): <input type = "text" name = "captain" id="captain" value="<%= captain.getEmail() %>">
         
         <br/><br/>
        
