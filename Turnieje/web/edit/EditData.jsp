@@ -26,21 +26,21 @@
             var JSONToSend = "{\"firstName\":\"" + document.getElementById("firstName").value + "\",";
             JSONToSend = JSONToSend + "\"type\":\"" + "firstName" + "\"}";
             console.log(JSONToSend);
-            location.replace("/Turnieje/FirstNameChanged?JSON="+ JSONToSend);
+            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
         }
         function submit1()
         {
             var JSONToSend = "{\"lastName\":\"" + document.getElementById("lastName").value + "\",";
             JSONToSend = JSONToSend + "\"type\":\"" + "lastName" + "\"}";
             console.log(JSONToSend);
-            location.replace("/Turnieje/FirstNameChanged?JSON="+ JSONToSend);
+            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
         }
         function submit2()
         {
             var JSONToSend = "{\"email\":\"" + document.getElementById("email").value + "\",";
             JSONToSend = JSONToSend + "\"type\":\"" + "email" + "\"}";
             console.log(JSONToSend);
-            location.replace("/Turnieje/FirstNameChanged?JSON="+ JSONToSend);
+            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
         }
         function submit3()
         {
@@ -48,14 +48,14 @@
             JSONToSend = JSONToSend + "\"newPassword\":\"" + document.getElementById("newPassword").value + "\",";
             JSONToSend = JSONToSend + "\"type\":\"" + "password" + "\"}";
             console.log(JSONToSend);
-            location.replace("/Turnieje/FirstNameChanged?JSON="+ JSONToSend);
+            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
         }
         function submit4()
         {
             var JSONToSend = "{\"password\":\"" + document.getElementById("password").value + "\",";
             JSONToSend = JSONToSend + "\"type\":\"" + "delete" + "\"}";
             console.log(JSONToSend);
-            location.replace("/Turnieje/FirstNameChanged?JSON="+ JSONToSend);
+            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
         }
         
     </script>

@@ -27,54 +27,41 @@
         
         <br/><br/>
         
-        <input type = "submit" value = "Stworz druzyne" onclick="submitCreateTeam()">
+        <a href="/Turnieje/PrepareCreateTeamServlet">
+        <input type = "submit" value = "Stworz druzyne" >
+        </a>
         
         <br/><br/>
-        
-        <input type = "submit" value = "Stworz turniej" onclick="submitCreateTournament()">
+         
+        <a href="/Turnieje/PrepareCreateTournamentServlet">
+        <input type = "submit" value = "Stworz turniej">
+        </a>
         
         <br/><br/><br/><br/>
-        
-        <input type = "submit" value = "Pokaz turnieje" onclick="submitShowTournaments()">
-        
-        <br/><br/>
-        
-        <input type = "submit" value = "Pokaz druzyny" onclick="submitShowTeams()">
+         
+        <a href="/Turnieje/PrepareTournamentsList">
+        <input type = "submit" value = "Pokaz turnieje">
+        </a>
         
         <br/><br/>
-        
-        <input type = "submit" value = "Pokaz moje turnieje" onclick="submitShowMyTournaments()">
+         
+        <a href="/Turnieje/PrepareTeamsList">
+        <input type = "submit" value = "Pokaz druzyny">
+        </a>
         
         <br/><br/>
+         
+        <a href="/Turnieje/PrepareTournamentsList?onlyMine=true">
+        <input type = "submit" value = "Pokaz moje turnieje">
+        </a>
         
-        <input type = "submit" value = "Pokaz moje druzyny" onclick="submitShowMyTeams()">
+        <br/><br/>
+         
+        <a href="/Turnieje/PrepareTeamsList?onlyMine=true">
+        <input type = "submit" value = "Pokaz moje druzyny">
+        </a>
+
         
     </center>
-        <script>
-            function submitCreateTeam()
-            {
-                location.replace("/Turnieje/PrepareCreateTeamServlet");
-            }
-            function submitCreateTournament()
-            {
-                location.replace("/Turnieje/PrepareCreateTournamentServlet");
-            }
-            function submitShowTournaments()
-            {
-                location.replace("/Turnieje/PrepareTournamentsList");
-            }
-            function submitShowTeams()
-            {
-                location.replace("/Turnieje/PrepareTeamsList");
-            }
-            function submitShowMyTournaments()
-            {
-                location.replace("/Turnieje/PrepareTournamentsList?onlyMine=true");
-            }
-            function submitShowMyTeams()
-            {
-                location.replace("/Turnieje/PrepareTeamsList?onlyMine=true");
-            }
-    </script>
     </body>
 </html>

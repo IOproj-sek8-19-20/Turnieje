@@ -51,5 +51,5 @@ function submit(myVar, captain)
     JSONToSend = JSONToSend + JSONArrayOfDisciplinesToAdd + "] }";
 
     console.log(JSONToSend);
-    location.replace("/Turnieje/"+myVar+"Team?JSONFromCreateTeam=" + JSONToSend);
+    location = "/Turnieje/"+myVar+"Team?JSONFromCreateTeam=" + JSONToSend;
 }

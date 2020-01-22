@@ -16,7 +16,7 @@
         <script>
         setTimeout(function() 
         {
-            location.replace("/Turnieje/edit/EditData.jsp")
+            location = "/Turnieje/edit/EditData.jsp"
         }, 2000);
         </script>
     </body>

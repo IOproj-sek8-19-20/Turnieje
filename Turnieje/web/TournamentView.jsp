@@ -47,19 +47,19 @@
         function submitShowBracket()
             {
                 var name = "<%= request.getParameter("tournamentName")%>"
-                location.replace("/Turnieje/TournamentBracketView.jsp?tournamentName="+name);
+                location = "/Turnieje/TournamentBracketView.jsp?tournamentName="+name;
             }
         function submitShowSchedule()
             {
                 var name = "<%= request.getParameter("tournamentName")%>"
-                location.replace("/Turnieje/TournamentScheduleView.jsp?tournamentName="+name);
+                location = "/Turnieje/TournamentScheduleView.jsp?tournamentName="+name;
             }
         function submitShowTeam()
             {
                 var iframe = document.getElementById("Teams");   
                 var select = iframe.contentWindow.document.getElementById("choosedTeams");   
                 var options = select.getElementsByTagName('option');    
-                location.replace("/Turnieje/TeamView.jsp?teamName="+options[select.selectedIndex].text);
+                location = "/Turnieje/TeamView.jsp?teamName="+options[select.selectedIndex].text;
             }
         </script>
     </body>

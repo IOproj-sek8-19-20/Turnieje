@@ -25,7 +25,7 @@
             var JSONToSend = "{\"login\":\"" + document.getElementById("login").value + "\",";
             JSONToSend = JSONToSend + "\"password\":\"" + document.getElementById("login").value+"\"}";
             console.log(JSONToSend);
-            location.replace("/Turnieje/Login?JSONFromLogin="+ JSONToSend);
+            location = "/Turnieje/Login?JSONFromLogin="+ JSONToSend;
      
         }
     </script>

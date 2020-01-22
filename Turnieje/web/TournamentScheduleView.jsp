@@ -30,7 +30,7 @@
     function submitShowTournament()
     {
         var name = "<%= request.getParameter("tournamentName")%>"
-        location.replace("/Turnieje/TournamentView.jsp?tournamentName="+name);
+        location = "/Turnieje/TournamentView.jsp?tournamentName="+name;
     }
     </script>
     </body>

@@ -72,5 +72,5 @@ function submit(myVar)
     }
 
     console.log(JSONToSend);
-    location.replace("/Turnieje/"+myVar+"Tournament?JSONFromCreateTournament=" + JSONToSend);
+    location = "/Turnieje/"+myVar+"Tournament?JSONFromCreateTournament=" + JSONToSend;
 }

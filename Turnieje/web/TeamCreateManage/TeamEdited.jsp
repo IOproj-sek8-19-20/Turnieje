@@ -23,7 +23,7 @@
         <script>
         setTimeout(function() 
         {
-            location.replace("/Turnieje/PrepareManageTeam?teamName=<%= editedTeam.getName() %>")
+            location = "/Turnieje/PrepareManageTeam?teamName=<%= editedTeam.getName() %>"
         }, 2000);
         </script>
     </body>

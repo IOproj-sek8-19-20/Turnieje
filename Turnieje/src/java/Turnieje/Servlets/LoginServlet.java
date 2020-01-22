@@ -60,12 +60,12 @@ public class LoginServlet extends HttpServlet {
            //    {
              ///      if (user.checkpassword(document.getElementById("password").value;))
             //       {
-             //          location.replace("/Turnieje/MainMenu?JSON");
+             //          location = "/Turnieje/MainMenu?JSON";
             //       }
             //   }
             //   else
            //    {
-           //        location.replace("/Turnieje/BadLogin?JSONFromLogin");
+           //        location = "/Turnieje/BadLogin?JSONFromLogin";
            //    }
           //  }
         //   System.out.print(login);

@@ -34,7 +34,7 @@
             JSONToSend = JSONToSend + "\"password2\":\"" + document.getElementById("password2").value + "\",";
             JSONToSend = JSONToSend + "\"checkBox\":\"" + document.getElementById("myCheck").value+"\"}";
             console.log(JSONToSend);
-            location.replace("/Turnieje/Registration?JSONFromRegistration="+ JSONToSend);
+            location = "/Turnieje/Registration?JSONFromRegistration="+ JSONToSend;
         }
         </script>
     </body>

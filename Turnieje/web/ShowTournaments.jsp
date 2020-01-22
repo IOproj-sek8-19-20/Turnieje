@@ -42,7 +42,7 @@
             var iframe = document.getElementById("Tournaments");   //dobieram sie do iframe
             var select = iframe.contentWindow.document.getElementById("choosedTournaments");   //dobieram sie do listy turnieji
             var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-            location.replace("/Turnieje/TournamentView.jsp?tournamentName="+options[select.selectedIndex].text);
+            location = "/Turnieje/TournamentView.jsp?tournamentName="+options[select.selectedIndex].text;
         }
         
         function submitEditTour()
@@ -50,7 +50,7 @@
             var iframe = document.getElementById("Tournaments");   //dobieram sie do iframe
             var select = iframe.contentWindow.document.getElementById("choosedTournaments");   //dobieram sie do listy turnieji
             var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-            location.replace("/Turnieje/PrepareManageTournament?tournamentName="+options[select.selectedIndex].text);
+            location = "/Turnieje/PrepareManageTournament?tournamentName="+options[select.selectedIndex].text;
         }
     </script>
     </body>

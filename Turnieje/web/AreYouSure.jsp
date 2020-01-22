@@ -17,11 +17,11 @@
             var JSONToSend = "{\"firstName\":\"" + "ss" + "\",";
             JSONToSend = JSONToSend + "\"type\":\"" + "deleteforever" + "\"}";
             console.log(JSONToSend);
-            location.replace("/Turnieje/AccountDelete");
+            location = "/Turnieje/AccountDelete";
         }
         function submit1()
         {
-            location.replace("/Turnieje/edit/EditData.jsp");
+            location = "/Turnieje/edit/EditData.jsp";
         }
     </script>
     </body>

@@ -41,7 +41,7 @@
                 var iframe = document.getElementById("Users");   
                 var select = iframe.contentWindow.document.getElementById("choosedUsers");   
                 var options = select.getElementsByTagName('option');    
-                location.replace("/Turnieje/UserView.jsp?userName="+options[select.selectedIndex].text);
+                location = "/Turnieje/UserView.jsp?userName="+options[select.selectedIndex].text;
             }
     </script>
     </body>

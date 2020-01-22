@@ -17,7 +17,7 @@
         <script>
             function submit()
             {
-                       location.replace("/Turnieje/Registration.jsp");
+                       location = "/Turnieje/Registration.jsp";
             }
     </script>
     </body>
