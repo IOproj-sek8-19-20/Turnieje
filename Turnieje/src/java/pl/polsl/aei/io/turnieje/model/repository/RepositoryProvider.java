@@ -11,7 +11,6 @@ import java.sql.SQLException;
  * Singleton repositories objects factory.
  * 
  * @author Piotr Uhl
- * @version 0.1.0
  */
 public class RepositoryProvider {
     //<editor-fold desc="Public">

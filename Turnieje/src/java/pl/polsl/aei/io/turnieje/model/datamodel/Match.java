@@ -11,7 +11,6 @@ import java.util.Date;
  * Representation of single match.
  * 
  * @author Piotr Uhl
- * @version 0.1.1
  */
 public class Match {
     //<editor-fold defaultstate="collapsed" desc="Fields">

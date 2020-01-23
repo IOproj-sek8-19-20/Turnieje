@@ -11,7 +11,6 @@ import java.util.Date;
  * Representation of single team in single tournament.
  * 
  * @author Piotr Uhl
- * @version 1.0.0
  */
 public class TeamInTournament { //struct
     public TournamentId tourId;
