@@ -20,7 +20,8 @@
         
     <%
         //Sprawdzanie, czy uzytkownik jest zalogowany
-        if(session.getAttribute("loginUser") == null)
+        User user = (User) session.getAttribute("loggedUser");
+        if(user == null)
         {
             response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
             return;

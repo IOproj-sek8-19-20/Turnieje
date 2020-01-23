@@ -13,4 +13,5 @@ function deleteFunction(toDelete)
     select2.add(option);
 
     select.remove(select.selectedIndex);
+    myCountingFunction(toDelete);
 }

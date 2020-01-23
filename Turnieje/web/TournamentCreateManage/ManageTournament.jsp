@@ -2,6 +2,7 @@
     Document   : ManageTournament
     Author     : Daniel Kaleta
 --%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
 <%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Tournament"%>
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
@@ -15,21 +16,17 @@
     </head>
 
     <script>var toInit="Teams"</script>
-    <body onload="init(toInit);setFieldsAndLists();">
+    <body onload="init(toInit);setFieldsAndLists();myCountingFunction(toInit)">
         
     <%
         //Sprawdzanie, czy uzytkownik jest zalogowany
-        String user = null;
-        if(session.getAttribute("loginUser") == null)
+        User user = (User) session.getAttribute("loggedUser");
+        if(user == null)
         {
             response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
             return;
         }
-        else 
-        {
-            user = (String) session.getAttribute("loginUser");
-        }
-        
+
         Tournament toEdit = (Tournament) session.getAttribute("tournamentToEdit");
     %>
 
@@ -42,7 +39,7 @@
         <br/><br/>
         
         <!-- Administrator -->
-        Administrator: <input type = "text" name = "admin" id="admin" value="<%= toEdit.getAdmin().id %>">
+        Administrator: <input type = "text" name = "admin" id="admin" value="<%= user.getEmail() %>">
         
         <br/><br/>
         
@@ -131,6 +128,7 @@
     <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>
     <script src="/Turnieje/JavaScripts/forLists/addFunction.js"></script>
     <script src="/Turnieje/JavaScripts/forLists/deleteFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/optionsCounter.js"></script>
     <script src="/Turnieje/JavaScripts/submits/createTournamentSubmit.js"></script>
     </body>
 </html>

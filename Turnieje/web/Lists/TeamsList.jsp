@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Teams list</title>
     </head>
+    <script>var toFilter="Teams"</script>
     <body>
 
         <%
@@ -21,14 +22,16 @@
             boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
         %>
         
-        <script>var toFilter="Teams"</script>
+
+        <center>
+            
         Nazwa: <input type = "text" name = "searchTeams" id="searchTeams" onkeyup="myFilterFunction(toFilter)">
         
-        <center>
             <select name="sorting" size="1" style="width:40%;" id="sorting">
                 <option selected>A-Z</option>
                 <option>Z-A</option>
             </select>
+            Ilość: <input type="text" id="amount" value="" style="width:20%;" readonly>
         </center>
                 
         <select name="choosedTeams" size="7" style="width:100%;" id="choosedTeams">
@@ -40,9 +43,11 @@
 
         <script src="/Turnieje/JavaScripts/forLists/filterFunction.js"></script>
         <script src="/Turnieje/JavaScripts/forLists/sortingFunction.js"></script>
+        <script src="/Turnieje/JavaScripts/forLists/optionsCounter.js"></script>
         <script>
             sort = document.getElementById("sorting");
-            var toSort="Teams";
+            
+            var toSort ="Teams";
             sort.addEventListener("change", mySortingFunction.bind(this,toSort),false);  
         </script>
     </body>

@@ -2,6 +2,8 @@
     Document   : CreateTournament
     Author     : Daniel Kaleta
 --%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
+<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
@@ -14,27 +16,18 @@
 </head>
 <%
     //Sprawdzanie, czy uzytkownik jest zalogowany
-    String user = null;
-    if(session.getAttribute("loginUser") == null)
+    User user = (User) session.getAttribute("loggedUser");
+    if(user == null)
     {
         response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
         return;
     }
-    else 
-    {
-        user = (String) session.getAttribute("loginUser");
-    } 
 
     Date date = new Date();
     SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
-
-    /*Calendar c = Calendar.getInstance();
-    c.setTime(date);
-    c.add(Calendar.DATE, 1);
-    Date DatePlusOne = c.getTime();*/
 %>
     <script>var toInit="Teams"</script>
-    <body onload="init(toInit)">
+    <body onload="init(toInit),myCountingFunction(toInit)">
         <center>
             
              <h1>Tworzenie turnieju</h1>
@@ -42,7 +35,10 @@
             <!--<form action = "CreateTournament" method="get">-->
             Nazwa turnieju : <input type = "text" name = "tournamentName" id="tournamentName">
 
+            <br/><br/>
 
+            <!-- Administrator -->
+            Administrator: <input type = "text" name = "admin" id="admin" value="<%= user.getEmail() %>">
             
             <br/><br/>
             
@@ -56,8 +52,11 @@
             
             Tryb rozgrywek:
             <select name="tournamentMode" size="1" id="tournamentMode">
-                    <option>Tryb 1</option>
-                    <option>Tryb 2</option>
+            
+            <% for(TournamentMode mode: TournamentMode.values())
+                { %>
+                    <option> <%= mode.toString() %></option>
+                <% } %>
             </select>
             
             <br/><br/>
@@ -113,6 +112,7 @@
     <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>
     <script src="/Turnieje/JavaScripts/forLists/addFunction.js"></script>
     <script src="/Turnieje/JavaScripts/forLists/deleteFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/optionsCounter.js"></script>
     <script src="/Turnieje/JavaScripts/submits/createTournamentSubmit.js"></script>
     </body>
 </html>
