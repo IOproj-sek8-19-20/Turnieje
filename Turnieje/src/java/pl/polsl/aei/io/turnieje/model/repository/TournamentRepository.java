@@ -78,11 +78,11 @@ public class TournamentRepository implements ITournamentRepository {
 	}
 	return ret;
     }
-    @Override
+    /*@Override
     public boolean delete(Tournament tournament) {
 	return delete(tournament.id);
-    }
-    @Override
+    }*/
+    /*@Override
     public boolean delete(TournamentId tournament) {
 	try {
 	    Statement statement = dbInterface.createStatement();
@@ -94,7 +94,7 @@ public class TournamentRepository implements ITournamentRepository {
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);
 	}
-    }
+    }*/
     @Override
     public Set<Tournament> getAll() {
 	try {
