@@ -15,8 +15,8 @@ import java.util.Date;
 public class TeamInTournament { //struct
     public TournamentId tourId;
     public TeamId teamId;
-    public int groupNr;
+    public Integer groupNr;
     public Date joinDate;
-    public int points;
-    public boolean eliminated;
+    public Integer points;
+    public Boolean eliminated;
 }
