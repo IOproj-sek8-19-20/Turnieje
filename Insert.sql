@@ -2,7 +2,7 @@ INSERT INTO Disciplines(discname) VALUES ('Discipline1');
 INSERT INTO Disciplines(discname) VALUES ('Discipline2');
 INSERT INTO Disciplines(discname) VALUES ('Discipline3');
 
-INSERT INTO TournamentModes(modename) VALUES ('Mode1');
+INSERT INTO TournamentModes(modename) VALUES ('Tryb Pucharowy');
 INSERT INTO TournamentModes(modename) VALUES ('Mode2');
 INSERT INTO TournamentModes(modename) VALUES ('Mode3');
 
