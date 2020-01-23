@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
+import pl.polsl.aei.io.turnieje.model.datamodel.TeamInTournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
@@ -31,6 +32,7 @@ public class TournamentRepository implements ITournamentRepository {
     
     @Override
     public TournamentId add(Tournament tournament) {
+	TournamentId ret = null;
 	try {
 	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Tournaments(name, startingDate, endingDate, adminId, modeId, discId, teamSize, finished) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	    statement.setString(1, tournament.getName());
@@ -44,13 +46,37 @@ public class TournamentRepository implements ITournamentRepository {
 	    statement.execute();
 	    ResultSet rs = statement.getGeneratedKeys();
 	    if (rs.next()) {
-	       return new TournamentId(rs.getInt(1));
+	        ret = new TournamentId(rs.getInt(1));
+		for (TeamInTournament k : tournament.getTeams()) {
+                    PreparedStatement statement2;
+		    statement2 = dbInterface.createPreparedStatement("INSERT INTO TeamsInTournaments(tourId, teamId, joinDate, points, eliminated, groupNr) VALUES (?, ?, ?, ?, ?, ?)");
+		    statement2.setInt(1, k.tourId.id);
+		    statement2.setInt(2, k.teamId.id);
+		    if (k.joinDate != null)
+			statement2.setDate(3, new java.sql.Date(k.joinDate.getTime()));
+		    else
+			statement2.setNull(3, java.sql.Types.DATE);
+		    //uncomment ifs if throws NullPointerException
+		    //if (k.points != null) 
+			statement2.setInt(4, k.points);
+		    //else
+			//statement2.setNull(4, java.sql.Types.INTEGER);
+		    //if (k.eliminated != null)
+			statement2.setBoolean(5, k.eliminated);
+		    //else
+			//statement2.setNull(5, java.sql.Types.BOOLEAN);
+		    //if (k.groupNr != null)
+			statement2.setInt(6, k.groupNr);
+		    //else
+			//statement2.setNull(6, java.sql.Types.INTEGER);
+                    statement2.execute();
+		}
 	    }
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);
 	}
-	return null;
+	return ret;
     }
     @Override
     public boolean delete(Tournament tournament) {
