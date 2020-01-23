@@ -215,17 +215,89 @@ public class TournamentRepository implements ITournamentRepository {
     @Override
     public boolean update(Tournament tournament) {
 	try {
-	    PreparedStatement statement = dbInterface.createPreparedStatement("UPDATE Tournaments SET name=?, startingDate=?, endingDate=?, adminId=?, modeId=?, discId=?, teamSize=?, finished=? WHERE tourId=?");
-	    statement.setInt(9, tournament.id.id);
-	    statement.setString(1, tournament.getName());
-	    statement.setDate(2, new java.sql.Date(tournament.getStartingDate().getTime()));
-	    statement.setDate(3, new java.sql.Date(tournament.getEndingDate().getTime()));
-	    statement.setInt(4, tournament.getAdmin().id);
-	    statement.setInt(5, 1); //todo: updating modeId
-	    statement.setInt(6, 1); //todo: updating discId
-	    statement.setInt(7, tournament.getTeamSize());
-	    statement.setBoolean(8, tournament.getFinished());
-	    return statement.executeUpdate() > 0;
+	    
+	    Statement statement = dbInterface.createStatement();
+	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM TeamsInTournaments WHERE tourId=%d", tournament.id.id));
+	    while (rs.next()) {
+		int currentId = rs.getInt("teamId");
+		boolean del = true;
+		for (TeamInTournament k : tournament.getTeams()) {
+		    if (currentId == k.teamId.id) {
+			del = false;
+			if (!rs.getDate("joinDate").equals(new java.sql.Date(k.joinDate.getTime())) || rs.getInt("points") != (k.points) || rs.getBoolean("eliminated") != k.eliminated || rs.getInt("groupNr") != k.groupNr) { //ale potwór
+			    PreparedStatement prepStatement = dbInterface.createPreparedStatement("UPDATE TeamsInTournaments SET joinDate=?, points=?, eliminated=?, groupNr=? WHERE tourId=? AND teamId=?");
+			    prepStatement.setInt(5, tournament.id.id);
+			    prepStatement.setInt(6, currentId);
+			    if (k.joinDate != null)
+				prepStatement.setDate(3, new java.sql.Date(k.joinDate.getTime()));
+			    else
+				prepStatement.setNull(3, java.sql.Types.DATE);
+			    //uncomment ifs if throws NullPointerException
+			    //if (k.points != null) 
+				prepStatement.setInt(4, k.points);
+			    //else
+				//statement2.setNull(4, java.sql.Types.INTEGER);
+			    //if (k.eliminated != null)
+				prepStatement.setBoolean(5, k.eliminated);
+			    //else
+				//statement2.setNull(5, java.sql.Types.BOOLEAN);
+			    //if (k.groupNr != null)
+				prepStatement.setInt(6, k.groupNr);
+			    //else
+			    //statement2.setNull(6, java.sql.Types.INTEGER);
+			    prepStatement.executeUpdate();
+			}
+		    }
+		}
+		if (del) {
+		    Statement statement2 = dbInterface.createStatement();
+		    statement2.executeUpdate(String.format("DELETE FROM TeamsInTournament WHERE tourId=%d AND teamId=%d", tournament.id.id, currentId));
+		}
+	    }
+	    for (TeamInTournament k : tournament.getTeams()) {
+		rs.absolute(0); 
+		boolean add = true;
+		while (rs.next()) {
+		    if (k.teamId.id == rs.getInt("teamId")) {
+			add = false;
+		    }
+		}
+		if (add) {
+		    PreparedStatement prepStatement;
+		    prepStatement = dbInterface.createPreparedStatement("INSERT INTO TeamsInTournaments(tourId, teamId, joinDate, points, eliminated, groupNr) VALUES (?, ?, ?, ?, ?, ?)");
+		    prepStatement.setInt(1, k.tourId.id);
+		    prepStatement.setInt(2, k.teamId.id);
+		    if (k.joinDate != null)
+			prepStatement.setDate(3, new java.sql.Date(k.joinDate.getTime()));
+		    else
+			prepStatement.setNull(3, java.sql.Types.DATE);
+		    //uncomment ifs if throws NullPointerException
+		    //if (k.points != null) 
+			prepStatement.setInt(4, k.points);
+		    //else
+			//statement2.setNull(4, java.sql.Types.INTEGER);
+		    //if (k.eliminated != null)
+			prepStatement.setBoolean(5, k.eliminated);
+		    //else
+			//statement2.setNull(5, java.sql.Types.BOOLEAN);
+		    //if (k.groupNr != null)
+			prepStatement.setInt(6, k.groupNr);
+		    //else
+			//statement2.setNull(6, java.sql.Types.INTEGER);
+                    prepStatement.executeUpdate();
+		}
+	    }
+	    PreparedStatement prepStatement = dbInterface.createPreparedStatement("UPDATE Tournaments SET name=?, startingDate=?, endingDate=?, adminId=?, modeId=?, discId=?, teamSize=?, finished=? WHERE tourId=?");
+	    prepStatement.setInt(9, tournament.id.id);
+	    prepStatement.setString(1, tournament.getName());
+	    prepStatement.setDate(2, new java.sql.Date(tournament.getStartingDate().getTime()));
+	    prepStatement.setDate(3, new java.sql.Date(tournament.getEndingDate().getTime()));
+	    prepStatement.setInt(4, tournament.getAdmin().id);
+	    prepStatement.setInt(5, 1); //todo: updating modeId
+	    prepStatement.setInt(6, 1); //todo: updating discId
+	    prepStatement.setInt(7, tournament.getTeamSize());
+	    prepStatement.setBoolean(8, tournament.getFinished());
+	    return prepStatement.executeUpdate() > 0;
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);
