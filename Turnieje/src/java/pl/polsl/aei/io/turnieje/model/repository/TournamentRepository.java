@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
+import pl.polsl.aei.io.turnieje.model.datamodel.TeamId;
 import pl.polsl.aei.io.turnieje.model.datamodel.TeamInTournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
@@ -111,6 +112,19 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setDiscipline(Discipline.NONE); //temp, todo
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
+		Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT teamId, joinDate, points, eliminated, groupNr FROM TeamsInTournaments WHERE tourId=%d", tournament.id.id));
+		while (rs2.next()) {
+		    TeamInTournament tit = new TeamInTournament();
+		    tit.tourId = tournament.id;
+		    tit.teamId = new TeamId(rs2.getInt("teamId"));
+		    tit.joinDate = rs2.getDate("joinDate");
+		    tit.points = rs2.getInt("points");
+		    tit.eliminated = rs2.getBoolean("eliminated");
+		    tit.groupNr = rs2.getInt("groupNr");
+		    tournament.addTeam(tit);
+		}
+	        rs2.close();
 		set.add(tournament);
 	    }
 	    return set;
