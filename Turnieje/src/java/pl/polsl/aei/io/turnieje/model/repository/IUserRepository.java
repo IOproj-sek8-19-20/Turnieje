@@ -15,7 +15,6 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Repository interface for users.
  * 
  * @author Piotr Uhl
- * @version 1.0.1
  */
 public interface IUserRepository {
     public UserId add(User user);

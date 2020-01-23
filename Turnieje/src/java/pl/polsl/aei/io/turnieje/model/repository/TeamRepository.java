@@ -21,7 +21,6 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for teams.
  * 
  * @author Piotr Uhl
- * @version 0.2.4
  */
 public class TeamRepository implements ITeamRepository {
     

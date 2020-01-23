@@ -12,7 +12,6 @@ import java.util.Set;
  * Representation of single team.
  * 
  * @author Piotr Uhl
- * @version 0.1.1
  */
 public class Team {
     //<editor-fold defaultstate="collapsed" desc="Fields">

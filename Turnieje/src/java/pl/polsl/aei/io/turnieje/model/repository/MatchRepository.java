@@ -21,7 +21,6 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
  * Realization of repository interface for matches.
  * 
  * @author Piotr Uhl
- * @version 0.2.3
  */
 public class MatchRepository implements IMatchRepository {
     

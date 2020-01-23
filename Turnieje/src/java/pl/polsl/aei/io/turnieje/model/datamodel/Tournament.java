@@ -13,7 +13,6 @@ import java.util.Set;
  * Representation of single tournament.
  * 
  * @author Piotr Uhl
- * @version 0.1.1
  */
 public class Tournament {
     //<editor-fold defaultstate="collapsed" desc="Fields">

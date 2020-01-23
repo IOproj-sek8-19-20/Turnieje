@@ -17,7 +17,6 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TournamentId;
  * Repository interface for match.
  * 
  * @author Piotr Uhl
- * @version 1.0.1
  */
 public interface IMatchRepository {
     public MatchId addMatch(Match match);

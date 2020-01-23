@@ -11,7 +11,6 @@ import java.util.Date;
  * Representation of single user in single team.
  * 
  * @author Piotr Uhl
- * @version 1.0.0
  */
 public class PlayerInTeam { //struct
     public TeamId teamId;

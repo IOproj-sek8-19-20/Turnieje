@@ -9,7 +9,6 @@ package pl.polsl.aei.io.turnieje.model.datamodel;
  * UserId datatype.
  * 
  * @author Piotr Uhl
- * @version 1.0.0
  */
 public class UserId extends Id {
     public UserId(int id) {

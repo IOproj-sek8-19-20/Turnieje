@@ -9,7 +9,6 @@ package pl.polsl.aei.io.turnieje.model.datamodel;
  * Id datatype pattern
  * 
  * @author Piotr Uhl
- * @version 1.0.0
  */
 public abstract class Id {
     public final int id;

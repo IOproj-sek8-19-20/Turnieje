@@ -16,7 +16,6 @@ import java.sql.Statement;
  * Internal package database connection interface.
  * 
  * @author Piotr Uhl
- * @version 0.1.1
  */
 class DBInterface {
     private Connection connection = null;

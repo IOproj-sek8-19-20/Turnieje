@@ -20,7 +20,6 @@ import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
  * Realization of repository interface for tournaments.
  * 
  * @author Piotr Uhl
- * @version 0.2.4
  */
 public class TournamentRepository implements ITournamentRepository {
     
