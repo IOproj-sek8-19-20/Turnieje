@@ -149,6 +149,19 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setDiscipline(Discipline.NONE); //temp, todo
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
+		Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT teamId, joinDate, points, eliminated, groupNr FROM TeamsInTournaments WHERE tourId=%d", tournament.id.id));
+		while (rs2.next()) {
+		    TeamInTournament tit = new TeamInTournament();
+		    tit.tourId = tournament.id;
+		    tit.teamId = new TeamId(rs2.getInt("teamId"));
+		    tit.joinDate = rs2.getDate("joinDate");
+		    tit.points = rs2.getInt("points");
+		    tit.eliminated = rs2.getBoolean("eliminated");
+		    tit.groupNr = rs2.getInt("groupNr");
+		    tournament.addTeam(tit);
+		}
+	        rs2.close();
 		return tournament;
 	    }
 	    else {
@@ -175,6 +188,19 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setDiscipline(Discipline.NONE); //temp, todo
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
+		Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT teamId, joinDate, points, eliminated, groupNr FROM TeamsInTournaments WHERE tourId=%d", tournament.id.id));
+		while (rs2.next()) {
+		    TeamInTournament tit = new TeamInTournament();
+		    tit.tourId = tournament.id;
+		    tit.teamId = new TeamId(rs2.getInt("teamId"));
+		    tit.joinDate = rs2.getDate("joinDate");
+		    tit.points = rs2.getInt("points");
+		    tit.eliminated = rs2.getBoolean("eliminated");
+		    tit.groupNr = rs2.getInt("groupNr");
+		    tournament.addTeam(tit);
+		}
+	        rs2.close();
 		return tournament;
 	    }
 	    else {
