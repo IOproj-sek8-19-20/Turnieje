@@ -52,34 +52,28 @@ public class AAPrepareTournamentsList extends HttpServlet {
         boolean onlyMine = Boolean.parseBoolean(request.getParameter("onlyMine"));
         
         Set<Tournament> allTournaments = tournamentRepository.getAll();
+        Set<String> allTournamentsNames = new HashSet<>();
         
         if(onlyMine==true)
         {
             User admin = (User) session.getAttribute("loggedUser");
-            Set<Tournament> myTournaments = new HashSet<>();
-            
             for(Tournament tournament: allTournaments)
             {
                 if(tournament.getAdmin().id == admin.getId().id)
                 {
-                    try
-                    {
-                        myTournaments.add(tournament);
-                    }
-                    catch(Exception ex)
-                    {
-                        System.out.print(ex.getMessage());
-                    }
+                    allTournamentsNames.add(tournament.getName());
                 }
             }
-            session.setAttribute("tournamentsToShow", myTournaments);
         }
         else
         {
-            session.setAttribute("tournamentsToShow", allTournaments);
+           for(Tournament tournament: allTournaments)
+           {
+               allTournamentsNames.add(tournament.getName());
+           }
         }
         
-        
+        session.setAttribute("tournamentsToShow", allTournamentsNames);
         response.sendRedirect("/Turnieje/ShowTournaments.jsp");
     }
 

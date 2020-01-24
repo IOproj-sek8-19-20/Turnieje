@@ -56,9 +56,9 @@ public class AAPrepareTeamsList extends HttpServlet {
         
         if(onlyMine==true)
         {
+            User captain = (User) session.getAttribute("loggedUser");
             for(Team team: allTeams)
             {
-                User captain = (User) session.getAttribute("loggedUser");
                 if(team.getCapitan().id ==captain.getId().id)
                 {
                     allTeamsName.add(team.getName());
