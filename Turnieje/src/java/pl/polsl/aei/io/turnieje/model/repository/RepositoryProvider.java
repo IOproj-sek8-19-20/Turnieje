@@ -31,6 +31,9 @@ public class RepositoryProvider {
     public IMatchRepository getMatchRepository() {
 	return new MatchRepository(dbInterface);
     }
+    public IDisciplineRepository getDisciplineRepository() {
+	return new DisciplineRepository(dbInterface);
+    }
     //</editor-fold>  
     //<editor-fold defaultstate="collapsed" desc="Private">
     private static RepositoryProvider instance = null;
