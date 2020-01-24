@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -53,12 +54,21 @@ public class AAPrepareCreateTeamServlet extends HttpServlet {
         {
             allUsersEmails.add(user.getEmail());
         }
+
+        Set<String> notTeamDisciplinesNames = new HashSet<>();
+        for(Discipline discipline: Discipline.values())
+        {
+            notTeamDisciplinesNames.add(discipline.name());
+        }
         
         Set<String> usersInTeamEmails = new HashSet<>();    //pusty
+        Set<String> teamDisciplinesNames = new HashSet<>();      //pusty
         
         HttpSession session = request.getSession(true);
         session.setAttribute("allUsers", allUsersEmails);
         session.setAttribute("usersInTeam", usersInTeamEmails);
+        session.setAttribute("teamDisciplines", teamDisciplinesNames);
+        session.setAttribute("notTeamDisciplines", notTeamDisciplinesNames);
 
         response.sendRedirect("/Turnieje/TeamCreateManage/CreateTeam.jsp");
     }

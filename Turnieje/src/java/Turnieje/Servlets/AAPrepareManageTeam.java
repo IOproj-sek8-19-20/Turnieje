@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
@@ -80,14 +81,27 @@ public class AAPrepareManageTeam extends HttpServlet {
             allUsersEmails.add(user.getEmail());
         }
         
+        Set<Discipline> teamDisciplines = actualTeam.getDisciplines();
+        Set<String> teamDisciplinesNames = new HashSet<>();
+        Set<String> notTeamDisciplinesNames = new HashSet<>();
+        for(Discipline discipline: Discipline.values())
+        {
+            if(teamDisciplines.contains(discipline))
+            {
+                continue;
+            }
+            notTeamDisciplinesNames.add(discipline.name());
+        }
+        
         User actualTeamCaptain = userRepository.getById(actualTeam.getCapitan());
         
         HttpSession session = request.getSession(true);
         session.setAttribute("allUsers", allUsersEmails);
         session.setAttribute("usersInTeam", usersInTeamEmails);
-
         session.setAttribute("actualTeam", actualTeam);
         session.setAttribute("actualTeamCaptain", actualTeamCaptain);
+        session.setAttribute("teamDisciplines", teamDisciplinesNames);
+        session.setAttribute("notTeamDisciplines", notTeamDisciplinesNames);
         
         response.sendRedirect("/Turnieje/TeamCreateManage/ManageTeam.jsp");
     }

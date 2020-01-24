@@ -3,7 +3,6 @@
     Created on : 2020-01-12, 13:39:42
     Author     : Daniel Kaleta
 --%>
-<%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
