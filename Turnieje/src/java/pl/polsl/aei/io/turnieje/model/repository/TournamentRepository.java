@@ -41,7 +41,7 @@ public class TournamentRepository implements ITournamentRepository {
 	    statement.setDate(3, new java.sql.Date(tournament.getEndingDate().getTime()));
 	    statement.setInt(4, tournament.getAdmin().id);
 	    statement.setInt(5, 1); //todo
-	    statement.setInt(6, 1); //todo
+	    statement.setInt(6, tournament.getDiscipline().id);
 	    statement.setInt(7, tournament.getTeamSize());
 	    statement.setBoolean(8, tournament.getFinished());
 	    statement.execute();
@@ -100,7 +100,7 @@ public class TournamentRepository implements ITournamentRepository {
     public Set<Tournament> getAll() {
 	try {
 	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery("SELECT * FROM Tournaments");
+	    ResultSet rs = statement.executeQuery("SELECT t.* d.discName FROM Tournaments t INNER JOIN Disciplines d ON t.discId=d.discId");
 	    Set<Tournament> set = new HashSet<>();
 	    while (rs.next()) {
 		Tournament tournament = new Tournament(rs.getInt("tourId"));
@@ -109,7 +109,7 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setEndingDate(rs.getDate("endingDate"));
 		tournament.setAdmin(new UserId(rs.getInt("adminId")));
 		tournament.setMode(TournamentMode.NONE); //temp, todo
-		tournament.setDiscipline(Discipline.NONE); //temp, todo
+		tournament.setDiscipline(new Discipline(rs.getInt("discId"), rs.getString("discName")));
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
 		Statement statement2 = dbInterface.createStatement();
@@ -146,7 +146,7 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setEndingDate(rs.getDate("endingDate"));
 		tournament.setAdmin(new UserId(rs.getInt("adminId")));
 		tournament.setMode(TournamentMode.NONE); //temp, todo
-		tournament.setDiscipline(Discipline.NONE); //temp, todo
+		tournament.setDiscipline(new Discipline(rs.getInt("discId"), rs.getString("discName")));
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
 		Statement statement2 = dbInterface.createStatement();
@@ -185,7 +185,7 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setEndingDate(rs.getDate("endingDate"));
 		tournament.setAdmin(new UserId(rs.getInt("adminId")));
 		tournament.setMode(TournamentMode.NONE); //temp, todo
-		tournament.setDiscipline(Discipline.NONE); //temp, todo
+		tournament.setDiscipline(new Discipline(rs.getInt("discId"), rs.getString("discName")));
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
 		Statement statement2 = dbInterface.createStatement();
@@ -215,7 +215,6 @@ public class TournamentRepository implements ITournamentRepository {
     @Override
     public boolean update(Tournament tournament) {
 	try {
-	    
 	    Statement statement = dbInterface.createStatement();
 	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM TeamsInTournaments WHERE tourId=%d", tournament.id.id));
 	    while (rs.next()) {
@@ -294,7 +293,7 @@ public class TournamentRepository implements ITournamentRepository {
 	    prepStatement.setDate(3, new java.sql.Date(tournament.getEndingDate().getTime()));
 	    prepStatement.setInt(4, tournament.getAdmin().id);
 	    prepStatement.setInt(5, 1); //todo: updating modeId
-	    prepStatement.setInt(6, 1); //todo: updating discId
+	    prepStatement.setInt(6, tournament.getDiscipline().id);
 	    prepStatement.setInt(7, tournament.getTeamSize());
 	    prepStatement.setBoolean(8, tournament.getFinished());
 	    return prepStatement.executeUpdate() > 0;
