@@ -6,6 +6,7 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
@@ -46,10 +49,37 @@ public class AAPrepareTournamentsList extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
+        HttpSession session = request.getSession(true);
+        boolean onlyMine = Boolean.parseBoolean(request.getParameter("onlyMine"));
+        
         Set<Tournament> allTournaments = tournamentRepository.getAll();
         
-        HttpSession session = request.getSession(true);
-        session.setAttribute("tournamentsToShow", allTournaments);
+        if(onlyMine==true)
+        {
+            User admin = (User) session.getAttribute("loggedUser");
+            Set<Tournament> myTournaments = new HashSet<>();
+            
+            for(Tournament tournament: allTournaments)
+            {
+                if(tournament.getAdmin().id == admin.getId().id)
+                {
+                    try
+                    {
+                        myTournaments.add(tournament);
+                    }
+                    catch(Exception ex)
+                    {
+                        System.out.print(ex.getMessage());
+                    }
+                }
+            }
+            session.setAttribute("tournamentsToShow", myTournaments);
+        }
+        else
+        {
+            session.setAttribute("tournamentsToShow", allTournaments);
+        }
+        
         
         response.sendRedirect("/Turnieje/ShowTournaments.jsp");
     }

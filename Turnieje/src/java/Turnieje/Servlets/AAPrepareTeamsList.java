@@ -50,7 +50,6 @@ public class AAPrepareTeamsList extends HttpServlet {
         
         HttpSession session = request.getSession(true);
         boolean onlyMine = Boolean.parseBoolean(request.getParameter("onlyMine"));
-        System.out.print(onlyMine);
 
         Set<Team> allTeams = teamRepository.getAll();
         
@@ -71,14 +70,13 @@ public class AAPrepareTeamsList extends HttpServlet {
                     {
                         System.out.print(ex.getMessage());
                     }
-                    System.out.println("Dodaje druzyne " + team.getName());
                 }
             }
-            session.setAttribute("teamsToShow", myTeams);
+            session.setAttribute("allTeams", myTeams);
         }
         else
         {
-            session.setAttribute("teamsToShow", allTeams);
+            session.setAttribute("allTeams", allTeams);
         }
         
         response.sendRedirect("/Turnieje/ShowTeams.jsp");

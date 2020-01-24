@@ -10,7 +10,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Show teams</title>
     </head>
-    <body>
+    <script>var toCount="Teams"</script>
+    <body onload="myCountingFunction(toCount)">
     <center>
         Druzyny (testowo):
         
@@ -35,6 +36,7 @@
         
     </center>
         
+    <script src="/Turnieje/JavaScripts/forLists/optionsCounter.js"></script>
     <script>
         function submitShowTeam()
         {

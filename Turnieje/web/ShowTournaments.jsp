@@ -11,7 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Show tournaments</title>
     </head>
-    <body>
+    <script>var toCount="Tournaments"</script>
+    <body onload="myCountingFunction(toCount)">
     <center>
         Turnieje (testowo):
         
@@ -36,6 +37,7 @@
         
     </center>
         
+    <script src="/Turnieje/JavaScripts/forLists/optionsCounter.js"></script>
     <script>
         function submitShowTour()
         {

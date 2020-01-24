@@ -8,7 +8,11 @@ package Turnieje.Servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -20,11 +24,13 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
+import pl.polsl.aei.io.turnieje.model.datamodel.Match;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.TeamInTournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -41,12 +47,14 @@ public class AACreateTournamentServlet extends HttpServlet {
     RepositoryProvider repositoryProvider;
     ITournamentRepository tournamentRepository;
     ITeamRepository teamRepository;
+    IMatchRepository matchRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         teamRepository = repositoryProvider.getTeamRepository();
         tournamentRepository = repositoryProvider.getTournamentRepository();
+        matchRepository = repositoryProvider.getMatchRepository();
     }
 
     /**
@@ -119,22 +127,6 @@ public class AACreateTournamentServlet extends HttpServlet {
         newTournament.setFinished(false);
         newTournament.setStartingDate(startDate);
         newTournament.setEndingDate(endDate);
-
-        JSONArray teams = JSON.getJSONArray("teamsToAdd");
-        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
-        for (int i = 0; i < teams.length(); i++) 
-        {
-            System.out.print(teams.getString(i));
-            Team toAddTeam = teamRepository.getByName(teams.getString(i));
-            TeamInTournament toAdd = new TeamInTournament();
-            toAdd.tourId = newTournament.id;
-            toAdd.eliminated = false;
-            toAdd.joinDate = date;
-            toAdd.points = 0;
-            toAdd.teamId = toAddTeam.id;
-            toAdd.groupNr = 1;
-            newTournament.addTeam(toAdd);
-        }
         
         try
         {
@@ -145,7 +137,58 @@ public class AACreateTournamentServlet extends HttpServlet {
             System.out.print(ex.getMessage());
         }
         
-        session.setAttribute("tournamentToEdit", newTournament);
+        Tournament newTournamentWithId = tournamentRepository.getByName(newTournament.getName());
+
+        Set <Team> temp = new HashSet<>();
+        JSONArray teams = JSON.getJSONArray("teamsToAdd");
+        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
+        for (int i = 0; i < teams.length(); i++) 
+        {
+            System.out.print(teams.getString(i));
+            Team toAddTeam = teamRepository.getByName(teams.getString(i));
+            TeamInTournament toAdd = new TeamInTournament();
+            toAdd.tourId = newTournamentWithId.id;
+            toAdd.eliminated = false;
+            toAdd.joinDate = date;
+            toAdd.points = 0;
+            toAdd.teamId = toAddTeam.id;
+            toAdd.groupNr = 1;
+            newTournamentWithId.addTeam(toAdd);
+            temp.add(toAddTeam);
+        }
+        
+        try
+        {
+            tournamentRepository.update(newTournamentWithId);
+        }
+        catch(Exception ex)
+        {
+            System.out.print(ex.getMessage());
+        }
+        
+        
+        /*try{
+            temp = teamRepository.getByTournament(newTournamentWithId);
+        }
+        catch(Exception ex){
+            System.out.print(ex.getMessage());
+        }*/
+        
+        List<Team> teamsInTournament = new ArrayList<>(temp);
+        
+        for(int i=0; i<teamsInTournament.size();i+=2)
+        {
+            Match toAdd = new Match();
+            //No z tą datą to tak jeszcze do przemyślenia
+            toAdd.setDate(date);
+            toAdd.setFinished(false);
+            toAdd.setTourId(newTournamentWithId.id);
+            toAdd.setTeamId((i+1), teamsInTournament.get(i).id);
+            toAdd.setTeamId((i+2), teamsInTournament.get(i+1).id);
+            matchRepository.addMatch(toAdd);
+        }
+        
+        session.setAttribute("tournamentToEdit", newTournamentWithId);
 
         response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentCreated.jsp?tournamentName=" + tournamentName);
 
