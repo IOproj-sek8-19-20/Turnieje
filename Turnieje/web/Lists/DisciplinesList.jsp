@@ -56,7 +56,7 @@
             Ilość: <input type="text" id="amount" value="" style="width:20%;" readonly>
         </center>
                 
-        <select name="choosedDisciplines" size="7" style="width:100%;" id="choosedDisciplines">
+        <select name="choosedDisciplines" size="6" style="width:100%;" id="choosedDisciplines">
             <% if(added!=true){
                 for(Discipline discipline: notTeamDisciplines) {%>
                 <option><%= discipline.toString() %></option>
@@ -72,7 +72,8 @@
         <script>
             sort = document.getElementById("sorting");
             var toSort="Disciplines";
-            sort.addEventListener("change", mySortingFunction.bind(this,toSort),false);  
+            sort.addEventListener("change", mySortingFunction.bind(this,toSort),false); 
+            window.onload = mySortingFunction(toSort);
         </script>
     </body>
 </html>

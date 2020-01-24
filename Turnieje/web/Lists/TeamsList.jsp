@@ -35,7 +35,7 @@
             Ilość: <input type="text" id="amount" value="" style="width:20%;" readonly>
         </center>
                 
-        <select name="choosedTeams" size="7" style="width:100%;" id="choosedTeams">
+        <select name="choosedTeams" size="6" style="width:100%;" id="choosedTeams">
             <% if(inTournament!=true){
                 for(Team team: allTeams) {%>
                 <option><%= team.getName() %></option>
@@ -50,9 +50,9 @@
         <script src="/Turnieje/JavaScripts/forLists/sortingFunction.js"></script>
         <script>
             sort = document.getElementById("sorting");
-            
             var toSort ="Teams";
-            sort.addEventListener("change", mySortingFunction.bind(this,toSort),false);  
+            sort.addEventListener("change", mySortingFunction.bind(this,toSort),false);
+            window.onload = mySortingFunction(toSort);
         </script>
     </body>
 </html>

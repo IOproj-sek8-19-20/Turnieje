@@ -33,7 +33,7 @@
             Ilość: <input type="text" id="amount" value="" style="width:20%;" readonly>
         </center>
                 
-        <select name="choosedUsers" size="7" style="width:100%;" id="choosedUsers">
+        <select name="choosedUsers" size="6" style="width:100%;" id="choosedUsers">
             <% if(inTeam!=true){
                 for(User user: allUsers) {%>
                 <option><%= user.getEmail()%></option>
@@ -48,8 +48,9 @@
         <script src="/Turnieje/JavaScripts/forLists/sortingFunction.js"></script>
         <script>
             sort = document.getElementById("sorting");
-            var toSort="Users";
-            sort.addEventListener("change", mySortingFunction.bind(this,toSort),false);   
+            var toSort = "Users";
+            sort.addEventListener("change", mySortingFunction.bind(this,toSort),false); 
+            window.onload = mySortingFunction(toSort);
         </script>
     </body>
 </html>

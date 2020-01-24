@@ -35,8 +35,9 @@
             Nazwa druzyny : <input type = "text" name = "teamName" id="teamName">
 
             <br/><br/>
-            
-            Kapitan: <%= user.getEmail() %>
+        
+            <!-- Kapitan -->
+            Kapitan (email): <input type = "text" name = "captain" id="captain" value="<%= user.getEmail() %>" readonly>
             
              <br/><br/>
 

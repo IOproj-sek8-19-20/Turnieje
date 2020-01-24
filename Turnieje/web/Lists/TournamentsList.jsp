@@ -30,7 +30,7 @@
             Ilość: <input type="text" id="amount" value="" style="width:20%;" readonly>
         </center>
                 
-        <select name="choosedTournaments" size="7" style="width:100%;" id="choosedTournaments">
+        <select name="choosedTournaments" size="6" style="width:100%;" id="choosedTournaments">
             <%for(Tournament tournament: tournaments) {%>
                 <option><%= tournament.getName()%></option>
             <%}%>
@@ -42,6 +42,7 @@
             sort = document.getElementById("sorting");
             var toSort="Tournaments";
             sort.addEventListener("change", mySortingFunction.bind(this,toSort),false);  
+            window.onload = mySortingFunction(toSort);
         </script>
     </body>
 </html>
