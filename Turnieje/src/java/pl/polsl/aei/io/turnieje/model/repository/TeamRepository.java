@@ -177,7 +177,7 @@ public class TeamRepository implements ITeamRepository {
     public Set<Team> getByTournament(TournamentId tournament) {
 	try {
 	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT t.* FROM Teams t INNER JOIN TeamsInTournaments tt ON t.teamId=tt.teamId WHERE t.tourId=%d", tournament.id));
+	    ResultSet rs = statement.executeQuery(String.format("SELECT t.* FROM Teams t INNER JOIN TeamsInTournaments tt ON t.teamId=tt.teamId WHERE tt.tourId=%d", tournament.id));
 	    Set<Team> set = new HashSet<>();
 	    while (rs.next()) {
 		Team team = new Team(rs.getInt("teamId"));

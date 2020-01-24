@@ -33,7 +33,7 @@ public class MatchRepository implements IMatchRepository {
     @Override
     public MatchId addMatch(Match match) {
 	try {
-	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Matches(tourId, date, finished, winner, team1Id, team2Id) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Matches(tourId, matchDate, finished, winner, team1Id, team2Id) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	    statement.setInt(1, match.getTourId().id);
 	    statement.setDate(2, new java.sql.Date(match.getDate().getTime()));
     	    statement.setBoolean(3, match.getFinished());
@@ -78,7 +78,7 @@ public class MatchRepository implements IMatchRepository {
 	    while (rs.next()) {
 		Match match = new Match(rs.getInt("matchId"));
 		match.setTourId(new TournamentId(rs.getInt("tourId")));
-		match.setDate(rs.getDate("date"));
+		match.setDate(rs.getDate("matchDate"));
 		match.setFinished(rs.getBoolean("finished"));
 		match.setWinner(new TeamId(rs.getInt("winner")));
 		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
@@ -99,7 +99,7 @@ public class MatchRepository implements IMatchRepository {
 	    if (rs.next()) {
 		Match match = new Match(rs.getInt("matchId"));
 		match.setTourId(new TournamentId(rs.getInt("tourId")));
-		match.setDate(rs.getDate("date"));
+		match.setDate(rs.getDate("matchDate"));
 		match.setFinished(rs.getBoolean("finished"));
 		match.setWinner(new TeamId(rs.getInt("winner")));
 		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
@@ -127,7 +127,7 @@ public class MatchRepository implements IMatchRepository {
 	    while (rs.next()) {
 		Match match = new Match(rs.getInt("matchId"));
 		match.setTourId(new TournamentId(rs.getInt("tourId")));
-		match.setDate(rs.getDate("date"));
+		match.setDate(rs.getDate("matchDate"));
 		match.setFinished(rs.getBoolean("finished"));
 		match.setWinner(new TeamId(rs.getInt("winner")));
 		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
@@ -148,7 +148,7 @@ public class MatchRepository implements IMatchRepository {
 	    while (rs.next()) {
 		Match match = new Match(rs.getInt("matchId"));
 		match.setTourId(new TournamentId(rs.getInt("tourId")));
-		match.setDate(rs.getDate("date"));
+		match.setDate(rs.getDate("matchDate"));
 		match.setFinished(rs.getBoolean("finished"));
 		match.setWinner(new TeamId(rs.getInt("winner")));
 		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
