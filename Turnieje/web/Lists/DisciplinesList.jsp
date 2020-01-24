@@ -53,6 +53,7 @@
                 <option selected>A-Z</option>
                 <option>Z-A</option>
             </select>
+            Ilość: <input type="text" id="amount" value="" style="width:20%;" readonly>
         </center>
                 
         <select name="choosedDisciplines" size="7" style="width:100%;" id="choosedDisciplines">

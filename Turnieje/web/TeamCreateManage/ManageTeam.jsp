@@ -16,7 +16,7 @@
     </head>
     <!-- 2 inity, 1 dla list uzytkownikow, 2 dla list dyscyplin-->
     <script>var toInit = "Users", toInit2 = "Disciplines";</script>
-    <body onload="init(toInit);init(toInit2);setFieldsAndLists();">
+    <body onload="init(toInit);init(toInit2);setFieldsAndLists();myCountingFunction(toInit);myCountingFunction(toInit2)">
         
     <%
         //Sprawdzanie, czy uzytkownik jest zalogowany
@@ -102,6 +102,7 @@
     <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>
     <script src="/Turnieje/JavaScripts/forLists/addFunction.js"></script>
     <script src="/Turnieje/JavaScripts/forLists/deleteFunction.js"></script>
+    <script src="/Turnieje/JavaScripts/forLists/optionsCounter.js"></script>
     <script src="/Turnieje/JavaScripts/submits/createTeamSubmit.js"></script>
     <script>
         function temp()
