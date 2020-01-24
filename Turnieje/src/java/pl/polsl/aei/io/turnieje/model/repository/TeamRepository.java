@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
+import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.PlayerInTeam;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.TeamId;
@@ -40,6 +41,10 @@ public class TeamRepository implements ITeamRepository {
 	    statement.execute();
 	    ResultSet rs = statement.getGeneratedKeys();
 	    if (rs.next()) {
+		for (Discipline k : team.getDisciplines()) {
+		    Statement statement2 = dbInterface.createStatement();
+		    statement2.executeUpdate(String.format("INSERT INTO TeamsInDisciplines(teamId, discId) VALUES (%d, %d)", team.id.id, k.id));;
+		}
 		ret = new TeamId(rs.getInt(1));
 		for (PlayerInTeam k : team.getPlayers()) {
                     PreparedStatement statement2;
@@ -96,14 +101,20 @@ public class TeamRepository implements ITeamRepository {
 		team.setCapitan(new UserId(rs.getInt("capId")));
                 Statement statement2 = dbInterface.createStatement();
 		ResultSet rs2 = statement2.executeQuery(String.format("SELECT userId, joinDate FROM PlayersInTeams WHERE teamId=%d", team.id.id));
-		    while (rs2.next()) {
-			PlayerInTeam pit = new PlayerInTeam();
-			pit.teamId = team.id;
-			pit.userId = new UserId(rs2.getInt("userId"));
-			pit.joinDate = rs2.getDate("joinDate");
-			team.addPlayer(pit);
-		    }
-                   rs2.close();
+		while (rs2.next()) {
+		    PlayerInTeam pit = new PlayerInTeam();
+		    pit.teamId = team.id;
+		    pit.userId = new UserId(rs2.getInt("userId"));
+		    pit.joinDate = rs2.getDate("joinDate");
+		    team.addPlayer(pit);
+		}
+	        rs2.close();
+		Statement statement3 = dbInterface.createStatement();
+		ResultSet rs3 = statement3.executeQuery(String.format("SELECT tid.*, d.discName FROM TeamsInDisciplines tid INNER JOIN Disciplines d ON tid.discId=d.discId WHERE teamId=%d", team.id.id));
+		while (rs3.next()) {
+		    team.addDiscipline(new Discipline(rs3.getInt("discId"), rs3.getString("discName")));
+		}
+		rs3.close();
 		set.add(team);
 	    }
             rs.close();
@@ -131,6 +142,13 @@ public class TeamRepository implements ITeamRepository {
 		    pit.joinDate = rs2.getDate("joinDate");
 		    team.addPlayer(pit);
 		}
+		rs2.close();
+		Statement statement3 = dbInterface.createStatement();
+		ResultSet rs3 = statement3.executeQuery(String.format("SELECT tid.*, d.discName FROM TeamsInDisciplines tid INNER JOIN Disciplines d ON tid.discId=d.discId WHERE teamId=%d", team.id.id));
+		while (rs3.next()) {
+		    team.addDiscipline(new Discipline(rs3.getInt("discId"), rs3.getString("discName")));
+		}
+		rs3.close();
 		return team;
 	    }
 	    else {
@@ -159,6 +177,13 @@ public class TeamRepository implements ITeamRepository {
 		    pit.joinDate = rs2.getDate("joinDate");
 		    team.addPlayer(pit);
 		}
+		rs2.close();
+		Statement statement3 = dbInterface.createStatement();
+		ResultSet rs3 = statement3.executeQuery(String.format("SELECT tid.*, d.discName FROM TeamsInDisciplines tid INNER JOIN Disciplines d ON tid.discId=d.discId WHERE teamId=%d", team.id.id));
+		while (rs3.next()) {
+		    team.addDiscipline(new Discipline(rs3.getInt("discId"), rs3.getString("discName")));
+		}
+		rs3.close();
 		return team;
 	    }
 	    else {
@@ -192,6 +217,13 @@ public class TeamRepository implements ITeamRepository {
 		    pit.joinDate = rs2.getDate("joinDate");
 		    team.addPlayer(pit);
 		}
+		rs2.close();
+		Statement statement3 = dbInterface.createStatement();
+		ResultSet rs3 = statement3.executeQuery(String.format("SELECT tid.*, d.discName FROM TeamsInDisciplines tid INNER JOIN Disciplines d ON tid.discId=d.discId WHERE teamId=%d", team.id.id));
+		while (rs3.next()) {
+		    team.addDiscipline(new Discipline(rs3.getInt("discId"), rs3.getString("discName")));
+		}
+		rs3.close();
 	    }
 	    return set;
 	}
@@ -202,6 +234,38 @@ public class TeamRepository implements ITeamRepository {
     @Override
     public boolean update(Team team) {
 	try {
+	    
+	    Statement statement00 = dbInterface.createStatement();
+	    ResultSet rs0 = statement00.executeQuery(String.format("SELECT * FROM TeamsInDisciplines WHERE teamId=%d", team.id.id));
+	    while (rs0.next()) {
+		Boolean del = true;
+		for (Discipline k : team.getDisciplines()) {
+		    if (k.id == rs0.getInt("discId")) {
+			del = false;
+			break;
+		    }
+		}
+		if (del) {
+		    Statement statement1 = dbInterface.createStatement();
+		    statement1.executeUpdate(String.format("DELETE FROM TeamsInDisciplines WHERE teamId=%d AND discId=%d", team.id.id, rs0.getInt("discId")));
+		}
+	    }
+	    
+	    for (Discipline k : team.getDisciplines()) {
+		Boolean add = true;
+		rs0.absolute(0);
+		while (rs0.next()) {
+		    if (k.id == rs0.getInt("discId")) {
+			add = false;
+			break;
+		    }
+		}
+		if (add) {
+		    Statement statement1 = dbInterface.createStatement();
+		    statement1.executeUpdate(String.format("INSERT INTO TeamsInDisciplines(teamId, discId) VALUES (%d, %d)", team.id.id, rs0.getInt("discId")));
+		}
+	    }
+	    
 	    Statement statement = dbInterface.createStatement();
 	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM PlayersInTeams WHERE teamId=%d", team.id.id));
 	    while (rs.next()) {
