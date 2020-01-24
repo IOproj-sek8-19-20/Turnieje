@@ -41,7 +41,7 @@ public class UserRepository implements IUserRepository {
 	    if (rs.next()) {
 		for (Discipline k : user.getDisciplines()) {
 		    Statement statement2 = dbInterface.createStatement();
-		    statement.executeUpdate(String.format("INSERT INTO UsersInDisciplines(userId, discId) VALUES (%d, %d)", user.id.id, k.id));;
+		    statement2.executeUpdate(String.format("INSERT INTO UsersInDisciplines(userId, discId) VALUES (%d, %d)", user.id.id, k.id));;
 		}
 	       return new UserId(rs.getInt(1));
 	    } 
@@ -84,7 +84,7 @@ public class UserRepository implements IUserRepository {
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
 		Statement statement2 = dbInterface.createStatement();
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
 		while (rs2.next()) {
 		    user.addDiscipline(new Discipline(rs2.getInt("discId"), rs2.getString("discName")));
 		}
@@ -110,7 +110,7 @@ public class UserRepository implements IUserRepository {
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
 		Statement statement2 = dbInterface.createStatement();
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
 		while (rs2.next()) {
 		    user.addDiscipline(new Discipline(rs2.getInt("discId"), rs2.getString("discName")));
 		}
@@ -139,7 +139,7 @@ public class UserRepository implements IUserRepository {
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
 		Statement statement2 = dbInterface.createStatement();
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
 		while (rs2.next()) {
 		    user.addDiscipline(new Discipline(rs2.getInt("discId"), rs2.getString("discName")));
 		}
@@ -172,7 +172,7 @@ public class UserRepository implements IUserRepository {
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
 		Statement statement2 = dbInterface.createStatement();
-		ResultSet rs2 = statement.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
+		ResultSet rs2 = statement2.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
 		while (rs2.next()) {
 		    user.addDiscipline(new Discipline(rs2.getInt("discId"), rs2.getString("discName")));
 		}
