@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
+import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.TeamId;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
@@ -38,6 +39,10 @@ public class UserRepository implements IUserRepository {
 		statement.executeUpdate(String.format("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('%s', '%s', '%s', '%s', FALSE)", user.getEmail(), user.getPassHash(), user.getFirstName(), user.getLastName()), Statement.RETURN_GENERATED_KEYS);
 	    ResultSet rs = statement.getGeneratedKeys();
 	    if (rs.next()) {
+		for (Discipline k : user.getDisciplines()) {
+		    Statement statement2 = dbInterface.createStatement();
+		    statement.executeUpdate(String.format("INSERT INTO UsersInDisciplines(userId, discId) VALUES (%d, %d)", user.id.id, k.id));;
+		}
 	       return new UserId(rs.getInt(1));
 	    } 
 	}
@@ -53,6 +58,8 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean delete(UserId user) {
 	try {
+	    Statement statement0 = dbInterface.createStatement();
+	    statement0.executeUpdate(String.format("DELETE FROM UsersInDisciplines WHERE userId=%d", user.id));
 	    Statement statement = dbInterface.createStatement();
 	    if (statement.executeUpdate(String.format("DELETE FROM Users WHERE userId=%d", user.id)) == 0)
 		return false;
@@ -76,6 +83,12 @@ public class UserRepository implements IUserRepository {
 		user.setFirstName(rs.getString("firstName"));
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
+		Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
+		while (rs2.next()) {
+		    user.addDiscipline(new Discipline(rs2.getInt("discId"), rs2.getString("discName")));
+		}
+		rs2.close();
 		set.add(user);
 	    }
 	    return set;
@@ -96,6 +109,12 @@ public class UserRepository implements IUserRepository {
 		user.setFirstName(rs.getString("firstName"));
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
+		Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
+		while (rs2.next()) {
+		    user.addDiscipline(new Discipline(rs2.getInt("discId"), rs2.getString("discName")));
+		}
+		rs2.close();
 		return user;
 	    }
 	    else {
@@ -119,6 +138,12 @@ public class UserRepository implements IUserRepository {
 		user.setFirstName(rs.getString("firstName"));
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
+		Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
+		while (rs2.next()) {
+		    user.addDiscipline(new Discipline(rs2.getInt("discId"), rs2.getString("discName")));
+		}
+		rs2.close();
 		return user;
 	    }
 	    else {
@@ -146,6 +171,12 @@ public class UserRepository implements IUserRepository {
 		user.setFirstName(rs.getString("firstName"));
 		user.setLastName(rs.getString("lastName"));
 		user.setActive(rs.getBoolean("active"));
+		Statement statement2 = dbInterface.createStatement();
+		ResultSet rs2 = statement.executeQuery(String.format("SELECT uid.*, d.discName FROM UsersInDisciplines uid INNER JOIN Disciplines d ON uid.discId=d.discId WHERE userId=%d", user.id.id));
+		while (rs2.next()) {
+		    user.addDiscipline(new Discipline(rs2.getInt("discId"), rs2.getString("discName")));
+		}
+		rs2.close();
 		set.add(user);
 	    }
 	    return set;
@@ -157,6 +188,38 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean update(User user) {
 	try {
+	    
+	    Statement statement0 = dbInterface.createStatement();
+	    ResultSet rs = statement0.executeQuery(String.format("SELECT * FROM UsersInDisciplines WHERE userId=%d", user.id.id));
+	    while (rs.next()) {
+		Boolean del = true;
+		for (Discipline k : user.getDisciplines()) {
+		    if (k.id == rs.getInt("discId")) {
+			del = false;
+			break;
+		    }
+		}
+		if (del) {
+		    Statement statement1 = dbInterface.createStatement();
+		    statement1.executeUpdate(String.format("DELETE FROM UsersInDisciplines WHERE userId=%d AND discId=%d", user.id.id, rs.getInt("discId")));
+		}
+	    }
+	    
+	    for (Discipline k : user.getDisciplines()) {
+		Boolean add = true;
+		rs.absolute(0);
+		while (rs.next()) {
+		    if (k.id == rs.getInt("discId")) {
+			add = false;
+			break;
+		    }
+		}
+		if (add) {
+		    Statement statement1 = dbInterface.createStatement();
+		    statement1.executeUpdate(String.format("INSERT INTO UsersInDisciplines(userId, discId) VALUES (%d, %d)", user.id.id, rs.getInt("discId")));
+		}
+	    }
+	    
 	    PreparedStatement statement = dbInterface.createPreparedStatement("UPDATE Users SET email=?, passhash=?, firstname=?, lastname=?, active=? WHERE userId=?");
 	    statement.setInt(6, user.id.id);
 	    statement.setString(1, user.getEmail());
