@@ -52,33 +52,28 @@ public class AAPrepareTeamsList extends HttpServlet {
         boolean onlyMine = Boolean.parseBoolean(request.getParameter("onlyMine"));
 
         Set<Team> allTeams = teamRepository.getAll();
+        Set<String> allTeamsName = new HashSet<>();
         
         if(onlyMine==true)
         {
-            User captain = (User) session.getAttribute("loggedUser");
-            Set<Team> myTeams = new HashSet<>();
-            
             for(Team team: allTeams)
             {
+                User captain = (User) session.getAttribute("loggedUser");
                 if(team.getCapitan().id ==captain.getId().id)
                 {
-                    try
-                    {
-                        myTeams.add(team);
-                    }
-                    catch(Exception ex)
-                    {
-                        System.out.print(ex.getMessage());
-                    }
+                    allTeamsName.add(team.getName());
                 }
             }
-            session.setAttribute("allTeams", myTeams);
         }
         else
         {
-            session.setAttribute("allTeams", allTeams);
+            for(Team team: allTeams)
+            {
+                allTeamsName.add(team.getName());
+            }
         }
-        
+
+        session.setAttribute("allTeams", allTeamsName);
         response.sendRedirect("/Turnieje/ShowTeams.jsp");
     }
 

@@ -48,11 +48,16 @@ public class AAPrepareCreateTournamentServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         Set<Team> allTeams = teamRepository.getAll();
-        Set<Team> teamsInTournament = new HashSet<>();
+        Set<String> allTeamsNames = new HashSet<>();
+        for(Team team: allTeams)
+        {
+            allTeamsNames.add(team.getName());
+        }
+        Set<String> teamsInTournamentNames = new HashSet<>();
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("allTeams", allTeams);
-        session.setAttribute("teamsInTournament", teamsInTournament);
+        session.setAttribute("allTeams", allTeamsNames);
+        session.setAttribute("teamsInTournament", teamsInTournamentNames);
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/CreateTournament.jsp");
     }
