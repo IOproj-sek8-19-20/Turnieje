@@ -74,6 +74,7 @@ public class TeamRepository implements ITeamRepository {
     public boolean delete(TeamId team) {
 	try {
 	    Statement statement = dbInterface.createStatement();
+	    statement.executeUpdate(String.format("DELETE FROM TeamsInDisciplines WHERE teamId=%d", team.id));
 	    statement.executeUpdate(String.format("DELETE FROM PlayersInTeams WHERE teamId=%d", team.id));
 	    statement.executeUpdate(String.format("DELETE FROM TeamsInTournaments WHERE teamId=%d", team.id));
 	    statement.executeUpdate(String.format("DELETE FROM TeamsInDisciplines WHERE teamId=%d", team.id));
