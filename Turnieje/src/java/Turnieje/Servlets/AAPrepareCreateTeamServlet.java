@@ -48,11 +48,17 @@ public class AAPrepareCreateTeamServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         Set<User> allUsers = userRepository.getAll();
-        Set<User> usersInTeam = new HashSet<>();
+        Set<String> allUsersEmails = new HashSet<>();
+        for(User user: allUsers)
+        {
+            allUsersEmails.add(user.getEmail());
+        }
+        
+        Set<String> usersInTeamEmails = new HashSet<>();    //pusty
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("allUsers", allUsers);
-        session.setAttribute("usersInTeam", usersInTeam);
+        session.setAttribute("allUsers", allUsersEmails);
+        session.setAttribute("usersInTeam", usersInTeamEmails);
 
         response.sendRedirect("/Turnieje/TeamCreateManage/CreateTeam.jsp");
     }

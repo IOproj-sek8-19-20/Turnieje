@@ -6,6 +6,7 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,10 +54,15 @@ public class AAPrepareManageTeam extends HttpServlet {
         Team actualTeam = teamRepository.getByName(request.getParameter("teamName"));
         
         Set<User> allUsers = userRepository.getAll();
+        
         Set<User> usersInTeam = userRepository.getByTeam(actualTeam.getId());
+        Set<String> usersInTeamEmails = new HashSet<>();
+        for(User user: usersInTeam)
+        {
+            usersInTeamEmails.add(user.getEmail());
+        }
         
-        User actualTeamCaptain = userRepository.getById(actualTeam.getCapitan());
-        
+        //Usuniecie z allUsers uzytkownikow juz dodanych
         for (User user: usersInTeam)
         {
             for (User user2: allUsers)
@@ -68,10 +74,17 @@ public class AAPrepareManageTeam extends HttpServlet {
                 }
             }
         }
+        Set<String> allUsersEmails = new HashSet<>();
+        for(User user: allUsers)
+        {
+            allUsersEmails.add(user.getEmail());
+        }
+        
+        User actualTeamCaptain = userRepository.getById(actualTeam.getCapitan());
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("allUsers", allUsers);
-        session.setAttribute("usersInTeam", usersInTeam);
+        session.setAttribute("allUsers", allUsersEmails);
+        session.setAttribute("usersInTeam", usersInTeamEmails);
 
         session.setAttribute("actualTeam", actualTeam);
         session.setAttribute("actualTeamCaptain", actualTeamCaptain);

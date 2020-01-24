@@ -3,7 +3,6 @@
     Created on : 2020-01-08, 13:20:06
     Author     : Daniel Kaleta
 --%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
 <%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,8 +15,8 @@
     <body>
 
         <%
-            Set<User> allUsers = (Set<User>) session.getAttribute("allUsers");
-            Set<User> usersInTeam = (Set<User>) session.getAttribute("usersInTeam");
+            Set<String> allUsers = (Set<String>) session.getAttribute("allUsers");
+            Set<String> usersInTeam = (Set<String>) session.getAttribute("usersInTeam");
 
             boolean inTeam = Boolean.parseBoolean(request.getParameter("inTeam"));
         %>
@@ -35,12 +34,12 @@
                 
         <select name="choosedUsers" size="6" style="width:100%;" id="choosedUsers">
             <% if(inTeam!=true){
-                for(User user: allUsers) {%>
-                <option><%= user.getEmail()%></option>
+                for(String user: allUsers) {%>
+                <option><%= user.toString()%></option>
             <%}}
             else{
-                for(User user: usersInTeam) {%>
-                <option><%= user.getEmail()%></option>
+                for(String user: usersInTeam) {%>
+                <option><%= user.toString()%></option>
             <%}}%>
         </select>
 
