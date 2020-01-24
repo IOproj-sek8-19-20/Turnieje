@@ -20,6 +20,8 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
+import pl.polsl.aei.io.turnieje.model.datamodel.TeamInTournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
@@ -60,6 +62,8 @@ public class AACreateTournamentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
+        Date date = new Date();
+        
         HttpSession session = request.getSession(true);
 
         String JSONString = request.getParameter("JSONFromCreateTournament");
@@ -95,10 +99,6 @@ public class AACreateTournamentServlet extends HttpServlet {
         System.out.print(teamSize);
         
         User admin = (User) session.getAttribute("loggedUser");
-        //rozwiazanie tymczasowe
-        /*LocalDate localDate = LocalDate.now();
-        Date startDate= java.sql.Date.valueOf( localDate );
-        Date endDate=java.sql.Date.valueOf( localDate );*/
         
         Date startDate=null;
         Date endDate=null;
@@ -119,6 +119,22 @@ public class AACreateTournamentServlet extends HttpServlet {
         newTournament.setFinished(false);
         newTournament.setStartingDate(startDate);
         newTournament.setEndingDate(endDate);
+
+        JSONArray teams = JSON.getJSONArray("teamsToAdd");
+        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
+        for (int i = 0; i < teams.length(); i++) 
+        {
+            System.out.print(teams.getString(i));
+            Team toAddTeam = teamRepository.getByName(teams.getString(i));
+            TeamInTournament toAdd = new TeamInTournament();
+            toAdd.tourId = newTournament.id;
+            toAdd.eliminated = false;
+            toAdd.joinDate = date;
+            toAdd.points = 0;
+            toAdd.teamId = toAddTeam.id;
+            toAdd.groupNr = 1;
+            newTournament.addTeam(toAdd);
+        }
         
         try
         {
@@ -127,14 +143,6 @@ public class AACreateTournamentServlet extends HttpServlet {
         catch(Exception ex)
         {
             System.out.print(ex.getMessage());
-        }
-        
-
-        JSONArray teams = JSON.getJSONArray("teamsToAdd");
-        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
-        for (int i = 0; i < teams.length(); i++) 
-        {
-            System.out.print(teams.getString(i));
         }
         
         session.setAttribute("tournamentToEdit", newTournament);

@@ -17,9 +17,10 @@
     <body>
 
         <%
-            Set<Team> teamsToShow = (Set<Team>) session.getAttribute("teamsToShow");
+            Set<Team> allTeams = (Set<Team>) session.getAttribute("allTeams");
+            Set<Team> teamsInTeam = (Set<Team>) session.getAttribute("teamsInTournament");
             
-            boolean emptyList = Boolean.parseBoolean(request.getParameter("Empty"));
+            boolean inTournament = Boolean.parseBoolean(request.getParameter("inTournament"));
         %>
         
 
@@ -35,9 +36,13 @@
         </center>
                 
         <select name="choosedTeams" size="7" style="width:100%;" id="choosedTeams">
-            <% if(emptyList!=true){
-                for(Team team: teamsToShow) {%>
-                <option><%= team.getName()%></option>
+            <% if(inTournament!=true){
+                for(Team team: allTeams) {%>
+                <option><%= team.getName() %></option>
+            <%}}
+            else{
+                for(Team team: teamsInTeam) {%>
+                <option><%= team.getName() %></option>
             <%}}%>
         </select>
 

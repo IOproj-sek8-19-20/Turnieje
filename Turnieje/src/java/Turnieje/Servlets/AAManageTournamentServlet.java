@@ -6,6 +6,7 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
+import pl.polsl.aei.io.turnieje.model.datamodel.TeamInTournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
@@ -57,6 +60,8 @@ public class AAManageTournamentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        Date date = new Date();
 
         String JSONString = request.getParameter("JSONFromCreateTournament");
         JSONObject JSON = new JSONObject(JSONString);
@@ -87,19 +92,27 @@ public class AAManageTournamentServlet extends HttpServlet {
         toEdit.setDiscipline(Discipline.valueOf(discipline));
         toEdit.setTeamSize(Integer.parseInt(teamSize));
         
-        tournamentRepository.update(toEdit);
+        //testowo narazie usuwam wszystkie i na nowo uzupelniam
+        toEdit.getTeams().clear();
 
         JSONArray teams = JSON.getJSONArray("teamsToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
         for (int i = 0; i < teams.length(); i++) 
         {
             System.out.print(teams.getString(i));
+            Team toAddTeam = teamRepository.getByName(teams.getString(i));
+            TeamInTournament toAdd = new TeamInTournament();
+            toAdd.tourId = toEdit.id;
+            toAdd.eliminated = false;
+            toAdd.joinDate = date;
+            toAdd.points = 0;
+            toAdd.teamId = toAddTeam.id;
+            toAdd.groupNr = 1;
+            toEdit.addTeam(toAdd);
         }
-
-        //Team toEdit = teamRepository.getById(managedTeamID);
-        //toEdit.setName(teamName);
-        //teamRepository.update(toEdit);
-
+        
+        tournamentRepository.update(toEdit);
+        
         response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentEdited.jsp?tournamentName="+tournamentName);
     }
 

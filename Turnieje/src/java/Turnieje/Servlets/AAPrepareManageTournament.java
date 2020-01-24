@@ -53,9 +53,11 @@ public class AAPrepareManageTournament extends HttpServlet {
 
         Tournament toEdit = tournamentRepository.getByName(request.getParameter("tournamentName"));
         Set<Team> allTeams = teamRepository.getAll();
+        Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("teamsToShow", allTeams);
+        session.setAttribute("allTeams", allTeams);
+        session.setAttribute("teamsInTournament", teamsInTournament);
         session.setAttribute("tournamentToEdit", toEdit);
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp");
