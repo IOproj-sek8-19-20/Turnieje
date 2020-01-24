@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
@@ -61,17 +62,26 @@ public class AAPrepareManageTournament extends HttpServlet {
             allTeamsNames.add(team.getName());
         }
         
-        Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
+        /*Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
         Set<String> teamsInTournamentNames = new HashSet<>();
         for(Team team: allTeams)
         {
             teamsInTournamentNames.add(team.getName());
+        }*/
+        
+        Set<String> allDisciplines = new HashSet<>();
+        for(Discipline discipline: Discipline.values())
+        {
+            allDisciplines.add(discipline.name());
         }
         
         HttpSession session = request.getSession(true);
         session.setAttribute("allTeams", allTeamsNames);
-        session.setAttribute("teamsInTournament", teamsInTournamentNames);
-        session.setAttribute("tournamentToEdit", toEdit);
+        //session.setAttribute("teamsInTournament", teamsInTournamentNames);
+        session.setAttribute("tournamentToEditName", toEdit.getName());
+        session.setAttribute("tournamentToEditTeamSize", toEdit.getTeamSize());
+        session.setAttribute("tournamentToEditDiscipline", toEdit.getDiscipline().name());
+        session.setAttribute("notTeamDisciplines", allDisciplines);
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp");
     }

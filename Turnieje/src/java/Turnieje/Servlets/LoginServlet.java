@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
         String login = JSON.getString("login");
         String password = JSON.getString("password");
         //pomysł :
-        User user = userRepository.getByEmail(login);
+        //User user = userRepository.getByEmail(login);
         // if (user != null)
            //    {
              ///      if (user.checkpassword(document.getElementById("password").value;))
@@ -78,7 +78,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("loginUser", login);
             session.setAttribute("passwordUser", password);
             
-            session.setAttribute("loggedUser", user);
+            session.setAttribute("loggedUser", login);
             //Jezeli ta postac przejdzie to pakowanie do sesji loginu, hasla, a chyba
             //nawet active jest zbedne, bo mozna wyciagnac wszystko z obiektu user
             //oraz sprawdzac czy jest nullem

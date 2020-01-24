@@ -2,7 +2,6 @@
     Document   : CreateTeam
     Author     : Daniel Kaleta
 --%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html>
@@ -16,8 +15,8 @@
     <body onload="init(toInit);init(toInit2);myCountingFunction(toInit);myCountingFunction(toInit2)">
     <%
         //Sprawdzanie, czy uzytkownik jest zalogowany
-        User user = (User) session.getAttribute("loggedUser");
-        if(user == null)
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
         {
             response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
             return;
@@ -37,7 +36,7 @@
             <br/><br/>
         
             <!-- Kapitan -->
-            Kapitan (email): <input type = "text" name = "captain" id="captain" value="<%= user.getEmail() %>" readonly>
+            Kapitan (email): <input type = "text" name = "captain" id="captain" value="<%= userEmail %>" readonly>
             
              <br/><br/>
 

@@ -2,8 +2,7 @@
     Document   : CreateTournament
     Author     : Daniel Kaleta
 --%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode"%>
+<%@page import="java.util.Set"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
@@ -16,12 +15,14 @@
 </head>
 <%
     //Sprawdzanie, czy uzytkownik jest zalogowany
-    User user = (User) session.getAttribute("loggedUser");
-    if(user == null)
+    String userEmail = (String) session.getAttribute("loggedUser");
+    if(userEmail == null)
     {
         response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
         return;
     }
+    
+    Set<String> tournamentModes = (Set<String>) session.getAttribute("tournamentModes");
 
     Date date = new Date();
     SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
@@ -38,7 +39,7 @@
             <br/><br/>
 
             <!-- Administrator -->
-            Administrator: <input type = "text" name = "admin" id="admin" value="<%= user.getEmail() %>">
+            Administrator: <input type = "text" name = "admin" id="admin" value="<%= userEmail %>">
             
             <br/><br/>
             
@@ -53,9 +54,9 @@
             Tryb rozgrywek:
             <select name="tournamentMode" size="1" id="tournamentMode">
             
-            <% for(TournamentMode mode: TournamentMode.values())
+            <% for(String mode: tournamentModes)
                 { %>
-                    <option> <%= mode.toString() %></option>
+                    <option> <%= mode %></option>
                 <% } %>
             </select>
             

@@ -2,10 +2,6 @@
     Document   : ManageTournament
     Author     : Daniel Kaleta
 --%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Tournament"%>
-<%@page import="org.json.JSONArray"%>
-<%@page import="org.json.JSONObject"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html>
@@ -20,26 +16,27 @@
         
     <%
         //Sprawdzanie, czy uzytkownik jest zalogowany
-        User user = (User) session.getAttribute("loggedUser");
-        if(user == null)
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
         {
             response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
             return;
         }
 
-        Tournament toEdit = (Tournament) session.getAttribute("tournamentToEdit");
+        String toEditName = (String) session.getAttribute("tournamentToEditName");
+        Integer toEditTeamSize = (Integer) session.getAttribute("tournamentToEditTeamSize");
     %>
 
     <center>
         
-    <h1>Edytujesz turniej: <%= toEdit.getName() %> </h1>
+    <h1>Edytujesz turniej: <%= toEditName %> </h1>
     
-        Nazwa turnieju : <input type = "text" name = "tournamentName" id="tournamentName" value="<%= toEdit.getName() %>">
+        Nazwa turnieju : <input type = "text" name = "tournamentName" id="tournamentName" value="<%= toEditName %>">
         
         <br/><br/>
         
         <!-- Administrator -->
-        Administrator: <input type = "text" name = "admin" id="admin" value="<%= user.getEmail() %>">
+        Administrator: <input type = "text" name = "admin" id="admin" value="<%= userEmail %>">
         
         <br/><br/>
         
@@ -60,7 +57,7 @@
             
             <br/><br/>
             
-            Rozmiar drużyn: <input type="number" id="teamSize" name="teamSize" value="<%= toEdit.getTeamSize() %>" min="1">
+            Rozmiar drużyn: <input type="number" id="teamSize" name="teamSize" value="<%= toEditTeamSize %>" min="1">
             
             <br/><br/>
             
@@ -104,7 +101,7 @@
                 var select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
                 var options = select.getElementsByTagName('option');
                 
-                var actualDiscipline = "<%= toEdit.getDiscipline().name() %>";
+                var actualDiscipline = "<%= (String) session.getAttribute("tournamentToEditDiscipline") %>";
                 
                 for ( var i = 0; i < select.length; i++ ) 
                 {
@@ -118,10 +115,7 @@
                 options = tournamentMode.getElementsByTagName('option');
                 for (var i = 0; i < tournamentMode.length; i++) 
                 {
-                    if(options[i].value == "<%= toEdit.getMode().name() %>")
-                    {
-                        tournamentMode.selectedIndex = i;
-                    }
+                    tournamentMode.selectedIndex = 0;
                 }
             }
         </script>

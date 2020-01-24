@@ -14,7 +14,7 @@
     </head>
     <body>
 <%
-    User loggedUser = (User) session.getAttribute("loggedUser");
+    String loggedUser = (String) session.getAttribute("loggedUser");
     if(loggedUser == null)
     {
         response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
@@ -23,7 +23,7 @@
 %>
     <center>
         
-        Zalogowany jako: <%= loggedUser.getEmail() %>
+        Zalogowany jako: <%= loggedUser.toString() %>
         
         <br/><br/>
         

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
@@ -28,11 +29,13 @@ public class AAPrepareTeamsList extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
     ITeamRepository teamRepository;
+    IUserRepository userRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         teamRepository = repositoryProvider.getTeamRepository();
+        userRepository = repositoryProvider.getUserRepository();
     }
 
     /**
@@ -54,9 +57,11 @@ public class AAPrepareTeamsList extends HttpServlet {
         Set<Team> allTeams = teamRepository.getAll();
         Set<String> allTeamsName = new HashSet<>();
         
+        String captainEmail = (String) session.getAttribute("loggedUser");
+        User captain = userRepository.getByEmail(captainEmail);
+        
         if(onlyMine==true)
         {
-            User captain = (User) session.getAttribute("loggedUser");
             for(Team team: allTeams)
             {
                 if(team.getCapitan().id ==captain.getId().id)

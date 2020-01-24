@@ -2,10 +2,7 @@
     Document   : ManageTeam
     Author     : Daniel Kaleta
 --%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Discipline"%>
 <%@page import="java.util.Set"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Team"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html>
@@ -20,33 +17,30 @@
         
     <%
         //Sprawdzanie, czy uzytkownik jest zalogowany
-        User user = (User) session.getAttribute("loggedUser");
-        if(user == null)
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
         {
             response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
             return;
         }
         
-        Team acutalTeam = (Team) session.getAttribute("actualTeam");
-    
-        //aktualnie nie do konca, zeby byl jakis podglad po edycji kapitana
-        User captain = (User) session.getAttribute("actualTeamCaptain");
+        String acutalTeam = (String) session.getAttribute("actualTeamName");
     %>
 
     <center>
         
-    <h1>Edytujesz drużynę: <%= acutalTeam.getName()%> o ID <%= acutalTeam.getId().id %>  </h1>
+    <h1>Edytujesz drużynę: <%= acutalTeam.toString()%> </h1>
     
     
     <!--<form action = "ManageTeam" method="get">-->
         
         <!-- Nazwa druzyny -->
-        Nazwa drużyny : <input type = "text" name = "teamName" id="teamName" value="<%= acutalTeam.getName() %>">
+        Nazwa drużyny : <input type = "text" name = "teamName" id="teamName" value="<%= acutalTeam.toString() %>">
         
         <br/><br/>
         
         <!-- Kapitan -->
-        Kapitan (email): <input type = "text" name = "captain" id="captain" value="<%= captain.getEmail() %>">
+        Kapitan (email): <input type = "text" name = "captain" id="captain" value="<%= userEmail %>">
         
         <br/><br/>
        
@@ -117,12 +111,12 @@
             select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
 
             <% 
-                Set<Discipline> teamDisciplines = acutalTeam.getDisciplines();
-                for (Discipline discipline: teamDisciplines)
+                Set<String> teamDisciplines = (Set<String>) session.getAttribute("teamDisciplines");
+                for (String discipline: teamDisciplines)
                 {
                     %>
                         var option = document.createElement("option");
-                        option.text = "<%= discipline.name() %>";
+                        option.text = "<%= discipline %>";
                         select.add(option);
                     <%
                 }
@@ -134,12 +128,12 @@
             options = select.getElementsByTagName('option');
 
             <% 
-                for (Discipline discipline: teamDisciplines) 
+                for (String discipline: teamDisciplines) 
                 {
                     %>
                         for (var i = 0; i < select.length; i++) 
                         {
-                            if(options[i].value == "<%= discipline.name() %>")
+                            if(options[i].value == "<%= discipline %>")
                             {
                                 select.remove(i);
                             }

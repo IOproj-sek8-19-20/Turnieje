@@ -33,6 +33,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
@@ -48,6 +49,7 @@ public class AACreateTournamentServlet extends HttpServlet {
     ITournamentRepository tournamentRepository;
     ITeamRepository teamRepository;
     IMatchRepository matchRepository;
+    IUserRepository userRepository;
 
     @Override
     public void init() {
@@ -55,6 +57,7 @@ public class AACreateTournamentServlet extends HttpServlet {
         teamRepository = repositoryProvider.getTeamRepository();
         tournamentRepository = repositoryProvider.getTournamentRepository();
         matchRepository = repositoryProvider.getMatchRepository();
+        userRepository = repositoryProvider.getUserRepository();
     }
 
     /**
@@ -106,7 +109,8 @@ public class AACreateTournamentServlet extends HttpServlet {
         System.out.print(discipline);
         System.out.print(teamSize);
         
-        User admin = (User) session.getAttribute("loggedUser");
+        String adminEmail = (String) session.getAttribute("loggedUser");
+        User admin = userRepository.getByEmail(adminEmail);
         
         Date startDate=null;
         Date endDate=null;

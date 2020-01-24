@@ -64,7 +64,8 @@ public class AAManageTeamServlet extends HttpServlet {
         String teamName = JSON.getString("name");
         
         HttpSession session = request.getSession(true);
-        User oldCaptain = (User) session.getAttribute("loggedUser");
+        String oldCaptainEmail = (String) session.getAttribute("loggedUser");
+        User oldCaptain = userRepository.getByEmail(oldCaptainEmail);
         User newCaptain = userRepository.getByEmail(JSON.getString("captain"));
         Team toEdit = (Team) session.getAttribute("actualTeam");
         

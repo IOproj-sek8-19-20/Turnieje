@@ -3,9 +3,6 @@
     Created on : 2020-01-09, 17:00:06
     Author     : Daniel Kaleta
 --%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Discipline"%>
-<%@page import="pl.polsl.aei.io.turnieje.model.datamodel.Team"%>
-<%@page import="java.util.TreeSet"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,7 +14,6 @@
     <body>
 
         <%
-            Team actualTeam = (Team) session.getAttribute("actualTeam");
             Set<String> teamDisciplines = (Set<String>) session.getAttribute("teamDisciplines");
             Set<String> notTeamDisciplines = (Set<String>) session.getAttribute("notTeamDisciplines");
             

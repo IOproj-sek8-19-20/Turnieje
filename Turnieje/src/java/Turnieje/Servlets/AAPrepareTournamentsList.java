@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
@@ -28,11 +29,13 @@ public class AAPrepareTournamentsList extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
     ITournamentRepository tournamentRepository;
+    IUserRepository userRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         tournamentRepository = repositoryProvider.getTournamentRepository();
+        userRepository = repositoryProvider.getUserRepository();
     }
 
     /**
@@ -56,7 +59,8 @@ public class AAPrepareTournamentsList extends HttpServlet {
         
         if(onlyMine==true)
         {
-            User admin = (User) session.getAttribute("loggedUser");
+            String adminEmail = (String) session.getAttribute("loggedUser");
+            User admin = userRepository.getByEmail(adminEmail);
             for(Tournament tournament: allTournaments)
             {
                 if(tournament.getAdmin().id == admin.getId().id)

@@ -73,9 +73,11 @@ public class AAManageTournamentServlet extends HttpServlet {
         String admin = JSON.getString("admin");
         
         HttpSession session = request.getSession(true);
-        Tournament toEdit = (Tournament) session.getAttribute("tournamentToEdit");
+        String toEditName = (String) session.getAttribute("tournamentToEditName");
+        Tournament toEdit = tournamentRepository.getByName(toEditName);
         
-        User oldAdmin = (User) session.getAttribute("loggedUser");
+        String oldAdminEmail = (String) session.getAttribute("loggedUser");
+        User oldAdmin = userRepository.getByEmail(oldAdminEmail);
         User newAdmin = userRepository.getByEmail(admin);
         
         if(newAdmin.id == oldAdmin.id)

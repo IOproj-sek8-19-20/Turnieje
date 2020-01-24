@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
+import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
@@ -55,9 +57,23 @@ public class AAPrepareCreateTournamentServlet extends HttpServlet {
         }
         Set<String> teamsInTournamentNames = new HashSet<>();
         
+        Set<String> allDisciplines = new HashSet<>();
+        for(Discipline discipline: Discipline.values())
+        {
+            allDisciplines.add(discipline.name());
+        }
+        
+        Set<String> allModes = new HashSet<>();
+        for(TournamentMode tournamentMode: TournamentMode.values())
+        {
+            allModes.add(tournamentMode.name());
+        }
+        
         HttpSession session = request.getSession(true);
         session.setAttribute("allTeams", allTeamsNames);
         session.setAttribute("teamsInTournament", teamsInTournamentNames);
+        session.setAttribute("notTeamDisciplines", allDisciplines);
+        session.setAttribute("tournamentModes", allModes);
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/CreateTournament.jsp");
     }
