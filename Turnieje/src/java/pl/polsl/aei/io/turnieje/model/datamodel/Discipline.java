@@ -6,14 +6,34 @@
 package pl.polsl.aei.io.turnieje.model.datamodel;
 
 /**
- * Discipline enumeration
+ * Representation of single discipline
  * 
  * @author Piotr Uhl
  */
-public enum Discipline {
-    NONE,
-    Bierki,
-    Pilka_nozna,
-    Koszykowka,
-    Szachy_podwodne
+public class Discipline {
+    public final int id;
+    private String name;
+    public Discipline(int id) {
+	this.id = id;
+    }
+    public Discipline(String id) throws NumberFormatException {
+	this(Integer.parseInt(id));
+    }
+    public Discipline(int id, String name) {
+	this.id = id;
+	this.name = name;
+    }
+    public Discipline(String id, String name) throws NumberFormatException {
+	this(Integer.parseInt(id), name);
+    }
+    public int getId() {
+	return id;
+    }
+    public String getName() {
+	return name;
+    }
+    public Boolean setName(String name) {
+	this.name = name;
+	return true;
+    }
 }
