@@ -177,7 +177,7 @@ public class TournamentRepository implements ITournamentRepository {
     public Tournament getByName(String name) {
 	try {
 	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery(String.format("SELECT * FROM Tournaments WHERE name='%s'", name));
+	    ResultSet rs = statement.executeQuery(String.format("SELECT t.*, d.discName FROM Tournaments t INNER JOIN Disciplines d ON t.discId=d.discId WHERE name='%s'", name));
 	    if (rs.next()) {
 		Tournament tournament = new Tournament(rs.getInt("tourId"));
 		tournament.setName(rs.getString("name"));
