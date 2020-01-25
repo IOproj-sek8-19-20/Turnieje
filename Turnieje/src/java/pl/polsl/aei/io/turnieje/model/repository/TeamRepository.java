@@ -263,7 +263,7 @@ public class TeamRepository implements ITeamRepository {
 		}
 		if (add) {
 		    Statement statement1 = dbInterface.createStatement();
-		    statement1.executeUpdate(String.format("INSERT INTO TeamsInDisciplines(teamId, discId) VALUES (%d, %d)", team.id.id, rs0.getInt("discId")));
+		    statement1.executeUpdate(String.format("INSERT INTO TeamsInDisciplines(teamId, discId) VALUES (%d, %d)", team.id.id, k.id));
 		}
 	    }
 	    
