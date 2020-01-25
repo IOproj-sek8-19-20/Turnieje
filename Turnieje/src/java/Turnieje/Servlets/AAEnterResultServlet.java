@@ -7,11 +7,14 @@ package Turnieje.Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Match;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
@@ -53,6 +56,7 @@ public class AAEnterResultServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         String matchName = request.getParameter("match");
+        String winner = request.getParameter("winner");
         String tournamentName = (String) session.getAttribute("tournamentName");
         Tournament tournament = tournamentRepository.getByName(tournamentName);
         
@@ -61,6 +65,23 @@ public class AAEnterResultServlet extends HttpServlet {
         String firstTeamName = matchName.substring(0, firstSpace);
         String secondTeamName = matchName.substring(secondSpace, matchName.length());
         
+        Team firstTeam = teamRepository.getByName(firstTeamName);
+        Team secondTeam = teamRepository.getByName(secondTeamName);
+        Team winnerTeam = teamRepository.getByName(winner);
+        
+        Set<Match> tournamentMatches = matchRepository.getByTournament(tournament);
+        
+        for(Match match: tournamentMatches)
+        {
+            if(match.getTeamId(1).id==firstTeam.id.id)
+            {
+                if(match.getTeamId(2).id==secondTeam.id.id)
+                {
+                    match.setWinner(winnerTeam.id);
+                }
+            }
+        }
+            
         response.sendRedirect("/Turnieje/EnterResult.jsp?firstTeam="+firstTeamName+"&secondTeam="+secondTeamName);
     }
 

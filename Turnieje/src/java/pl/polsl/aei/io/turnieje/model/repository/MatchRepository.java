@@ -154,6 +154,7 @@ public class MatchRepository implements IMatchRepository {
 		match.setWinner(new TeamId(rs.getInt("winner")));
 		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
 		match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
+                set.add(match);
 	    }
 	    return set;
 	}
