@@ -21,6 +21,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TeamInTournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
@@ -39,6 +40,7 @@ public class AAManageTournamentServlet extends HttpServlet {
     ITournamentRepository tournamentRepository;
     ITeamRepository teamRepository;
     IUserRepository userRepository;
+    IDisciplineRepository disciplineRepository;
 
     @Override
     public void init() {
@@ -46,6 +48,7 @@ public class AAManageTournamentServlet extends HttpServlet {
         teamRepository = repositoryProvider.getTeamRepository();
         tournamentRepository = repositoryProvider.getTournamentRepository();
         userRepository = repositoryProvider.getUserRepository();
+        disciplineRepository = repositoryProvider.getDisciplineRepository();
     }
 
     /**
@@ -89,9 +92,10 @@ public class AAManageTournamentServlet extends HttpServlet {
             toEdit.setAdmin(newAdmin);
         }
         
+        Discipline tournamentDiscipline = disciplineRepository.getByName(discipline);
         toEdit.setName(tournamentName);
         toEdit.setMode(TournamentMode.valueOf(type));
-        toEdit.setDiscipline(Discipline.valueOf(discipline));
+        toEdit.setDiscipline(tournamentDiscipline);
         toEdit.setTeamSize(Integer.parseInt(teamSize));
         
         //testowo narazie usuwam wszystkie i na nowo uzupelniam

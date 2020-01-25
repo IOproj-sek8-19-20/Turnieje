@@ -7,6 +7,7 @@ package Turnieje.Servlets;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +20,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.PlayerInTeam;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -35,12 +37,14 @@ public class AAManageTeamServlet extends HttpServlet {
     RepositoryProvider repositoryProvider;
     IUserRepository userRepository;
     ITeamRepository teamRepository;
+    IDisciplineRepository disciplineRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         teamRepository = repositoryProvider.getTeamRepository();
         userRepository = repositoryProvider.getUserRepository();
+        disciplineRepository = repositoryProvider.getDisciplineRepository();
     }
 
     /**
@@ -94,13 +98,13 @@ public class AAManageTeamServlet extends HttpServlet {
         }
         
         JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
+        Set<Discipline> allDisciplines = disciplineRepository.getAll();
         for(int i=0; i<disciplines.length();i++)
         {
             System.out.print(disciplines.getString(i));
-            for(Discipline discipline: Discipline.values())
+            for(Discipline discipline: allDisciplines)
             {
-                String temp = discipline.toString();
-                if(disciplines.getString(i).equals(discipline.toString()))
+                if(disciplines.getString(i).equals(discipline.getName()))
                 {
                     toEdit.addDiscipline(discipline);
                 }

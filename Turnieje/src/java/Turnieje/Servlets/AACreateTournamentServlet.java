@@ -30,6 +30,7 @@ import pl.polsl.aei.io.turnieje.model.datamodel.TeamInTournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
@@ -50,6 +51,7 @@ public class AACreateTournamentServlet extends HttpServlet {
     ITeamRepository teamRepository;
     IMatchRepository matchRepository;
     IUserRepository userRepository;
+    IDisciplineRepository disciplineRepository;
 
     @Override
     public void init() {
@@ -58,6 +60,7 @@ public class AACreateTournamentServlet extends HttpServlet {
         tournamentRepository = repositoryProvider.getTournamentRepository();
         matchRepository = repositoryProvider.getMatchRepository();
         userRepository = repositoryProvider.getUserRepository();
+        disciplineRepository = repositoryProvider.getDisciplineRepository();
     }
 
     /**
@@ -121,12 +124,12 @@ public class AACreateTournamentServlet extends HttpServlet {
             Logger.getLogger(AACreateTournamentServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
+        Discipline tournamentDiscipline = disciplineRepository.getByName(discipline);
         Tournament newTournament = new Tournament();
         newTournament.setName(tournamentName);
         newTournament.setTeamSize(Integer.parseInt(teamSize));
         newTournament.setAdmin(admin);
-        newTournament.setDiscipline(Discipline.valueOf(discipline));
+        newTournament.setDiscipline(tournamentDiscipline);
         newTournament.setMode(TournamentMode.valueOf(type));
         newTournament.setFinished(false);
         newTournament.setStartingDate(startDate);

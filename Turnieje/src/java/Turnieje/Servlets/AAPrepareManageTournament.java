@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
+import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -31,12 +32,14 @@ public class AAPrepareManageTournament extends HttpServlet {
     RepositoryProvider repositoryProvider;
     ITournamentRepository tournamentRepository;
     ITeamRepository teamRepository;
+    IDisciplineRepository disciplineRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         tournamentRepository = repositoryProvider.getTournamentRepository();
         teamRepository = repositoryProvider.getTeamRepository();
+        disciplineRepository = repositoryProvider.getDisciplineRepository();
     }
 
 
@@ -69,10 +72,11 @@ public class AAPrepareManageTournament extends HttpServlet {
             teamsInTournamentNames.add(team.getName());
         }*/
         
-        Set<String> allDisciplines = new HashSet<>();
-        for(Discipline discipline: Discipline.values())
+        Set<String> allDisciplinesNames = new HashSet<>();
+        Set<Discipline> allDisciplines = disciplineRepository.getAll();
+        for(Discipline discipline: allDisciplines)
         {
-            allDisciplines.add(discipline.name());
+            allDisciplinesNames.add(discipline.getName());
         }
         
         HttpSession session = request.getSession(true);
@@ -80,8 +84,8 @@ public class AAPrepareManageTournament extends HttpServlet {
         //session.setAttribute("teamsInTournament", teamsInTournamentNames);
         session.setAttribute("tournamentToEditName", toEdit.getName());
         session.setAttribute("tournamentToEditTeamSize", toEdit.getTeamSize());
-        session.setAttribute("tournamentToEditDiscipline", toEdit.getDiscipline().name());
-        session.setAttribute("notTeamDisciplines", allDisciplines);
+        session.setAttribute("tournamentToEditDiscipline", toEdit.getDiscipline().getName());
+        session.setAttribute("notTeamDisciplines", allDisciplinesNames);
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp");
     }

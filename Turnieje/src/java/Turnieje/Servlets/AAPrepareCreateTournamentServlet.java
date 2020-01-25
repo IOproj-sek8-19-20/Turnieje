@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
+import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
@@ -29,11 +30,13 @@ public class AAPrepareCreateTournamentServlet extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
     ITeamRepository teamRepository;
+    IDisciplineRepository disciplineRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         teamRepository = repositoryProvider.getTeamRepository();
+        disciplineRepository = repositoryProvider.getDisciplineRepository();
     }
 
     /**
@@ -57,10 +60,11 @@ public class AAPrepareCreateTournamentServlet extends HttpServlet {
         }
         Set<String> teamsInTournamentNames = new HashSet<>();
         
-        Set<String> allDisciplines = new HashSet<>();
-        for(Discipline discipline: Discipline.values())
+        Set<String> allDisciplinesNames = new HashSet<>();
+        Set<Discipline> allDisciplines = disciplineRepository.getAll();
+        for(Discipline discipline: allDisciplines)
         {
-            allDisciplines.add(discipline.name());
+            allDisciplinesNames.add(discipline.getName());
         }
         
         Set<String> allModes = new HashSet<>();
@@ -72,7 +76,7 @@ public class AAPrepareCreateTournamentServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("allTeams", allTeamsNames);
         session.setAttribute("teamsInTournament", teamsInTournamentNames);
-        session.setAttribute("notTeamDisciplines", allDisciplines);
+        session.setAttribute("notTeamDisciplines", allDisciplinesNames);
         session.setAttribute("tournamentModes", allModes);
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/CreateTournament.jsp");

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -31,12 +32,14 @@ public class AAPrepareManageTeam extends HttpServlet {
     RepositoryProvider repositoryProvider;
     ITeamRepository teamRepository;
     IUserRepository userRepository;
+    IDisciplineRepository disciplineRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         teamRepository = repositoryProvider.getTeamRepository();
         userRepository = repositoryProvider.getUserRepository();
+        disciplineRepository = repositoryProvider.getDisciplineRepository();
     }
 
     /**
@@ -84,13 +87,14 @@ public class AAPrepareManageTeam extends HttpServlet {
         Set<Discipline> teamDisciplines = actualTeam.getDisciplines();
         Set<String> teamDisciplinesNames = new HashSet<>();
         Set<String> notTeamDisciplinesNames = new HashSet<>();
-        for(Discipline discipline: Discipline.values())
+        Set<Discipline> allDisciplines = disciplineRepository.getAll();
+        for(Discipline discipline: allDisciplines)
         {
             if(teamDisciplines.contains(discipline))
             {
                 continue;
             }
-            notTeamDisciplinesNames.add(discipline.name());
+            notTeamDisciplinesNames.add(discipline.getName());
         }
         
         User actualTeamCaptain = userRepository.getById(actualTeam.getCapitan());

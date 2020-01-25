@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
@@ -28,11 +29,13 @@ public class AAPrepareCreateTeamServlet extends HttpServlet {
     
     RepositoryProvider repositoryProvider;
     IUserRepository userRepository;
+    IDisciplineRepository disciplineRepository;
 
     @Override
     public void init() {
         repositoryProvider = RepositoryProvider.getInstance();
         userRepository = repositoryProvider.getUserRepository();
+        disciplineRepository = repositoryProvider.getDisciplineRepository();
     }
 
     /**
@@ -56,9 +59,10 @@ public class AAPrepareCreateTeamServlet extends HttpServlet {
         }
 
         Set<String> notTeamDisciplinesNames = new HashSet<>();
-        for(Discipline discipline: Discipline.values())
+        Set<Discipline> allDisciplines = disciplineRepository.getAll();
+        for(Discipline discipline: allDisciplines)
         {
-            notTeamDisciplinesNames.add(discipline.name());
+            notTeamDisciplinesNames.add(discipline.getName());
         }
         
         Set<String> usersInTeamEmails = new HashSet<>();    //pusty
