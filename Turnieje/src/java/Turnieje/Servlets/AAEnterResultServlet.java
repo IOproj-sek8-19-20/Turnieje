@@ -63,7 +63,7 @@ public class AAEnterResultServlet extends HttpServlet {
         int firstSpace = matchName.indexOf(' ');
         int secondSpace = matchName.indexOf(' ',(firstSpace+1));
         String firstTeamName = matchName.substring(0, firstSpace);
-        String secondTeamName = matchName.substring(secondSpace, matchName.length());
+        String secondTeamName = matchName.substring(secondSpace+1, matchName.length());
         
         Team firstTeam = teamRepository.getByName(firstTeamName);
         Team secondTeam = teamRepository.getByName(secondTeamName);
