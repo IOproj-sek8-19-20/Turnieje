@@ -36,7 +36,6 @@ public class User {
      */
     public User(UserId id) {
 	this(id.id);
-	disciplines = new HashSet<>();
     }
     /**
      * Parameterized constructor, sets id to given one.
@@ -44,6 +43,7 @@ public class User {
      */
     public User(int id) {
 	this.id = new UserId(id);
+	disciplines = new HashSet<>();
     }
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Methods">
