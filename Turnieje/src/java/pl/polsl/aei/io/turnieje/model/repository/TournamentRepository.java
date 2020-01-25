@@ -250,7 +250,7 @@ public class TournamentRepository implements ITournamentRepository {
 		}
 		if (del) {
 		    Statement statement2 = dbInterface.createStatement();
-		    statement2.executeUpdate(String.format("DELETE FROM TeamsInTournament WHERE tourId=%d AND teamId=%d", tournament.id.id, currentId));
+		    statement2.executeUpdate(String.format("DELETE FROM TeamsInTournaments WHERE tourId=%d AND teamId=%d", tournament.id.id, currentId));
 		}
 	    }
 	    for (TeamInTournament k : tournament.getTeams()) {
