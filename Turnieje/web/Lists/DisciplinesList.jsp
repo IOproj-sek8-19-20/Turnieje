@@ -22,7 +22,9 @@
         %>
         
         <script>var toFilter="Disciplines"</script>
-        Nazwa: <input type = "text" name = "searchDisciplines" id="searchDisciplines" onkeyup="myFilterFunction(toFilter)">
+        
+        <label for="searchDisciplines">Nazwa:</label>
+        <input type = "text" name = "searchDisciplines" id="searchDisciplines" onkeyup="myFilterFunction(toFilter)">
         
         <center>
             <select name="sorting" size="1" style="width:40%;" id="sorting">

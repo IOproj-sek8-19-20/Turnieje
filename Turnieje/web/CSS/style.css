@@ -5,12 +5,61 @@ body{
 	color: Black;
 }
 
-input[type=text], select, input[type=number], input[type=date], input[type=submit] {
-  width: 100px;
-  padding: 4px 6px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+input[type=text], select, input[type=number], input[type=submit] {
+    width: 100px;
+    padding: 4px 6px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-color: LightSlateGray;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+input[type=date] {
+    width: 150px;
+    padding: 4px 6px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-color: LightSlateGray;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+iframe {
+    border: 5px solid #ccc;
+    border-color: LightSlateGray;
+    border-radius: 10px;
+    width: 400px;
+    height: 235px;
+    display: inline-block;
+}
+
+#searchDisciplines {
+  width: 75%;
+}
+
+#searchTeams {
+  width: 75%;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

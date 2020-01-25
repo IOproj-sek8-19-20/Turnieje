@@ -24,8 +24,8 @@
         
 
         <center>
-            
-        Nazwa: <input type = "text" name = "searchTeams" id="searchTeams" onkeyup="myFilterFunction(toFilter)">
+            <label for="searchTeams">Nazwa:</label>
+            <input type = "text" name = "searchTeams" id="searchTeams" onkeyup="myFilterFunction(toFilter)">
         
             <select name="sorting" size="1" style="width:40%;" id="sorting">
                 <option selected>A-Z</option>
