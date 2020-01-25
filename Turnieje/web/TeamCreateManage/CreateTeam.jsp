@@ -8,6 +8,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="http://localhost:8080/Turnieje/CSS/style.css" type="text/css"/>
         <title>Stwórz drużynę</title>
     </head>
     <!-- 2 inity, 1 dla list uzytkownikow, 2 dla list dyscyplin-->
