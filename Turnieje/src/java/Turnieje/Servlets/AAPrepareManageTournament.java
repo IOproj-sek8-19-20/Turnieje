@@ -66,12 +66,12 @@ public class AAPrepareManageTournament extends HttpServlet {
             allTeamsNames.add(team.getName());
         }
         
-        /*Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
+        Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
         Set<String> teamsInTournamentNames = new HashSet<>();
-        for(Team team: allTeams)
+        for(Team team: teamsInTournament)
         {
             teamsInTournamentNames.add(team.getName());
-        }*/
+        }
         
         Set<String> allDisciplinesNames = new HashSet<>();
         Set<Discipline> allDisciplines = disciplineRepository.getAll();
@@ -81,8 +81,9 @@ public class AAPrepareManageTournament extends HttpServlet {
         }
         
         HttpSession session = request.getSession(true);
+        session.setAttribute("torunamentToEdit", toEdit.getName());
         session.setAttribute("allTeams", allTeamsNames);
-        //session.setAttribute("teamsInTournament", teamsInTournamentNames);
+        session.setAttribute("teamsInTournament", teamsInTournamentNames);
         session.setAttribute("tournamentToEditTeamSize", toEdit.getTeamSize());
         session.setAttribute("tournamentToEditDiscipline", toEdit.getDiscipline().getName());
         session.setAttribute("notTeamDisciplines", allDisciplinesNames);

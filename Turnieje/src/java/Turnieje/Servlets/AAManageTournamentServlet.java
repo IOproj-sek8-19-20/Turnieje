@@ -75,12 +75,19 @@ public class AAManageTournamentServlet extends HttpServlet {
         String teamSize = JSON.getString("teamSize");
         String admin = JSON.getString("admin");
         
-        Tournament toEdit = tournamentRepository.getByName(tournamentName);
-        
         HttpSession session = request.getSession(true);
+        String toEditName = (String) session.getAttribute("torunamentToEdit");
+        Tournament toEdit = tournamentRepository.getByName(toEditName);
+        
         String oldAdminEmail = (String) session.getAttribute("loggedUser");
         User oldAdmin = userRepository.getByEmail(oldAdminEmail);
         User newAdmin = userRepository.getByEmail(admin);
+        if(newAdmin==null)
+        {
+            String errorMessage = "Brak w bazie adresu email: " + JSON.getString("captain");
+            response.sendRedirect("/Turnieje/Error.jsp?errorMessage="+errorMessage);
+            return;
+        }
         
         if(newAdmin.id == oldAdmin.id)
         {

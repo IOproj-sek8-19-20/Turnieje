@@ -112,6 +112,7 @@ public class AAPrepareManageTeam extends HttpServlet {
         User actualTeamCaptain = userRepository.getById(actualTeam.getCapitan());
         
         HttpSession session = request.getSession(true);
+        session.setAttribute("teamToEdit", actualTeam.getName());
         session.setAttribute("allUsers", allUsersEmails);
         session.setAttribute("usersInTeam", usersInTeamEmails);
         session.setAttribute("teamCaptainEmail", actualTeamCaptain.getEmail());

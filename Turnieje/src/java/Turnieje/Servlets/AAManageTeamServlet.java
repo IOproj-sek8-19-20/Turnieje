@@ -71,7 +71,14 @@ public class AAManageTeamServlet extends HttpServlet {
         String oldCaptainEmail = (String) session.getAttribute("loggedUser");
         User oldCaptain = userRepository.getByEmail(oldCaptainEmail);
         User newCaptain = userRepository.getByEmail(JSON.getString("captain"));
-        Team toEdit = teamRepository.getByName(teamName);
+        if(newCaptain==null)
+        {
+            String errorMessage = "Brak w bazie adresu email: " + JSON.getString("captain");
+            response.sendRedirect("/Turnieje/Error.jsp?errorMessage="+errorMessage);
+            return;
+        }
+        String toEditName = (String) session.getAttribute("teamToEdit");
+        Team toEdit = teamRepository.getByName(toEditName);
         
         if(newCaptain.id == oldCaptain.id)
         {
@@ -84,7 +91,6 @@ public class AAManageTeamServlet extends HttpServlet {
         
         //testowo narazie usuwam wszystkich i na nowo uzupelniam
         toEdit.getPlayers().clear();
-        
         JSONArray users = JSON.getJSONArray("usersToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
         for(int i=0; i<users.length();i++)
@@ -97,6 +103,7 @@ public class AAManageTeamServlet extends HttpServlet {
             toEdit.addPlayer(playerInTeam);
         }
         
+        toEdit.getDisciplines().clear();
         JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
         Set<Discipline> allDisciplines = disciplineRepository.getAll();
         for(int i=0; i<disciplines.length();i++)

@@ -71,28 +71,8 @@ public class AACreateTeamServlet extends HttpServlet {
         
         String captain = JSON.getString("captain");
         teamToAdd.setCapitan(userRepository.getByEmail(captain));
-        
-        JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
-        Set<Discipline> allDisciplines = disciplineRepository.getAll();
-        for(int i=0; i<disciplines.length();i++)
-        {
-            System.out.print(disciplines.getString(i));
-            for(Discipline discipline: allDisciplines)
-            {
-                if(disciplines.getString(i).equals(discipline.getName()))
-                {
-                    teamToAdd.addDiscipline(discipline);
-                }
-            }
-        }
-        try
-        {
-            teamRepository.add(teamToAdd);
-        }
-        catch(Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+
+        teamRepository.add(teamToAdd);
         
         Team toAddWithCorrectID = teamRepository.getByName(teamToAdd.getName());
         
@@ -106,6 +86,20 @@ public class AACreateTeamServlet extends HttpServlet {
             playerInTeam.userId = newPlayer.id;
             playerInTeam.joinDate = date;
             toAddWithCorrectID.addPlayer(playerInTeam);
+        }
+        
+        JSONArray disciplines = JSON.getJSONArray("disciplinesToAdd");
+        Set<Discipline> allDisciplines = disciplineRepository.getAll();
+        for(int i=0; i<disciplines.length();i++)
+        {
+            System.out.print(disciplines.getString(i));
+            for(Discipline discipline: allDisciplines)
+            {
+                if(disciplines.getString(i).equals(discipline.getName()))
+                {
+                    toAddWithCorrectID.addDiscipline(discipline);
+                }
+            }
         }
         
         teamRepository.update(toAddWithCorrectID);
