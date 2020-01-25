@@ -114,6 +114,7 @@ public class AAPrepareManageTeam extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("allUsers", allUsersEmails);
         session.setAttribute("usersInTeam", usersInTeamEmails);
+        session.setAttribute("teamCaptainEmail", actualTeamCaptain.getEmail());
         session.setAttribute("teamDisciplines", teamDisciplinesNames);
         session.setAttribute("notTeamDisciplines", notTeamDisciplinesNames);
         

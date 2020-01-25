@@ -76,19 +76,21 @@
             <br/><br/>
             
             Drużyny 
-            <br/>
-            Do dodania: 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-            Dodane:
             
             <br/><br/>
 
-            <iframe id="AvaibleTeams" src="/Turnieje/Lists/TeamsList.jsp" width="300" height="150"></iframe>
-            <iframe id="ChoosedTeams" src="/Turnieje/Lists/TeamsList.jsp?inTournament=true" width="300" height="150"></iframe>
-            
-            <br/>
-            
-            <!--</form>-->
+            <div id="container">
+                <div id="avaible">
+                    Dostępne: 
+                    <br/>
+                    <iframe id="AvaibleTeams" src="/Turnieje/Lists/TeamsList.jsp" width="300" height="150"></iframe>
+                </div>
+                <div id="added">
+                    Dodane:
+                    <br/>
+                    <iframe id="ChoosedTeams" src="/Turnieje/Lists/TeamsList.jsp?inTournament=true" width="300" height="150"></iframe>
+                </div>
+            </div>
             
             <br/><br/>
                 <input type = "submit" value = "Zatwierdz" onclick="temp()">

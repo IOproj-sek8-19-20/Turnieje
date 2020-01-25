@@ -36,6 +36,45 @@ iframe {
     display: inline-block;
 }
 
+
+
+#container {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#avaible{
+    margin-right: 5px;
+}
+
+#AvaibleUsers{
+    margin-top: 5px;
+}
+#AvaibleDisciplines{
+    margin-top: 5px;
+}
+#AvaibleTeams{
+    margin-top: 5px;
+}
+
+#ChoosedUsers{
+    margin-top: 5px;
+}
+#ChoosedDisciplines{
+    margin-top: 5px;
+}
+#ChoosedTeams{
+    margin-top: 5px;
+}
+
+
+
+#added{
+    margin-left: 5px;
+}
+
 #searchDisciplines {
   width: 75%;
 }

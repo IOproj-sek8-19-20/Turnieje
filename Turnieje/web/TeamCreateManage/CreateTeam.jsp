@@ -48,32 +48,40 @@
             <!-- Dodawanie zawodników -->
 
             Dodaj zawodników (wybierz z listy) :
-
-            <br/>
-
-            Dostępni: 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-            Dodani:
-
+            
             <br/><br/>
 
-            <iframe id="AvaibleUsers" src="/Turnieje/Lists/UsersList.jsp"></iframe>
-            <iframe id="ChoosedUsers" src="/Turnieje/Lists/UsersList.jsp?inTeam=true"></iframe>
+            <div id="container">
+                <div id="avaible">
+                    Dostępni: 
+                    <br/>
+                    <iframe id="AvaibleUsers" src="/Turnieje/Lists/UsersList.jsp"></iframe>
+                </div>
+                <div id="added">
+                    Dodani:
+                    <br/>
+                    <iframe id="ChoosedUsers" src="/Turnieje/Lists/UsersList.jsp?inTeam=true"></iframe>
+                </div>
+            </div>
 
             <br/><br/>
 
             Dodaj dyscypliny (wybierz z listy) :
 
-            <br/>
-
-            Dostępne: 
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-            Dodane:
-
             <br/><br/>
 
-            <iframe id="AvaibleDisciplines" src="/Turnieje/Lists/DisciplinesList.jsp"></iframe>
-            <iframe id="ChoosedDisciplines" src="/Turnieje/Lists/DisciplinesList.jsp?added=true"></iframe>
+            <div id="container">
+                <div id="avaible">
+                    Dostępne: 
+                    <br/>
+                    <iframe id="AvaibleDisciplines" src="/Turnieje/Lists/DisciplinesList.jsp"></iframe>
+                </div>
+                <div id="added">
+                    Dodane:
+                    <br/>
+                    <iframe id="ChoosedDisciplines" src="/Turnieje/Lists/DisciplinesList.jsp?added=true"></iframe>
+                </div>
+            </div>
 
             <br/><br/>
             
