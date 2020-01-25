@@ -146,7 +146,7 @@ public class AACreateTournamentServlet extends HttpServlet {
         
         Tournament newTournamentWithId = tournamentRepository.getByName(newTournament.getName());
 
-        Set <Team> temp = new HashSet<>();
+        Set <Team> tempTeamsInTournament = new HashSet<>();
         JSONArray teams = JSON.getJSONArray("teamsToAdd");
         //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
         for (int i = 0; i < teams.length(); i++) 
@@ -161,7 +161,7 @@ public class AACreateTournamentServlet extends HttpServlet {
             toAdd.teamId = toAddTeam.id;
             toAdd.groupNr = 1;
             newTournamentWithId.addTeam(toAdd);
-            temp.add(toAddTeam);
+            tempTeamsInTournament.add(toAddTeam);
         }
         
         try
@@ -173,15 +173,7 @@ public class AACreateTournamentServlet extends HttpServlet {
             System.out.print(ex.getMessage());
         }
         
-        
-        /*try{
-            temp = teamRepository.getByTournament(newTournamentWithId);
-        }
-        catch(Exception ex){
-            System.out.print(ex.getMessage());
-        }*/
-        
-        List<Team> teamsInTournament = new ArrayList<>(temp);
+        List<Team> teamsInTournament = new ArrayList<>(tempTeamsInTournament);
         
         for(int i=0; i<teamsInTournament.size();i+=2)
         {

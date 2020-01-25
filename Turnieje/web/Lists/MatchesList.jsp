@@ -1,7 +1,7 @@
 <%-- 
-    Document   : UsersList
-    Created on : 2020-01-08, 13:20:06
-    Author     : Daniel Kaleta
+    Document   : MatchesList.jsp
+    Created on : 2020-01-25, 17:14:26
+    Author     : Danielowy Eltech
 --%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -10,19 +10,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="http://localhost:8080/Turnieje/CSS/style.css" type="text/css"/>
-        <title>Users list</title>
+        <title>Matches list</title>
     </head>
     <body>
 
         <%
-            Set<String> allUsers = (Set<String>) session.getAttribute("allUsers");
-            Set<String> usersInTeam = (Set<String>) session.getAttribute("usersInTeam");
-
-            boolean inTeam = Boolean.parseBoolean(request.getParameter("inTeam"));
+            Set<String> matches = (Set<String>) session.getAttribute("matchesToShow");
         %>
         
-        <script>var toFilter="Users"</script>
-        Nazwa: <input type = "text" name = "searchUsers" id="searchUsers" onkeyup="myFilterFunction(toFilter)">
+        <script>var toFilter="Matches"</script>
+        Nazwa: <input type = "text" name = "searchMatches" id="searchMatches" onkeyup="myFilterFunction(toFilter)">
         
         <center>
             <select name="sorting" size="1" style="width:40%;" id="sorting">
@@ -32,24 +29,20 @@
             Ilość: <input type="text" id="amount" value="" style="width:20%;" readonly>
         </center>
                 
-        <select name="choosedUsers" size="6" style="width:100%;" id="choosedUsers">
-            <% if(inTeam!=true){
-                for(String user: allUsers) {%>
-                <option><%= user %></option>
-            <%}}
-            else{
-                for(String user: usersInTeam) {%>
-                <option><%= user %></option>
-            <%}}%>
+        <select name="choosedMatches" size="6" style="width:100%;" id="choosedMatches">
+            <%for(String match: matches) {%>
+                <option><%= match %></option>
+            <%}%>
         </select>
 
         <script src="/Turnieje/JavaScripts/forLists/filterFunction.js"></script>
         <script src="/Turnieje/JavaScripts/forLists/sortingFunction.js"></script>
         <script>
             sort = document.getElementById("sorting");
-            var toSort = "Users";
-            sort.addEventListener("change", mySortingFunction.bind(this,toSort),false); 
+            var toSort="Matches";
+            sort.addEventListener("change", mySortingFunction.bind(this,toSort),false);  
             window.onload = mySortingFunction(toSort);
         </script>
     </body>
 </html>
+

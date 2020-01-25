@@ -17,7 +17,7 @@
 
         <%
             Set<String> allTeams = (Set<String>) session.getAttribute("allTeams");
-            Set<String> teamsInTeam = (Set<String>) session.getAttribute("teamsInTournament");
+            Set<String> teamsInTournament = (Set<String>) session.getAttribute("teamsInTournament");
             
             boolean inTournament = Boolean.parseBoolean(request.getParameter("inTournament"));
         %>
@@ -37,11 +37,11 @@
         <select name="choosedTeams" size="6" style="width:100%;" id="choosedTeams">
             <% if(inTournament!=true){
                 for(String teamName: allTeams) {%>
-                <option><%= teamName.toString() %></option>
+                <option><%= teamName %></option>
             <%}}
             else{
-                for(String team: teamsInTeam) {%>
-                <option><%= team.toString() %></option>
+                for(String teamName: teamsInTournament) {%>
+                <option><%= teamName %></option>
             <%}}%>
         </select>
 

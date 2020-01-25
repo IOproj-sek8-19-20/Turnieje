@@ -83,6 +83,14 @@ iframe {
   width: 75%;
 }
 
+#tournamentMode{
+     width: 110px;
+}
+
+#enterResult{
+    width: 120px;
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;

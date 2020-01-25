@@ -38,6 +38,10 @@
         
         <input type = "submit" value = "Edytuj turniej" onclick="submitEditTour()">
         
+        <br/>
+        
+        <input type = "submit" value = "Wprowadź wynik" onclick="submitEnterResult()" id="enterResult">
+        
         <br/><br/>
         
         <!--
@@ -65,6 +69,14 @@
             var select = iframe.contentWindow.document.getElementById("choosedTournaments");   //dobieram sie do listy turnieji
             var options = select.getElementsByTagName('option');    //pobieram opcje z listy
             location = "/Turnieje/PrepareManageTournament?tournamentName="+options[select.selectedIndex].text;
+        }
+        
+        function submitEnterResult()
+        {
+            var iframe = document.getElementById("Tournaments");   //dobieram sie do iframe
+            var select = iframe.contentWindow.document.getElementById("choosedTournaments");   //dobieram sie do listy turnieji
+            var options = select.getElementsByTagName('option');    //pobieram opcje z listy
+            location = "/Turnieje/PrepareMatchesList?tournamentName="+options[select.selectedIndex].text;
         }
     </script>
     </body>
