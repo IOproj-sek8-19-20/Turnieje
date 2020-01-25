@@ -11,18 +11,25 @@
         <title>Drużyna zedytowana</title>
     </head>
     <%
-        String editedTeam = (String) session.getAttribute("actualTeamName");
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+        String editedTeam = request.getParameter("teamName");
     %>
     
     <body> 
         <center>
-            <h1> Pomyślna edycja drużyny <%= editedTeam.toString() %></h1>
+            <h1> Pomyślna edycja drużyny <%= editedTeam %></h1>
         </center>   
 
         <script>
         setTimeout(function() 
         {
-            location = "/Turnieje/PrepareManageTeam?teamName=<%= editedTeam.toString() %>"
+            location = "/Turnieje/PrepareManageTeam?teamName=<%= editedTeam %>"
         }, 2000);
         </script>
     </body>

@@ -24,18 +24,18 @@
             return;
         }
         
-        String acutalTeam = (String) session.getAttribute("actualTeamName");
+        String acutalTeam = request.getParameter("teamName");
     %>
 
     <center>
         
-    <h1>Edytujesz drużynę: <%= acutalTeam.toString()%> </h1>
+    <h1>Edytujesz drużynę: <%= acutalTeam %> </h1>
     
     
     <!--<form action = "ManageTeam" method="get">-->
         
         <!-- Nazwa druzyny -->
-        Nazwa drużyny : <input type = "text" name = "teamName" id="teamName" value="<%= acutalTeam.toString() %>">
+        Nazwa drużyny : <input type = "text" name = "teamName" id="teamName" value="<%= acutalTeam %>">
         
         <br/><br/>
         

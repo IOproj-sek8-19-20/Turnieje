@@ -21,7 +21,6 @@
             response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
             return;
         }
-
     %>
     <center>
 

@@ -23,7 +23,7 @@
             return;
         }
 
-        String toEditName = (String) session.getAttribute("tournamentToEditName");
+        String toEditName = request.getParameter("tournamentName");
         Integer toEditTeamSize = (Integer) session.getAttribute("tournamentToEditTeamSize");
     %>
 

@@ -194,8 +194,6 @@ public class AACreateTournamentServlet extends HttpServlet {
             toAdd.setTeamId((i+2), teamsInTournament.get(i+1).id);
             matchRepository.addMatch(toAdd);
         }
-        
-        session.setAttribute("tournamentToEdit", newTournamentWithId);
 
         response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentCreated.jsp?tournamentName=" + tournamentName);
 

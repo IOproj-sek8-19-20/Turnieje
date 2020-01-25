@@ -55,7 +55,8 @@ public class AAPrepareManageTeam extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        Team actualTeam = teamRepository.getByName(request.getParameter("teamName"));
+        String teamName = request.getParameter("teamName");
+        Team actualTeam = teamRepository.getByName(teamName);
         
         Set<User> allUsers = userRepository.getAll();
         
@@ -102,12 +103,10 @@ public class AAPrepareManageTeam extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("allUsers", allUsersEmails);
         session.setAttribute("usersInTeam", usersInTeamEmails);
-        session.setAttribute("actualTeam", actualTeam);
-        session.setAttribute("actualTeamCaptain", actualTeamCaptain);
         session.setAttribute("teamDisciplines", teamDisciplinesNames);
         session.setAttribute("notTeamDisciplines", notTeamDisciplinesNames);
         
-        response.sendRedirect("/Turnieje/TeamCreateManage/ManageTeam.jsp");
+        response.sendRedirect("/Turnieje/TeamCreateManage/ManageTeam.jsp?teamName="+teamName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -12,17 +12,25 @@
     </head>
     
     <%
-        String acutalTeam = (String) session.getAttribute("actualTeamName");
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+        
+        String teamName = request.getParameter("teamName");
     %>
     
     <body>
         <center>
-            <h1> Drużyna <%= acutalTeam.toString() %> dodana</h1>
+            <h1> Drużyna <%= teamName %> dodana</h1>
         </center>   
 
         <script>
         setTimeout(function() {
-            location = "/Turnieje/PrepareManageTeam?teamName=<%= acutalTeam.toString() %>"
+            location = "/Turnieje/PrepareManageTeam?teamName=<%= teamName %>"
         }, 2000);
         </script>
     </body>

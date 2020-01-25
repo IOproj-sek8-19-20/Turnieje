@@ -71,7 +71,7 @@ public class AAManageTeamServlet extends HttpServlet {
         String oldCaptainEmail = (String) session.getAttribute("loggedUser");
         User oldCaptain = userRepository.getByEmail(oldCaptainEmail);
         User newCaptain = userRepository.getByEmail(JSON.getString("captain"));
-        Team toEdit = (Team) session.getAttribute("actualTeam");
+        Team toEdit = teamRepository.getByName(teamName);
         
         if(newCaptain.id == oldCaptain.id)
         {
@@ -113,9 +113,8 @@ public class AAManageTeamServlet extends HttpServlet {
         
         toEdit.setName(teamName);
         teamRepository.update(toEdit);
-        session.setAttribute("actualTeam", toEdit);
         
-        response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp");
+        response.sendRedirect("/Turnieje/TeamCreateManage/TeamEdited.jsp?teamName="+teamName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -11,16 +11,28 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
+    
+    <%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+        
+        String tournamentName = request.getParameter("tournamentName");
+    %>
 
     <body>
         <center>
-            <h1> Turniej <%= request.getParameter("tournamentName")%> stworzony</h1>
+            <h1> Turniej <%= tournamentName %> stworzony</h1>
         </center>   
 
         <script>
             setTimeout(function () 
             {
-                location = "/Turnieje/PrepareManageTournament?tournamentName=" + "<%= request.getParameter("tournamentName")%>";
+                location = "/Turnieje/PrepareManageTournament?tournamentName=" + "<%= tournamentName %>";
             }, 2000);
         </script>
     </body>

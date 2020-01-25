@@ -56,7 +56,8 @@ public class AAPrepareManageTournament extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        Tournament toEdit = tournamentRepository.getByName(request.getParameter("tournamentName"));
+        String tournamentName= request.getParameter("tournamentName");
+        Tournament toEdit = tournamentRepository.getByName(tournamentName);
         
         Set<Team> allTeams = teamRepository.getAll();
         Set<String> allTeamsNames = new HashSet<>();
@@ -82,12 +83,11 @@ public class AAPrepareManageTournament extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("allTeams", allTeamsNames);
         //session.setAttribute("teamsInTournament", teamsInTournamentNames);
-        session.setAttribute("tournamentToEditName", toEdit.getName());
         session.setAttribute("tournamentToEditTeamSize", toEdit.getTeamSize());
         session.setAttribute("tournamentToEditDiscipline", toEdit.getDiscipline().getName());
         session.setAttribute("notTeamDisciplines", allDisciplinesNames);
         
-        response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp");
+        response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp?tournamentName="+tournamentName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

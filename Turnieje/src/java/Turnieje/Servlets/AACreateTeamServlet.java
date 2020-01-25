@@ -110,10 +110,7 @@ public class AACreateTeamServlet extends HttpServlet {
         
         teamRepository.update(toAddWithCorrectID);
         
-        HttpSession session = request.getSession(true);
-        session.setAttribute("actualTeamName", toAddWithCorrectID.getName());
-        
-        response.sendRedirect("/Turnieje/TeamCreateManage/TeamCreated.jsp");
+        response.sendRedirect("/Turnieje/TeamCreateManage/TeamCreated.jsp?teamName="+teamName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

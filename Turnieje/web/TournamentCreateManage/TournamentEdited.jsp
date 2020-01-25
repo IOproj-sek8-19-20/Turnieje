@@ -11,15 +11,27 @@
         <title>Turniej zedytowany</title>
     </head>
     
+    <%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+        
+        String tournamentName = request.getParameter("tournamentName");
+    %>
+    
     <body> 
         <center>
-            <h1> Pomyślna edycja turnieju <%= request.getParameter("tournamentName") %></h1>
+            <h1> Pomyślna edycja turnieju <%= tournamentName %></h1>
         </center>   
 
         <script>
         setTimeout(function() 
         {
-            location = "/Turnieje/TournamentCreateManage/ManageTournament.jsp?tournamentName="+"<%= request.getParameter("tournamentName") %>"+""
+            location = "/Turnieje/TournamentCreateManage/ManageTournament.jsp?tournamentName="+"<%= tournamentName %>"+""
         }, 2000);
         </script>
     </body>
