@@ -100,7 +100,7 @@ public class TournamentRepository implements ITournamentRepository {
     public Set<Tournament> getAll() {
 	try {
 	    Statement statement = dbInterface.createStatement();
-	    ResultSet rs = statement.executeQuery("SELECT t.* d.discName FROM Tournaments t INNER JOIN Disciplines d ON t.discId=d.discId");
+	    ResultSet rs = statement.executeQuery("SELECT t.*, d.discName FROM Tournaments t INNER JOIN Disciplines d ON t.discId=d.discId");
 	    Set<Tournament> set = new HashSet<>();
 	    while (rs.next()) {
 		Tournament tournament = new Tournament(rs.getInt("tourId"));
