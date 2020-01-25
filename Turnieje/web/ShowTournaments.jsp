@@ -11,6 +11,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Show tournaments</title>
     </head>
+    
+    <%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+    %>
+    
     <script>var toCount="Tournaments"</script>
     <body onload="myCountingFunction(toCount)">
     <center>
