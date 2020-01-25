@@ -23,7 +23,7 @@
     %>
     
     <script>var toCount="Matches"</script>
-    <body onload="myCountingFunction(toCount)">
+    <body onload="myCountingFunction(toCount);init()">
     <center>
         Mecze (testowo):
         
@@ -31,9 +31,17 @@
         
         <iframe id="Matches" src="/Turnieje/Lists/MatchesList.jsp"></iframe>
         
-        <br/>
+        <br/><br/>
         
-        <input type = "submit" value = "Pokaż mecz" onclick="submitEnterResult()">
+        <input type="radio" name="team" value="" id="firstTeam">
+        <label for="firstTeam" id="firstTeamLabel"></label>
+       
+        <input type="radio" name="team" value="" id="secondTeam">
+        <label for="secondTeam" id="secondTeamLabel"></label>
+        
+        <br/><br/>
+
+        <input type = "submit" value = "Wskaż zwycięzcę" onclick="submitEnterResult()" id="showMeTheWinner">
         
         <br/><br/>
         
@@ -48,20 +56,50 @@
         
     <script src="/Turnieje/JavaScripts/forLists/optionsCounter.js"></script>
     <script>
-        function submitEnterResult()
+        function init()
+        {
+            var iframe = document.getElementById("Matches");   //dobieram sie do iframe
+            var select = iframe.contentWindow.document.getElementById("choosedMatches");   
+            select.addEventListener("click", showTeams.bind(),false);
+        }
+        function showTeams()
         {
             var iframe = document.getElementById("Matches");   //dobieram sie do iframe
             var select = iframe.contentWindow.document.getElementById("choosedMatches");   //dobieram sie do listy druzyn
             var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-            location = "/Turnieje/TeamView.jsp?teamName="+options[select.selectedIndex].text;
+            var matchName = options[select.selectedIndex].text;
+            var firstSpace = matchName.indexOf(' ',0);
+            var secondSpace = matchName.indexOf(' ',(firstSpace+1));
+            
+            var firstTeamName = matchName.substring(0, firstSpace);
+            var firstButton = document.getElementById("firstTeam");
+            var firstButtonLabel = document.getElementById("firstTeamLabel");
+            firstButton.value = firstTeamName;
+            firstButtonLabel.innerText = firstTeamName;
+            
+            var secondTeamName = matchName.substring(secondSpace, matchName.length);
+            var secondButton = document.getElementById("secondTeam");
+            var secondButtonLabel = document.getElementById("secondTeamLabel");
+            secondButton.value = secondTeamName;
+            secondButtonLabel.innerText = secondTeamName;
         }
-        
-        function submitEditTeam()
+        function submitEnterResult()
         {
-            var iframe = document.getElementById("Teams");   //dobieram sie do iframe
-            var select = iframe.contentWindow.document.getElementById("choosedTeams");   //dobieram sie do listy druzyn
-            var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-            location = "/Turnieje/PrepareManageTeam?teamName="+options[select.selectedIndex].text;
+            var iframe = document.getElementById("Matches");   //dobieram sie do iframe
+            var select = iframe.contentWindow.document.getElementById("choosedMatches");   //dobieram sie do listy druzyn
+            var options = select.getElementsByTagName('option'); 
+            
+            var firstButton = document.getElementById("firstTeam");
+            var secondButton = document.getElementById("secondTeam");
+            if(secondButton.checked == true)
+            {
+                var winner = secondButton.value;
+            }
+            else
+            {
+                var winner = firstButton.value;
+            }
+            location = "/Turnieje/EnterResult?match="+options[select.selectedIndex].text+"&winner="+winner;
         }
     </script>
     </body>

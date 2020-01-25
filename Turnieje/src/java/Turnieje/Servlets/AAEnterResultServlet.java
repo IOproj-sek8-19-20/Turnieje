@@ -6,15 +6,12 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import pl.polsl.aei.io.turnieje.model.datamodel.Match;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
@@ -25,9 +22,8 @@ import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
  *
  * @author Danielowy Eltech
  */
-@WebServlet(name = "PrepareMatchesList", urlPatterns = {"/PrepareMatchesList"})
-public class AAPrepareMatchesListServlet extends HttpServlet {
-    
+public class AAEnterResultServlet extends HttpServlet {
+
     RepositoryProvider repositoryProvider;
     ITournamentRepository tournamentRepository;
     IMatchRepository matchRepository;
@@ -40,7 +36,7 @@ public class AAPrepareMatchesListServlet extends HttpServlet {
         matchRepository = repositoryProvider.getMatchRepository();
         teamRepository = repositoryProvider.getTeamRepository();
     }
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -53,27 +49,19 @@ public class AAPrepareMatchesListServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String tournamentName = request.getParameter("tournamentName");
-        Tournament tournament = tournamentRepository.getByName(tournamentName);
-        Set<Match> tournamentMatches = matchRepository.getByTournament(tournament);
-        
-        Set<String> matchesNames = new HashSet<>();
-        for(Match match: tournamentMatches)
-        {
-            String team1Name = teamRepository.getById(match.getTeamId(1)).getName();
-            String team2Name = teamRepository.getById(match.getTeamId(2)).getName();
-            String matchName = team1Name + " vs " + team2Name;
-            matchesNames.add(matchName);
-        }
-        
-        matchesNames.add("Test vs Test2");
-        matchesNames.add("Atest vs Atest2");
         
         HttpSession session = request.getSession(true);
-        session.setAttribute("matchesToShow", matchesNames);
-        session.setAttribute("tournamentName", tournamentName);
-        response.sendRedirect("/Turnieje/ShowMatches.jsp");
+
+        String matchName = request.getParameter("match");
+        String tournamentName = (String) session.getAttribute("tournamentName");
+        Tournament tournament = tournamentRepository.getByName(tournamentName);
+        
+        int firstSpace = matchName.indexOf(' ');
+        int secondSpace = matchName.indexOf(' ',(firstSpace+1));
+        String firstTeamName = matchName.substring(0, firstSpace);
+        String secondTeamName = matchName.substring(secondSpace, matchName.length());
+        
+        response.sendRedirect("/Turnieje/EnterResult.jsp?firstTeam="+firstTeamName+"&secondTeam="+secondTeamName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

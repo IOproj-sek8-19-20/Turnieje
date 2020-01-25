@@ -31,11 +31,7 @@ function submit(myVar)
         {
             n/=2;
         }
-        if(n == 1)
-        {
-            alert("Liczba drużyn jest potęgą dwójki");
-        }
-        else if(n == 0 || n != 1)
+        if(n == 0 || n != 1)
         {
             alert("Liczba drużyn NIE jest potęgą dwójki");
             return;

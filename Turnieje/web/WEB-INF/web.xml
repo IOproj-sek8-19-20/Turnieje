@@ -41,8 +41,12 @@
         <servlet-class>Turnieje.Servlets.AAPrepareTournamentsList</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PrepareEnterResult</servlet-name>
+        <servlet-name>PrepareMatchesList</servlet-name>
         <servlet-class>Turnieje.Servlets.AAPrepareMatchesListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EnterResult</servlet-name>
+        <servlet-class>Turnieje.Servlets.AAEnterResultServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateTeamServlet</servlet-name>
@@ -85,8 +89,12 @@
         <url-pattern>/PrepareTournamentsList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PrepareEnterResult</servlet-name>
-        <url-pattern>/PrepareEnterResult</url-pattern>
+        <servlet-name>PrepareMatchesList</servlet-name>
+        <url-pattern>/PrepareMatchesList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EnterResult</servlet-name>
+        <url-pattern>/EnterResult</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

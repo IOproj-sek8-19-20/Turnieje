@@ -37,7 +37,8 @@ public class MatchRepository implements IMatchRepository {
 	    statement.setInt(1, match.getTourId().id);
 	    statement.setDate(2, new java.sql.Date(match.getDate().getTime()));
     	    statement.setBoolean(3, match.getFinished());
-	    statement.setInt(4, match.getWinner().id);
+            if (match.getWinner() != null)
+		statement.setInt(4, match.getWinner().id);
 	    statement.setInt(5, match.getTeamId(1).id);
 	    statement.setInt(6, match.getTeamId(1).id);
 	    statement.execute();

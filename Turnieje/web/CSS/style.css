@@ -5,6 +5,15 @@ body{
 	color: Black;
 }
 
+input[type=radio] {
+    width: 20px;
+    height: 20px;
+}
+
+#showMeTheWinner{
+   width: 220px; 
+}
+
 input[type=text], select, input[type=number], input[type=submit] {
     width: 100px;
     padding: 4px 6px;
