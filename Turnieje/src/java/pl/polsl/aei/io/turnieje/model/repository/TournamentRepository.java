@@ -228,22 +228,22 @@ public class TournamentRepository implements ITournamentRepository {
 			    prepStatement.setInt(5, tournament.id.id);
 			    prepStatement.setInt(6, currentId);
 			    if (k.joinDate != null)
-				prepStatement.setDate(3, new java.sql.Date(k.joinDate.getTime()));
+				prepStatement.setDate(1, new java.sql.Date(k.joinDate.getTime()));
 			    else
-				prepStatement.setNull(3, java.sql.Types.DATE);
+				prepStatement.setNull(1, java.sql.Types.DATE);
 			    //uncomment ifs if throws NullPointerException
 			    //if (k.points != null) 
-				prepStatement.setInt(4, k.points);
+				prepStatement.setInt(2, k.points);
 			    //else
-				//statement2.setNull(4, java.sql.Types.INTEGER);
+				//statement2.setNull(2, java.sql.Types.INTEGER);
 			    //if (k.eliminated != null)
-				prepStatement.setBoolean(5, k.eliminated);
+				prepStatement.setBoolean(3, k.eliminated);
 			    //else
-				//statement2.setNull(5, java.sql.Types.BOOLEAN);
+				//statement2.setNull(3, java.sql.Types.BOOLEAN);
 			    //if (k.groupNr != null)
-				prepStatement.setInt(6, k.groupNr);
+				prepStatement.setInt(4, k.groupNr);
 			    //else
-			    //statement2.setNull(6, java.sql.Types.INTEGER);
+			    //statement2.setNull(4, java.sql.Types.INTEGER);
 			    prepStatement.executeUpdate();
 			}
 		    }
