@@ -105,49 +105,6 @@
             var myVar="Manage";
             submit(myVar);
         }
-        function setFieldsAndLists()
-        {
-            //Ustawianie dyscyplin juz dodanych
-            iframe = document.getElementById("ChoosedDisciplines");   //dobieram sie do iframe
-            select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
-
-            <% 
-                Set<String> teamDisciplines = (Set<String>) session.getAttribute("teamDisciplines");
-                for (String discipline: teamDisciplines)
-                {
-                    %>
-                        var option = document.createElement("option");
-                        option.text = "<%= discipline %>";
-                        select.add(option);
-                    <%
-                }
-            %>
-
-            //Usuniecie dodanych dyscyplin z listy dostepnych
-            iframe = document.getElementById("AvaibleDisciplines");   //dobieram sie do iframe
-            select = iframe.contentWindow.document.getElementById("choosedDisciplines");   //dobieram sie do listy druzyn
-            options = select.getElementsByTagName('option');
-
-            <% 
-                for (String discipline: teamDisciplines) 
-                {
-                    %>
-                        for (var i = 0; i < select.length; i++) 
-                        {
-                            if(options[i].value == "<%= discipline %>")
-                            {
-                                select.remove(i);
-                            }
-                        }
-                    <%
-                }
-            %>
-        }
-        function deleteFromNewCaptain()
-        {
-            
-        }
-            
     </script>
     </body>
 </html>

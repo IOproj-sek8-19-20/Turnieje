@@ -91,11 +91,22 @@ public class AAPrepareManageTeam extends HttpServlet {
         Set<Discipline> allDisciplines = disciplineRepository.getAll();
         for(Discipline discipline: allDisciplines)
         {
-            if(teamDisciplines.contains(discipline))
+            boolean contain = false;
+            for(Discipline teamDiscipline: teamDisciplines)
             {
-                continue;
+                if(discipline.id==teamDiscipline.id)
+                {
+                    contain=true;
+                }
             }
-            notTeamDisciplinesNames.add(discipline.getName());
+            if(contain==false)
+            {
+                notTeamDisciplinesNames.add(discipline.getName());
+            }
+            else if(contain==true)
+            {
+                teamDisciplinesNames.add(discipline.getName());
+            }
         }
         
         User actualTeamCaptain = userRepository.getById(actualTeam.getCapitan());

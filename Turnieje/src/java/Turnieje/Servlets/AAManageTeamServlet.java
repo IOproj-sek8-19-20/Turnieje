@@ -101,10 +101,10 @@ public class AAManageTeamServlet extends HttpServlet {
         Set<Discipline> allDisciplines = disciplineRepository.getAll();
         for(int i=0; i<disciplines.length();i++)
         {
-            System.out.print(disciplines.getString(i));
             for(Discipline discipline: allDisciplines)
             {
-                if(disciplines.getString(i).equals(discipline.getName()))
+                String disciplineName = discipline.getName();
+                if(disciplines.getString(i).equals(disciplineName))
                 {
                     toEdit.addDiscipline(discipline);
                 }

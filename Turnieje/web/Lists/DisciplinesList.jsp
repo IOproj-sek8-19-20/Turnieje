@@ -37,11 +37,11 @@
         <select name="choosedDisciplines" size="6" style="width:100%;" id="choosedDisciplines">
             <% if(added!=true){
                 for(String discipline: notTeamDisciplines) {%>
-                <option><%= discipline.toString() %></option>
+                <option><%= discipline %></option>
             <%}}
-            else{
+            else if(added==true){
                 for(String discipline: teamDisciplines) {%>
-                <option><%= discipline.toString() %></option>
+                <option><%= discipline %></option>
             <%}}%>
         </select>
 
