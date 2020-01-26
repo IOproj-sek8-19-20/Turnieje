@@ -11,7 +11,7 @@ function addFunction(toAdd)
     var option = document.createElement("option");
     option.text = options[select.selectedIndex].text;
     
-    var captainEmail = document.getElementById("captain").value;
+    /*var captainEmail = document.getElementById("captain").value;
     if(captainEmail != null)
     {
         if(option.text == captainEmail)
@@ -19,7 +19,7 @@ function addFunction(toAdd)
             alert("Kapitan jest nietykalny");
             return;
         }
-    }
+    }*/
     
     select2.add(option);
 

@@ -114,7 +114,8 @@
                     break;
                 }
             }
-
+            
+            //dodaje kapitana do dodanych zawodnikow
             var iframe2 = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
             var select2 = iframe2.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
             var option = document.createElement("option");
