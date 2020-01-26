@@ -148,7 +148,7 @@ ITeamRepository teamRepository;
        
          GoogleMail.Send("turniejeserwis","Aligator33",email,
             email,"Link Aktywacyjny","Jeśli się rejestrowałeś skopiuj ten link aktywacyjny:"
-                      + "http://localhost:15406/Turnieje/RegistrationValid.jsp?id="+id);
+                      + "http://localhost:15406/Turnieje/RegistrationActivate.jsp?id="+id);
         }
         if(statement.isEmpty())
         {   
