@@ -2,13 +2,14 @@
     Document   : ManageTournament
     Author     : Daniel Kaleta
 --%>
+<%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="http://localhost:8080/Turnieje/CSS/style.css" type="text/css"/>
+        <link rel="stylesheet" href="/Turnieje/CSS/style.css" type="text/css"/>
         <title>Edytuj turniej</title>
     </head>
 
@@ -20,13 +21,15 @@
         String userEmail = (String) session.getAttribute("loggedUser");
         if(userEmail == null)
         {
-            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            response.sendRedirect("/Turnieje/Login.jsp");
             return;
         }
 
         String toEditName = request.getParameter("tournamentName");
         String tournamentAdmin = (String) session.getAttribute("tournamentAdmin");
         Integer toEditTeamSize = (Integer) session.getAttribute("tournamentToEditTeamSize");
+        
+        Set<String> tournamentModes = (Set<String>) session.getAttribute("tournamentModes");
     %>
 
     <center>
@@ -53,8 +56,11 @@
         
         Tryb rozgrywek:
             <select name="tournamentMode" size="1" id="tournamentMode">
-                    <option>Tryb 1</option>
-                    <option>Tryb 2</option>
+            
+            <% for(String mode: tournamentModes)
+                { %>
+                    <option> <%= mode %></option>
+                <% } %>
             </select>
             
             <br/><br/>
@@ -91,7 +97,7 @@
         <!--
         Powrót do menu glownego
         -->
-        <form action = "http://localhost:8080/Turnieje//MainMenu.jsp" method="get">
+        <form action = "/Turnieje/MainMenu.jsp" method="get">
             <input type = "submit" value = "Powrot">
         </form>
 

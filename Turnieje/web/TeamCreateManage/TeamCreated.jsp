@@ -8,7 +8,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="http://localhost:8080/Turnieje/CSS/style.css" type="text/css"/>
+        <link rel="stylesheet" href="/Turnieje/CSS/style.css" type="text/css"/>
         <title>Drużyna utworzona</title
     </head>
     
@@ -17,7 +17,7 @@
         String userEmail = (String) session.getAttribute("loggedUser");
         if(userEmail == null)
         {
-            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            response.sendRedirect("/Turnieje/Login.jsp");
             return;
         }
         
