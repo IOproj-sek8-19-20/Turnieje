@@ -90,7 +90,7 @@ public class AAEnterResultServlet extends HttpServlet {
         for(Match match: tournamentMatches)
         {
             //znajduje mecz w którym jest tylko pierwsza druzyna, dodaje druga
-            if(match.getTeamId(2).id == 0)
+            if(match.getTeamId(2) == null)
             {
                 found=true;
                 match.setTeamId(2, winnerTeam.id);

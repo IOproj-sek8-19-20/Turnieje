@@ -65,9 +65,9 @@ public class AAPrepareMatchesListServlet extends HttpServlet {
             if(match.getFinished()==false)
             {
                 String team1Name = teamRepository.getById(match.getTeamId(1)).getName();
-                Team secondTeam = teamRepository.getById(match.getTeamId(2));
-                if(secondTeam!=null)
+                if(match.getTeamId(2)!=null)
                 {
+                    Team secondTeam = teamRepository.getById(match.getTeamId(2));
                     String team2Name = secondTeam.getName();
                     String matchName = team1Name + " vs " + team2Name;
                     matchesNames.add(matchName);
