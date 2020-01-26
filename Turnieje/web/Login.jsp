@@ -23,7 +23,7 @@
         function submit()
         {    
             var JSONToSend = "{\"login\":\"" + document.getElementById("login").value + "\",";
-            JSONToSend = JSONToSend + "\"password\":\"" + document.getElementById("login").value+"\"}";
+            JSONToSend = JSONToSend + "\"password\":\"" + document.getElementById("password").value+"\"}";
             console.log(JSONToSend);
             location = "/Turnieje/Login?JSONFromLogin="+ JSONToSend;
      

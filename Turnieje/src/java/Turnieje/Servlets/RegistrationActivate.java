@@ -54,7 +54,8 @@ public class RegistrationActivate extends HttpServlet {
     //  User user = new User();
       UserId userId = new UserId(id);
         User user = userRepository.getById(userId);
-        user.getActive();
+        user.setActive(true);
+        userRepository.update(user);
         response.sendRedirect("Login.jsp");
         }
     

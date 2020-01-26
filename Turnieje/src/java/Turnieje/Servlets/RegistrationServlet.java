@@ -18,7 +18,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
@@ -157,10 +156,7 @@ ITeamRepository teamRepository;
                       + "http://localhost:15406/Turnieje/RegistrationActivate.jsp?id="+id);
         
         if(statement.isEmpty())
-        {   //HttpSession session = request.getSession(true);
-            //   session.setAttribute("passwordUser", password1);
-             //         session.setAttribute("loggedUser", email);
-              //        session.setAttribute("acive","YES");
+        {  
             response.sendRedirect("GoodRegistration.jsp");
         }
         else
