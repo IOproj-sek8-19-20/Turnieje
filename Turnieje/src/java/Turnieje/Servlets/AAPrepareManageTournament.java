@@ -60,13 +60,26 @@ public class AAPrepareManageTournament extends HttpServlet {
         Tournament toEdit = tournamentRepository.getByName(tournamentName);
         
         Set<Team> allTeams = teamRepository.getAll();
+        Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
+        //Usuniecie z allUsers uzytkownikow juz dodanych
+        for (Team team: teamsInTournament)
+        {
+            for (Team team2: allTeams)
+            {
+                if(team.id.id==team2.id.id)
+                {
+                    allTeams.remove(team2);
+                    break;
+                }
+            }
+        }
+        
         Set<String> allTeamsNames = new HashSet<>();
         for(Team team: allTeams)
         {
             allTeamsNames.add(team.getName());
         }
         
-        Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
         Set<String> teamsInTournamentNames = new HashSet<>();
         for(Team team: teamsInTournament)
         {
@@ -87,6 +100,8 @@ public class AAPrepareManageTournament extends HttpServlet {
         session.setAttribute("tournamentToEditTeamSize", toEdit.getTeamSize());
         session.setAttribute("tournamentToEditDiscipline", toEdit.getDiscipline().getName());
         session.setAttribute("notTeamDisciplines", allDisciplinesNames);
+        String actualAdmin = (String) session.getAttribute("loggedUser");
+        session.setAttribute("tournamentAdmin", actualAdmin);
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp?tournamentName="+tournamentName);
     }
