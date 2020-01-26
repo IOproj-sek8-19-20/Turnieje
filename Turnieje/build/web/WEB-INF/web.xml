@@ -60,6 +60,10 @@
         <servlet-name>AccountFinalyDeleted</servlet-name>
         <servlet-class>Turnieje.Servlets.AccountFinalyDeleted</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AALogout</servlet-name>
+        <servlet-class>Turnieje.Servlets.AALogout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateTeamServlet</servlet-name>
         <url-pattern>/CreateTeam</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>AccountFinalyDeleted</servlet-name>
         <url-pattern>/AccountFinalyDeleted</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AALogout</servlet-name>
+        <url-pattern>/AALogout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
