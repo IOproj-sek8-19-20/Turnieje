@@ -100,7 +100,7 @@
     <script> 
         function addCaptain()
         {
-            var captainEmain = document.getElementById("captain").value;
+            var captainEmail = document.getElementById("captain").value;
             
             var iframe = document.getElementById("AvaibleUsers");   //dobieram sie do iframe
             var select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
@@ -108,7 +108,7 @@
             //usuwam kapitana z dostepnych zawodnikow
             for (var i = 0, optionsLength = options.length; i < optionsLength; i++) 
             {
-                if (options[i].value == captainEmain) 
+                if (options[i].value == captainEmail) 
                 {
                     select.remove(i);
                     break;
@@ -118,7 +118,7 @@
             var iframe2 = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
             var select2 = iframe2.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
             var option = document.createElement("option");
-            option.text = captainEmain;
+            option.text = captainEmail;
             select2.add(option);
 
             myCountingFunction("Users");
