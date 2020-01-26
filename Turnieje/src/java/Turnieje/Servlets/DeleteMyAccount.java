@@ -58,12 +58,12 @@ public class DeleteMyAccount extends HttpServlet
             
             if(goodPassword.equals(password))
             {
-                    response.sendRedirect("/Turnieje/TeamCreateManage/AreYouSure.jsp?");
+                    response.sendRedirect("/Turnieje/EditDataManage/AreYouSure.jsp?");
 
             }
             else
             {
-                response.sendRedirect("/Turnieje/TeamCreateManage/FailToDelete.jsp?");
+                response.sendRedirect("/Turnieje/EditDataManage/FailToDelete.jsp?");
             }
             
         

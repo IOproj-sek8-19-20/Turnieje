@@ -61,13 +61,13 @@ public class PasswordChange extends HttpServlet
                 u.setPassHash(newPassword);
                 if(userRepository.update(u))
                 {
-                    response.sendRedirect("/Turnieje/TeamCreateManage/PasswordChanged.jsp?lastName="+newPassword);
+                    response.sendRedirect("/Turnieje/EditDataManage/PasswordChanged.jsp?lastName="+newPassword);
                 }
            
             }
             else
             {
-                response.sendRedirect("/Turnieje/TeamCreateManage/FailToChangePassword.jsp?lastName="+newPassword);
+                response.sendRedirect("/Turnieje/EditDataManage/FailToChangePassword.jsp?lastName="+newPassword);
             }
     }
 

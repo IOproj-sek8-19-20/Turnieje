@@ -61,13 +61,13 @@ public class FirstNameChange extends HttpServlet
                 u.setFirstName(firstName);
                 if(userRepository.update(u))
                 {
-                    response.sendRedirect("/Turnieje/TeamCreateManage/ChangeName.jsp?firstName="+firstName);
+                    response.sendRedirect("/Turnieje/EditDataManage/ChangeName.jsp?firstName="+firstName);
                 }
            
             }
             else
             {
-                response.sendRedirect("/Turnieje/TeamCreateManage/FailToChange.jsp?firstName="+firstName);
+                response.sendRedirect("/Turnieje/EditDataManage/FailToChange.jsp?firstName="+firstName);
             }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
