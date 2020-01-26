@@ -35,14 +35,23 @@ public class MatchRepository implements IMatchRepository {
 	try {
 	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Matches(tourId, matchDate, finished, winner, team1Id, team2Id) VALUES (?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 	    statement.setInt(1, match.getTourId().id);
-	    statement.setDate(2, new java.sql.Date(match.getDate().getTime()));
+	    if (match.getDate() != null)
+		statement.setDate(2, new java.sql.Date(match.getDate().getTime()));
+	    else
+		statement.setNull(2, java.sql.Types.DATE);
     	    statement.setBoolean(3, match.getFinished());
             if (match.getWinner() != null)
 		statement.setInt(4, match.getWinner().id);
 	    else
 		statement.setNull(4, java.sql.Types.INTEGER);
-	    statement.setInt(5, match.getTeamId(1).id);
-	    statement.setInt(6, match.getTeamId(2).id);
+	    if (match.getTeamId(1) != null)
+		statement.setInt(5, match.getTeamId(1).id);
+	    else
+		statement.setNull(5, java.sql.Types.INTEGER);
+	    if (match.getTeamId(2) != null)
+		statement.setInt(6, match.getTeamId(2).id);
+	    else
+		statement.setNull(6, java.sql.Types.INTEGER);
 	    statement.execute();
 	    
 	    ResultSet rs = statement.getGeneratedKeys();
