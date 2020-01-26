@@ -8,6 +8,7 @@ package Turnieje.Servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -71,6 +72,22 @@ public class AAEnterResultServlet extends HttpServlet {
         Team winnerTeam = teamRepository.getByName(winner);
         
         Set<Match> tournamentMatches = matchRepository.getByTournament(tournament);
+        Set<Match> tournamentMatchesLeft = new HashSet<>();
+        
+        //Uzupelnianie listy pozostalych meczy, ponizej do zoptymalizowania petli jeszcze zrobic
+        for(Match match: tournamentMatches)
+        {
+            if(match.getFinished()==false)
+            {
+                tournamentMatchesLeft.add(match);
+            }
+        }
+        
+        //sprawdzam czy ostatni mecz i czy koniec
+        if(tournamentMatchesLeft.size()==1)
+        {
+            tournament.setFinished(true);
+        }
         
         for(Match match: tournamentMatches)
         {
@@ -113,6 +130,8 @@ public class AAEnterResultServlet extends HttpServlet {
             toAdd.setTeamId((1), winnerTeam.id);
             matchRepository.addMatch(toAdd);
         }
+        
+
         
             
         response.sendRedirect("/Turnieje/PrepareMatchesList?tournamentName="+tournamentName);
