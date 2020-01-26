@@ -8,16 +8,11 @@ package Turnieje.Servlets;
 
 import email.GoogleMail;
 import java.io.IOException;
-import static java.lang.ProcessBuilder.Redirect.to;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,14 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
-import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
-import javax.mail.*;  
-import javax.mail.internet.*;  
-import javax.activation.*;  
-import static jdk.nashorn.internal.objects.NativeJava.to;
 /**
  *
  * @author mariu
@@ -154,13 +144,13 @@ ITeamRepository teamRepository;
          user.setActive(false);
          user.setLastName(surname);
          user.setPassHash(password1);
-         UserId userid = userRepository.add(user);
+     //    UserId userid = userRepository.add(user);
       //   int id=userid.id;
        
        
-        //    GoogleMail.Send("adachs1996","haslo","mariusz1998@wp.pl",
-        //       "mariusz1998@wp.pl","Link Aktywacyjny","Jeśli się rejestrowałeś skopiuj ten link aktywacyjny:"
-        //              + "http://localhost:15406/Turnieje/RegistrationValid.jsp?id="+id);
+         GoogleMail.Send("turniejeserwis","Aligator33",email,
+            email,"Link Aktywacyjny","Jeśli się rejestrowałeś skopiuj ten link aktywacyjny:"
+                      + "http://localhost:15406/Turnieje/RegistrationValid.jsp?id=");
         }
        // "http://localhost:15406/Turnieje/MainMenu.jsp?id="
          
