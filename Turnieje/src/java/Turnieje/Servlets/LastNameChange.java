@@ -62,13 +62,13 @@ public class LastNameChange extends HttpServlet
                 u.setLastName(lastName);
                 if(userRepository.update(u))
                 {
-                    response.sendRedirect("/Turnieje/TeamCreateManage/ChangeLastName.jsp?lastName="+lastName);
+                    response.sendRedirect("/Turnieje/EditDataManage/ChangeLastName.jsp?lastName="+lastName);
                 }
            
             }
             else
             {
-                response.sendRedirect("/Turnieje/TeamCreateManage/FailToChangeLastName.jsp?lastName="+lastName);
+                response.sendRedirect("/Turnieje/EditDataManage/FailToChangeLastName.jsp?lastName="+lastName);
             }
     }
 

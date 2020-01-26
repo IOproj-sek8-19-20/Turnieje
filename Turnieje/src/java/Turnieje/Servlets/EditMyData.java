@@ -64,7 +64,7 @@ public class EditMyData extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         String userLogin= (String) session.getAttribute("loggedUser");
-        response.sendRedirect("/Turnieje/TeamCreateManage/EditMenu.jsp?loggedUser="+userLogin);
+        response.sendRedirect("/Turnieje/EditDataManage/EditMenu.jsp?loggedUser="+userLogin);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
