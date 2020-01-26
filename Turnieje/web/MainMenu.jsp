@@ -65,10 +65,6 @@
         <a href="/Turnieje/EditMyData?onlyMine=true">
         <input type = "submit" value = "Edytuj konto">
         </a>
-        <br/><br/>
-        <a href="/Turnieje/AALogout">
-        <input type = "submit" value = "Wyloguj">
-        </a>
 
         
     </center>
