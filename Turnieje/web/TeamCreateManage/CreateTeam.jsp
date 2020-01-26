@@ -31,7 +31,7 @@
         <form action="ManageTeam" method="get" id="myForm"> -->
 
             <!-- Nazwa druzyny -->
-            Nazwa druzyny : <input type = "text" name = "teamName" id="teamName">
+            Nazwa drużyny : <input type = "text" name = "teamName" id="teamName">
 
             <br/><br/>
         

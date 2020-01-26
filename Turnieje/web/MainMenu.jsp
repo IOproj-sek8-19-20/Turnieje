@@ -10,6 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://localhost:8080/Turnieje/CSS/style.css" type="text/css"/>
         <title>Witamy w serwisie!</title>
     </head>
     <body>
@@ -37,28 +38,28 @@
         <input type = "submit" value = "Stwórz turniej">
         </a>
         
-        <br/><br/><br/><br/>
+        <br/><br/>
          
         <a href="/Turnieje/PrepareTournamentsList">
-        <input type = "submit" value = "Pokaż turnieje">
+        <input type = "submit" value = "Turnieje">
         </a>
         
         <br/><br/>
          
         <a href="/Turnieje/PrepareTeamsList">
-        <input type = "submit" value = "Pokaż drużyny">
+        <input type = "submit" value = "Drużyny">
         </a>
         
         <br/><br/>
          
         <a href="/Turnieje/PrepareTournamentsList?onlyMine=true">
-        <input type = "submit" value = "Pokaż moje turnieje">
+        <input type = "submit" value = "Moje turnieje">
         </a>
         
         <br/><br/>
          
         <a href="/Turnieje/PrepareTeamsList?onlyMine=true">
-        <input type = "submit" value = "Pokaż moje drużyny">
+        <input type = "submit" value = "Moje drużyny">
         </a>
         <br/><br/>
         <a href="/Turnieje/EditMyData?onlyMine=true">
