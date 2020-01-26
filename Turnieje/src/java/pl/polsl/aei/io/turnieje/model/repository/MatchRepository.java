@@ -42,7 +42,7 @@ public class MatchRepository implements IMatchRepository {
 	    else
 		statement.setNull(4, java.sql.Types.INTEGER);
 	    statement.setInt(5, match.getTeamId(1).id);
-	    statement.setInt(6, match.getTeamId(1).id);
+	    statement.setInt(6, match.getTeamId(2).id);
 	    statement.execute();
 	    
 	    ResultSet rs = statement.getGeneratedKeys();

@@ -78,11 +78,13 @@ public class AAEnterResultServlet extends HttpServlet {
                 if(match.getTeamId(2).id==secondTeam.id.id)
                 {
                     match.setWinner(winnerTeam.id);
+                    matchRepository.update(match);
                 }
             }
         }
+        
             
-        response.sendRedirect("/Turnieje/EnterResult.jsp?firstTeam="+firstTeamName+"&secondTeam="+secondTeamName);
+        response.sendRedirect("/Turnieje/ShowMatches.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
