@@ -178,9 +178,15 @@ public class MatchRepository implements IMatchRepository {
 	    while (rs.next()) {
 		Match match = new Match(rs.getInt("matchId"));
 		match.setTourId(new TournamentId(rs.getInt("tourId")));
-		match.setDate(rs.getDate("matchDate"));
+		if (rs.getDate("matchDate") == null)
+		    match.setDate(null);
+		else
+		    match.setDate(rs.getDate("matchDate"));
 		match.setFinished(rs.getBoolean("finished"));
-		match.setWinner(new TeamId(rs.getInt("winner")));
+		if (rs.getInt("winner") == 0)
+		    match.setWinner(null);
+		else
+		    match.setWinner(new TeamId(rs.getInt("winner")));
 		if (rs.getInt("team1Id") == 0)
 		    match.setTeamId(1, null);
 		else
