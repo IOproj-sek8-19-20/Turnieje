@@ -6,7 +6,6 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
