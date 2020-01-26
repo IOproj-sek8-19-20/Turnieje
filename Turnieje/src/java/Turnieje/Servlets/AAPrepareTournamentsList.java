@@ -68,6 +68,8 @@ public class AAPrepareTournamentsList extends HttpServlet {
                     allTournamentsNames.add(tournament.getName());
                 }
             }
+            session.setAttribute("tournamentsToShow", allTournamentsNames);
+            response.sendRedirect("/Turnieje/ShowTournaments.jsp?onlyMine=true");
         }
         else
         {
@@ -75,10 +77,9 @@ public class AAPrepareTournamentsList extends HttpServlet {
            {
                allTournamentsNames.add(tournament.getName());
            }
+            session.setAttribute("tournamentsToShow", allTournamentsNames);
+            response.sendRedirect("/Turnieje/ShowTournaments.jsp");
         }
-        
-        session.setAttribute("tournamentsToShow", allTournamentsNames);
-        response.sendRedirect("/Turnieje/ShowTournaments.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

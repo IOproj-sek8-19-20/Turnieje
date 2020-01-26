@@ -21,6 +21,9 @@
             response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
             return;
         }
+        
+        boolean onlyMine = Boolean.parseBoolean(request.getParameter("onlyMine"));
+        
     %>
     
     <script>var toCount="Tournaments"</script>
@@ -36,11 +39,18 @@
         
         <input type = "submit" value = "Pokaz turniej" onclick="submitShowTour()">
         
-        <input type = "submit" value = "Edytuj turniej" onclick="submitEditTour()">
         
-        <br/>
         
-        <input type = "submit" value = "Wprowadź wynik" onclick="submitEnterResult()" id="enterResult">
+        <%   if(onlyMine==true)
+        {
+            
+            out.println("<input type = \"submit\" value = \"Edytuj turniej\" onclick=\"submitEditTour()\">");
+            out.println("<br/>");
+            out.println("<input type = \"submit\" value = \"Wprowadź wynik\" onclick=\"submitEnterResult()\" id=\"enterResult\">");
+        }
+        %>
+        
+        
         
         <br/><br/>
         

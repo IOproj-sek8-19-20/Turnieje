@@ -76,12 +76,15 @@ public class AAEnterResultServlet extends HttpServlet {
         {
             if(match.getTeamId(1).id==firstTeam.id.id)
             {
-                if(match.getTeamId(2).id==secondTeam.id.id)
+                if(match.getTeamId(2) != null)
                 {
-                    match.setWinner(winnerTeam.id);
-                    match.setFinished(true);
-                    matchRepository.update(match);
-                    break;
+                    if(match.getTeamId(2).id == secondTeam.id.id)
+                    {
+                        match.setWinner(winnerTeam.id);
+                        match.setFinished(true);
+                        matchRepository.update(match);
+                        break;
+                    }
                 }
             }
         }
