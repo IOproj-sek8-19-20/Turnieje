@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -60,9 +61,6 @@ ITeamRepository teamRepository;
         public static boolean validateLastName(String lastName) {
         return lastName.matches("[a-zA-z]+(['-][a-zA-Z]+)*");
      }
-        private String createConfirmationID() {
-        return java.util.UUID.randomUUID().toString();
-    }
     //</editor-fold>
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -144,23 +142,21 @@ ITeamRepository teamRepository;
          user.setActive(false);
          user.setLastName(surname);
          user.setPassHash(password1);
-     //    UserId userid = userRepository.add(user);
-      //   int id=userid.id;
+         UserId userid = userRepository.add(user);
+         int id=userid.id;
        
        
          GoogleMail.Send("turniejeserwis","Aligator33",email,
             email,"Link Aktywacyjny","Jeśli się rejestrowałeś skopiuj ten link aktywacyjny:"
-                      + "http://localhost:15406/Turnieje/RegistrationValid.jsp?id=");
+                      + "http://localhost:15406/Turnieje/RegistrationValid.jsp?id="+id);
         }
-       // "http://localhost:15406/Turnieje/MainMenu.jsp?id="
-         
-      // "http://szafbook.pl/confirm?id="
         if(statement.isEmpty())
         {   
-            HttpSession session = request.getSession(true);
-            session.setAttribute("passwordUser", password1);
-            session.setAttribute("loggedUser", email);
-        response.sendRedirect("MainMenu.jsp");
+          //  HttpSession session = request.getSession(true);
+          //  session.setAttribute("passwordUser", password1);
+         //   session.setAttribute("loggedUser", email);
+        //response.sendRedirect("MainMenu.jsp");
+            response.sendRedirect("GoodRegistration.jsp");
         }
         else
          {  
