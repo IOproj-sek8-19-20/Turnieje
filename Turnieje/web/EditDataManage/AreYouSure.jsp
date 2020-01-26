@@ -19,8 +19,10 @@
     <center>
             <h1> Na pewno? Twoje konto zostanie usunięte na zawsze<br>
             To na prawdę długo!</h1>
+
       <input type = "submit" value = "Usuń konto, definitywnie ostatecznie" onclick="submit()" id="Im100Sure">   <br>
       <input type = "submit" value = "Nie chcę usuwać konta" onclick="submit1()" id="ImNot100Sure"> <br>
+
     </center>
     <script>
         

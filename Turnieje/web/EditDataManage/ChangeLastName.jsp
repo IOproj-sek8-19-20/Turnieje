@@ -27,7 +27,7 @@
         <script>
         setTimeout(function() 
         {
-            location = "/Turnieje/TeamCreateManage/EditMenu.jsp"
+            location = "/Turnieje/EditDataManage/EditMenu.jsp"
         }, 2000);
         </script>
     </body>

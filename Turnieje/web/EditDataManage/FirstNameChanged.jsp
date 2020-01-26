@@ -22,9 +22,9 @@
     </center>   
     
         <script>
-        setTimeout(function() 
+        setTimeout (function() 
         {
-            location = "/Turnieje/edit/EditData.jsp"
+            location = "/Turnieje/EditDataManage/EditMenu.jsp"
         }, 2000);
         </script>
     </body>
