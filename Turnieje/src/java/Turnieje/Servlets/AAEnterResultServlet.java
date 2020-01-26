@@ -7,6 +7,7 @@ package Turnieje.Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -78,13 +79,40 @@ public class AAEnterResultServlet extends HttpServlet {
                 if(match.getTeamId(2).id==secondTeam.id.id)
                 {
                     match.setWinner(winnerTeam.id);
+                    match.setFinished(true);
                     matchRepository.update(match);
+                    break;
                 }
             }
         }
         
+        boolean found = false;
+        for(Match match: tournamentMatches)
+        {
+            //znajduje mecz w którym jest tylko pierwsza druzyna, dodaje druga
+            if(match.getTeamId(2).id == 0)
+            {
+                found=true;
+                match.setTeamId(2, winnerTeam.id);
+                matchRepository.update(match);
+                break;
+            }
+        }
+        //nie znalazlem meczu, tworze nowy
+        if(found==false)
+        {
+            Date date = new Date();
+            Match toAdd = new Match();
+            //No z tą datą to tak jeszcze do przemyślenia
+            toAdd.setDate(date);
+            toAdd.setFinished(false);
+            toAdd.setTourId(tournament.id);
+            toAdd.setTeamId((1), winnerTeam.id);
+            matchRepository.addMatch(toAdd);
+        }
+        
             
-        response.sendRedirect("/Turnieje/ShowMatches.jsp");
+        response.sendRedirect("/Turnieje/PrepareMatchesList?tournamentName="+tournamentName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

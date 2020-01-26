@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Match;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
@@ -61,10 +62,22 @@ public class AAPrepareMatchesListServlet extends HttpServlet {
         Set<String> matchesNames = new HashSet<>();
         for(Match match: tournamentMatches)
         {
-            String team1Name = teamRepository.getById(match.getTeamId(1)).getName();
-            String team2Name = teamRepository.getById(match.getTeamId(2)).getName();
-            String matchName = team1Name + " vs " + team2Name;
-            matchesNames.add(matchName);
+            if(match.getFinished()==false)
+            {
+                String team1Name = teamRepository.getById(match.getTeamId(1)).getName();
+                Team secondTeam = teamRepository.getById(match.getTeamId(2));
+                if(secondTeam!=null)
+                {
+                    String team2Name = secondTeam.getName();
+                    String matchName = team1Name + " vs " + team2Name;
+                    matchesNames.add(matchName);
+                }
+                else
+                {
+                    String matchName = team1Name + " vs jeszcze nikt";
+                    matchesNames.add(matchName);
+                }
+            }
         }
         
         //matchesNames.add("Team1 vs Team4");
