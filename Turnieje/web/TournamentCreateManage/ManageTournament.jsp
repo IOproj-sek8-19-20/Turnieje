@@ -25,7 +25,6 @@
         }
 
         String toEditName = request.getParameter("tournamentName");
-        String tournamentAdmin = (String) session.getAttribute("tournamentAdmin");
         Integer toEditTeamSize = (Integer) session.getAttribute("tournamentToEditTeamSize");
     %>
 
@@ -38,7 +37,7 @@
         <br/><br/>
         
         <!-- Administrator -->
-        Administrator: <input type = "text" name = "admin" id="admin" value="<%= tournamentAdmin %>">
+        Administrator: <input type = "text" name = "admin" id="admin" value="<%= userEmail %>">
         
         <br/><br/>
         

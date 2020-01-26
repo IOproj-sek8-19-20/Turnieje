@@ -8,35 +8,20 @@ package Turnieje.Servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
-import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
-import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
-import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
+import org.json.JSONObject;
 
 /**
  *
- * @author Danielowy Eltech
+ * @author user
  */
-public class AAEnterResultServlet extends HttpServlet {
+@WebServlet(name = "LastNameChange", urlPatterns = {"/LastNameChange"})
+public class LastNameChange extends HttpServlet {
 
-    RepositoryProvider repositoryProvider;
-    ITournamentRepository tournamentRepository;
-    IMatchRepository matchRepository;
-    ITeamRepository teamRepository;
-
-    @Override
-    public void init() {
-        repositoryProvider = RepositoryProvider.getInstance();
-        tournamentRepository = repositoryProvider.getTournamentRepository();
-        matchRepository = repositoryProvider.getMatchRepository();
-        teamRepository = repositoryProvider.getTeamRepository();
-    }
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,20 +33,27 @@ public class AAEnterResultServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
+       response.setContentType("text/html;charset=UTF-8");
+        String JSONString = request.getParameter("JSON");
+        JSONObject JSON = new JSONObject(JSONString);
+        String lastName = JSON.getString("lastName");
+        String password = JSON.getString("password");
         HttpSession session = request.getSession(true);
 
-        String matchName = request.getParameter("match");
-        String tournamentName = (String) session.getAttribute("tournamentName");
-        Tournament tournament = tournamentRepository.getByName(tournamentName);
+        String userLogin = (String) session.getAttribute("loggedUser");
         
-        int firstSpace = matchName.indexOf(' ');
-        int secondSpace = matchName.indexOf(' ',(firstSpace+1));
-        String firstTeamName = matchName.substring(0, firstSpace);
-        String secondTeamName = matchName.substring(secondSpace, matchName.length());
-        
-        response.sendRedirect("/Turnieje/EnterResult.jsp?firstTeam="+firstTeamName+"&secondTeam="+secondTeamName);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet FirstNameChange</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>last name " + lastName+" login "+userLogin.toString() +"haslo"+password+ "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

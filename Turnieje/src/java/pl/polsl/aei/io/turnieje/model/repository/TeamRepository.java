@@ -225,7 +225,6 @@ public class TeamRepository implements ITeamRepository {
 		    team.addDiscipline(new Discipline(rs3.getInt("discId"), rs3.getString("discName")));
 		}
 		rs3.close();
-                set.add(team);
 	    }
 	    return set;
 	}

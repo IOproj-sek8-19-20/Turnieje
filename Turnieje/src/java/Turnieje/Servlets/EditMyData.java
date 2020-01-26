@@ -6,42 +6,48 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.Set;
+import javax.jms.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
+import pl.polsl.aei.io.turnieje.model.datamodel.PlayerInTeam;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
-import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
+ * Servlet responsible for editing the team.
  *
- * @author Daniel-Laptop
+ * @author Daniel Tarnecki
+ * @version 1.0.0
  */
-@WebServlet(name = "PrepareManageTournament", urlPatterns = {"/PrepareManageTournament"})
-public class AAPrepareManageTournament extends HttpServlet {
-    
+@WebServlet(name = "EditMyData", urlPatterns = {"/EditMyData"})
+public class EditMyData extends HttpServlet {
+
     RepositoryProvider repositoryProvider;
-    ITournamentRepository tournamentRepository;
+    IUserRepository userRepository;
     ITeamRepository teamRepository;
     IDisciplineRepository disciplineRepository;
 
     @Override
-    public void init() {
+    public void init() 
+    {
         repositoryProvider = RepositoryProvider.getInstance();
-        tournamentRepository = repositoryProvider.getTournamentRepository();
         teamRepository = repositoryProvider.getTeamRepository();
+        userRepository = repositoryProvider.getUserRepository();
         disciplineRepository = repositoryProvider.getDisciplineRepository();
     }
-
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -53,42 +59,12 @@ public class AAPrepareManageTournament extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException 
+    {
         response.setContentType("text/html;charset=UTF-8");
-
-        String tournamentName= request.getParameter("tournamentName");
-        Tournament toEdit = tournamentRepository.getByName(tournamentName);
-        
-        Set<Team> allTeams = teamRepository.getAll();
-        Set<String> allTeamsNames = new HashSet<>();
-        for(Team team: allTeams)
-        {
-            allTeamsNames.add(team.getName());
-        }
-        
-        Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
-        Set<String> teamsInTournamentNames = new HashSet<>();
-        for(Team team: teamsInTournament)
-        {
-            teamsInTournamentNames.add(team.getName());
-        }
-        
-        Set<String> allDisciplinesNames = new HashSet<>();
-        Set<Discipline> allDisciplines = disciplineRepository.getAll();
-        for(Discipline discipline: allDisciplines)
-        {
-            allDisciplinesNames.add(discipline.getName());
-        }
-        
         HttpSession session = request.getSession(true);
-        session.setAttribute("torunamentToEdit", toEdit.getName());
-        session.setAttribute("allTeams", allTeamsNames);
-        session.setAttribute("teamsInTournament", teamsInTournamentNames);
-        session.setAttribute("tournamentToEditTeamSize", toEdit.getTeamSize());
-        session.setAttribute("tournamentToEditDiscipline", toEdit.getDiscipline().getName());
-        session.setAttribute("notTeamDisciplines", allDisciplinesNames);
-        
-        response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp?tournamentName="+tournamentName);
+        String userLogin= (String) session.getAttribute("loggedUser");
+        response.sendRedirect("/Turnieje/TeamCreateManage/EditMenu.jsp?loggedUser="+userLogin);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

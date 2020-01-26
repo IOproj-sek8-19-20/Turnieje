@@ -49,8 +49,28 @@
         <servlet-class>Turnieje.Servlets.AAEnterResultServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RegistrationActive</servlet-name>
-        <servlet-class>Turnieje.Servlets.RegistrationActive</servlet-class>
+        <servlet-name>EditMyData</servlet-name>
+        <servlet-class>Turnieje.Servlets.EditMyData</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FirstNameChange</servlet-name>
+        <servlet-class>Turnieje.Servlets.FirstNameChange</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LastNameChange</servlet-name>
+        <servlet-class>Turnieje.Servlets.LastNameChange</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmailChange</servlet-name>
+        <servlet-class>Turnieje.Servlets.EmailChange</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PasswordChange</servlet-name>
+        <servlet-class>Turnieje.Servlets.PasswordChange</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteMyAccount</servlet-name>
+        <servlet-class>Turnieje.Servlets.DeleteMyAccount</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateTeamServlet</servlet-name>
@@ -101,8 +121,28 @@
         <url-pattern>/EnterResult</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RegistrationActive</servlet-name>
-        <url-pattern>/RegistrationActive</url-pattern>
+        <servlet-name>EditMyData</servlet-name>
+        <url-pattern>/EditMyData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FirstNameChange</servlet-name>
+        <url-pattern>/FirstNameChange</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LastNameChange</servlet-name>
+        <url-pattern>/LastNameChange</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmailChange</servlet-name>
+        <url-pattern>/EmailChange</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PasswordChange</servlet-name>
+        <url-pattern>/PasswordChange</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteMyAccount</servlet-name>
+        <url-pattern>/DeleteMyAccount</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

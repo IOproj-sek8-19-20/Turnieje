@@ -39,10 +39,8 @@ public class MatchRepository implements IMatchRepository {
     	    statement.setBoolean(3, match.getFinished());
             if (match.getWinner() != null)
 		statement.setInt(4, match.getWinner().id);
-	    else
-		statement.setNull(4, java.sql.Types.INTEGER);
 	    statement.setInt(5, match.getTeamId(1).id);
-	    statement.setInt(6, match.getTeamId(2).id);
+	    statement.setInt(6, match.getTeamId(1).id);
 	    statement.execute();
 	    
 	    ResultSet rs = statement.getGeneratedKeys();
@@ -156,7 +154,6 @@ public class MatchRepository implements IMatchRepository {
 		match.setWinner(new TeamId(rs.getInt("winner")));
 		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
 		match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
-                set.add(match);
 	    }
 	    return set;
 	}

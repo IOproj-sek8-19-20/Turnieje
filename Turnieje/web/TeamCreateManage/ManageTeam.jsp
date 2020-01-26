@@ -111,25 +111,6 @@
     <script>
         function temp()
         {
-            var captainIncluded = false;
-            var captain = document.getElementById("captain").value;
-            var iframe = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
-            var select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
-            var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-            for (var i = 0, optionsLength = options.length; i < optionsLength; i++) 
-            {
-                if (options[i].value == captain) 
-                {
-                    captainIncluded=true;
-                    break;
-                }
-            }
-            if(captainIncluded==false)
-            {
-                alert("Brak kapitana w drużynie!");
-                return;
-            }
-            
             var myVar="Manage";
             submit(myVar);
         }

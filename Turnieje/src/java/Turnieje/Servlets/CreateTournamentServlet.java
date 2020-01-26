@@ -6,37 +6,24 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
-import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
-import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
-import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
+ * Servlet responsible for creating the tournament.
  *
- * @author Danielowy Eltech
+ * @author Daniel Kaleta
+ * @version 1.0.0
  */
-public class AAEnterResultServlet extends HttpServlet {
+@WebServlet(name = "CreateTournamentServlet", urlPatterns = {"/CreateTournament"})
+public class CreateTournamentServlet extends HttpServlet {
 
-    RepositoryProvider repositoryProvider;
-    ITournamentRepository tournamentRepository;
-    IMatchRepository matchRepository;
-    ITeamRepository teamRepository;
-
-    @Override
-    public void init() {
-        repositoryProvider = RepositoryProvider.getInstance();
-        tournamentRepository = repositoryProvider.getTournamentRepository();
-        matchRepository = repositoryProvider.getMatchRepository();
-        teamRepository = repositoryProvider.getTeamRepository();
-    }
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,19 +36,38 @@ public class AAEnterResultServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        HttpSession session = request.getSession(true);
 
-        String matchName = request.getParameter("match");
-        String tournamentName = (String) session.getAttribute("tournamentName");
-        Tournament tournament = tournamentRepository.getByName(tournamentName);
+        String JSONString = request.getParameter("JSONFromCreateTournament");
+        JSONObject JSON = new JSONObject(JSONString);
+
+        String tournamentName = JSON.getString("name");
+        String type = JSON.getString("type");
+        String startDate = JSON.getString("startDate");
+        String endDate = JSON.getString("endDate");
+        String discipline = JSON.getString("discipline");
+        String teamSize = JSON.getString("teamSize");
         
-        int firstSpace = matchName.indexOf(' ');
-        int secondSpace = matchName.indexOf(' ',(firstSpace+1));
-        String firstTeamName = matchName.substring(0, firstSpace);
-        String secondTeamName = matchName.substring(secondSpace, matchName.length());
+        //sprawdzenie czy bangla
+        System.out.print(tournamentName);
+        System.out.print(type);
+        System.out.print(startDate);
+        System.out.print(endDate);
+        System.out.print(discipline);
+        System.out.print(teamSize);
         
-        response.sendRedirect("/Turnieje/EnterResult.jsp?firstTeam="+firstTeamName+"&secondTeam="+secondTeamName);
+
+        JSONArray teams = JSON.getJSONArray("teamsToAdd");
+        //wypisanie dodanych uzytkonwikow w ramach testu czy dziala
+        for (int i = 0; i < teams.length(); i++) 
+        {
+            System.out.print(teams.getString(i));
+        }
+
+        Cookie cookie = new Cookie("aboutTournament", JSONString);
+        response.addCookie(cookie);
+        
+        response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentCreated.jsp?tournamentName=" + tournamentName);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

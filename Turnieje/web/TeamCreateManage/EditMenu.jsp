@@ -8,6 +8,9 @@
     <body>
     <center>
         <form action = "Login" method="get" id="myForm">
+            <h1> Aby zmienić dane, wpisz nowe dane w odpowiednie pole, <br>
+                wpisz poprawne hasło w pole Biezace haslo, i kliknij odpowiedni przycisk
+            </h1>
             Nowe imie: <input type = "text" name = "login" id="firstName"> <br> 
             Nowe nazwisko: <input type = "text" name = "password" id="lastName"> <br> 
             Nowy mail: <input type = "text" name = "password" id="email"> <br>
@@ -24,23 +27,23 @@
         function submit()
         {
             var JSONToSend = "{\"firstName\":\"" + document.getElementById("firstName").value + "\",";
-            JSONToSend = JSONToSend + "\"type\":\"" + "firstName" + "\"}";
+            JSONToSend = JSONToSend + "\"password\":\"" + document.getElementById("password").value + "\"}";
             console.log(JSONToSend);
-            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
+            location = "/Turnieje/FirstNameChange?JSON="+ JSONToSend;
         }
         function submit1()
         {
             var JSONToSend = "{\"lastName\":\"" + document.getElementById("lastName").value + "\",";
-            JSONToSend = JSONToSend + "\"type\":\"" + "lastName" + "\"}";
+            JSONToSend = JSONToSend + "\"password\":\"" + document.getElementById("password").value + "\"}";
             console.log(JSONToSend);
-            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
+            location = "/Turnieje/LastNameChange?JSON="+ JSONToSend;
         }
         function submit2()
         {
             var JSONToSend = "{\"email\":\"" + document.getElementById("email").value + "\",";
-            JSONToSend = JSONToSend + "\"type\":\"" + "email" + "\"}";
+            JSONToSend = JSONToSend + "\"password\":\"" + document.getElementById("password").value + "\"}";
             console.log(JSONToSend);
-            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
+            location = "/Turnieje/EmailChange?JSON="+ JSONToSend;
         }
         function submit3()
         {
@@ -48,14 +51,14 @@
             JSONToSend = JSONToSend + "\"newPassword\":\"" + document.getElementById("newPassword").value + "\",";
             JSONToSend = JSONToSend + "\"type\":\"" + "password" + "\"}";
             console.log(JSONToSend);
-            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
+            location = "/Turnieje/PasswordChange?JSON="+ JSONToSend;
         }
         function submit4()
         {
             var JSONToSend = "{\"password\":\"" + document.getElementById("password").value + "\",";
             JSONToSend = JSONToSend + "\"type\":\"" + "delete" + "\"}";
             console.log(JSONToSend);
-            location = "/Turnieje/FirstNameChanged?JSON="+ JSONToSend;
+            location = "/Turnieje/DeleteMyAccount?JSON="+ JSONToSend;
         }
         
     </script>

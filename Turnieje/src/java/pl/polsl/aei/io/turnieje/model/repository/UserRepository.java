@@ -31,34 +31,25 @@ public class UserRepository implements IUserRepository {
     
     @Override
     public UserId add(User user) {
-	UserId ret = null;
 	try {
-	    /*Statement statement = dbInterface.createStatement();
+	    Statement statement = dbInterface.createStatement();
 	    if (user.getActive())
 		statement.executeUpdate(String.format("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('%s', '%s', '%s', '%s', TRUE)", user.getEmail(), user.getPassHash(), user.getFirstName(), user.getLastName()), Statement.RETURN_GENERATED_KEYS);
 	    else
 		statement.executeUpdate(String.format("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES ('%s', '%s', '%s', '%s', FALSE)", user.getEmail(), user.getPassHash(), user.getFirstName(), user.getLastName()), Statement.RETURN_GENERATED_KEYS);
-	    */
-	    PreparedStatement statement = dbInterface.createPreparedStatement("INSERT INTO Users(email, passHash, firstName, lastName, active) VALUES (?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-	    statement.setString(1, user.getEmail());
-	    statement.setString(2, user.getPassHash());
-	    statement.setString(3, user.getFirstName());
-	    statement.setString(4, user.getLastName());
-	    statement.setBoolean(5, user.getActive());
-	    statement.execute();
 	    ResultSet rs = statement.getGeneratedKeys();
 	    if (rs.next()) {
 		for (Discipline k : user.getDisciplines()) {
 		    Statement statement2 = dbInterface.createStatement();
 		    statement2.executeUpdate(String.format("INSERT INTO UsersInDisciplines(userId, discId) VALUES (%d, %d)", user.id.id, k.id));;
 		}
-	        ret = new UserId(rs.getInt(1));
+	       return new UserId(rs.getInt(1));
 	    } 
 	}
 	catch (Exception exc) {
 	    throw new RuntimeException(exc);
 	}
-	return ret;
+	return null;
     }
     @Override
     public boolean delete(User user) {

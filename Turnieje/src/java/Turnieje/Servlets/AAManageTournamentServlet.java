@@ -7,8 +7,6 @@ package Turnieje.Servlets;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -73,7 +71,7 @@ public class AAManageTournamentServlet extends HttpServlet {
 
         String tournamentName = JSON.getString("name");
         String type = JSON.getString("type").replaceAll(" ", "_");
-        String tournamentDisciplineName = JSON.getString("discipline").replaceAll(" ", "_");
+        String discipline = JSON.getString("discipline").replaceAll(" ", "_");
         String teamSize = JSON.getString("teamSize");
         String admin = JSON.getString("admin");
         
@@ -86,7 +84,7 @@ public class AAManageTournamentServlet extends HttpServlet {
         User newAdmin = userRepository.getByEmail(admin);
         if(newAdmin==null)
         {
-            String errorMessage = "Brak w bazie adresu email: " + JSON.getString("admin");
+            String errorMessage = "Brak w bazie adresu email: " + JSON.getString("captain");
             response.sendRedirect("/Turnieje/Error.jsp?errorMessage="+errorMessage);
             return;
         }
@@ -100,7 +98,7 @@ public class AAManageTournamentServlet extends HttpServlet {
             toEdit.setAdmin(newAdmin);
         }
         
-        Discipline tournamentDiscipline = disciplineRepository.getByName(tournamentDisciplineName);
+        Discipline tournamentDiscipline = disciplineRepository.getByName(discipline);
         toEdit.setName(tournamentName);
         toEdit.setMode(TournamentMode.valueOf(type));
         toEdit.setDiscipline(tournamentDiscipline);
@@ -126,48 +124,6 @@ public class AAManageTournamentServlet extends HttpServlet {
         }
         
         tournamentRepository.update(toEdit);
-        
-        Set<Team> allTeams = teamRepository.getAll();
-        Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
-        //Usuniecie z allUsers uzytkownikow juz dodanych
-        for (Team team: teamsInTournament)
-        {
-            for (Team team2: allTeams)
-            {
-                if(team.id.id==team2.id.id)
-                {
-                    allTeams.remove(team2);
-                    break;
-                }
-            }
-        }
-        
-        Set<String> allTeamsNames = new HashSet<>();
-        for(Team team: allTeams)
-        {
-            allTeamsNames.add(team.getName());
-        }
-        
-        Set<String> teamsInTournamentNames = new HashSet<>();
-        for(Team team: teamsInTournament)
-        {
-            teamsInTournamentNames.add(team.getName());
-        }
-        
-        Set<String> allDisciplinesNames = new HashSet<>();
-        Set<Discipline> allDisciplines = disciplineRepository.getAll();
-        for(Discipline discipline: allDisciplines)
-        {
-            allDisciplinesNames.add(discipline.getName());
-        }
-        
-        session.setAttribute("torunamentToEdit", toEdit.getName());
-        session.setAttribute("allTeams", allTeamsNames);
-        session.setAttribute("teamsInTournament", teamsInTournamentNames);
-        session.setAttribute("tournamentToEditTeamSize", toEdit.getTeamSize());
-        session.setAttribute("tournamentToEditDiscipline", toEdit.getDiscipline().getName());
-        session.setAttribute("notTeamDisciplines", allDisciplinesNames);
-        session.setAttribute("tournamentAdmin", admin);
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/TournamentEdited.jsp?tournamentName="+tournamentName);
     }
