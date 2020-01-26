@@ -108,7 +108,7 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setStartingDate(rs.getDate("startingDate"));
 		tournament.setEndingDate(rs.getDate("endingDate"));
 		tournament.setAdmin(new UserId(rs.getInt("adminId")));
-		tournament.setMode(TournamentMode.NONE); //temp, todo
+		tournament.setMode(TournamentMode.Pucharowy); //temp, todo
 		tournament.setDiscipline(new Discipline(rs.getInt("discId"), rs.getString("DISCNAME")));
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
@@ -145,7 +145,7 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setStartingDate(rs.getDate("startingDate"));
 		tournament.setEndingDate(rs.getDate("endingDate"));
 		tournament.setAdmin(new UserId(rs.getInt("adminId")));
-		tournament.setMode(TournamentMode.NONE); //temp, todo
+		tournament.setMode(TournamentMode.Pucharowy); //temp, todo
 		tournament.setDiscipline(new Discipline(rs.getInt("discId"), rs.getString("DISCNAME")));
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
@@ -184,7 +184,7 @@ public class TournamentRepository implements ITournamentRepository {
 		tournament.setStartingDate(rs.getDate("startingDate"));
 		tournament.setEndingDate(rs.getDate("endingDate"));
 		tournament.setAdmin(new UserId(rs.getInt("adminId")));
-		tournament.setMode(TournamentMode.NONE); //temp, todo
+		tournament.setMode(TournamentMode.Pucharowy); //temp, todo
 		tournament.setDiscipline(new Discipline(rs.getInt("discId"), rs.getString("DISCNAME")));
 		tournament.setTeamSize(rs.getInt("teamSize"));
 		tournament.setFinished(rs.getBoolean("finished"));
