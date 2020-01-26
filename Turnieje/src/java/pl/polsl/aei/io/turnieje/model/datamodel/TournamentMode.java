@@ -11,7 +11,5 @@ package pl.polsl.aei.io.turnieje.model.datamodel;
  * @author Piotr Uhl
  */
 public enum TournamentMode {
-    NONE,
-    Tryb_1,
-    Tryb_2
+    Pucharowy
 }
