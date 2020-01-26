@@ -9,13 +9,13 @@
     <center>
         <form action = "Login" method="get" id="myForm">
             <h1> Aby zmienić dane, wpisz nowe dane w odpowiednie pole, <br>
-                wpisz poprawne hasło w pole Biezace haslo, i kliknij odpowiedni przycisk
+                wpisz poprawne hasło w pole Bieżące haslo, i kliknij odpowiedni przycisk
             </h1>
-            Nowe imie: <input type = "text" name = "login" id="firstName"> <br> 
+            Nowe imię: <input type = "text" name = "login" id="firstName"> <br> 
             Nowe nazwisko: <input type = "text" name = "password" id="lastName"> <br> 
             <!--Nowy mail: <input type = "text" name = "password" id="email"> <br>-->
-            Biezace haslo: <input type = "text" name = "password" id="password"> <br>
-            Nowe haslo: <input type = "text" name = "password" id="newPassword"> <br>
+            Bieżące hasło: <input type = "text" name = "password" id="password"> <br>
+            Nowe hasło: <input type = "text" name = "password" id="newPassword"> <br>
         </form>
         <input type = "submit" value = "Zmien imię" onclick="submit()">   <br>
       <input type = "submit" value = "Zmien nazwisko" onclick="submit1()"> <br>

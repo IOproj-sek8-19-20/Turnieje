@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Nie udalo sie zmienic danych! Wpisano zle haslo lub dane nie spelniaja wymagan</h1>
+        <h1>Nie udało się zmienić danych! Wpisano złe hasło lub dane nie spełniają wymagań</h1>
         <script>
         setTimeout(function() 
         {
