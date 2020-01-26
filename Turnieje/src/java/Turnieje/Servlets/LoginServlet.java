@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
         String password = JSON.getString("password");
       
         User user = userRepository.getByEmail(login);
-         if (user != null || (user.checkPassword(password)))
+         if (user != null || (user.checkPassword(password)) || (!user.getActive()))
                   {
                       HttpSession session = request.getSession(true);
                       session.setAttribute("passwordUser", password);
