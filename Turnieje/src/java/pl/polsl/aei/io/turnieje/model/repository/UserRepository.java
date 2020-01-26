@@ -68,11 +68,10 @@ public class UserRepository implements IUserRepository {
     @Override
     public boolean delete(UserId user) {
 	try {
-	    Statement statement00 = dbInterface.createStatement();
-	    statement00.executeUpdate(String.format("DELETE FROM UsersInDisciplines WHERE userId=%d", user.id));
-	    Statement statement01 = dbInterface.createStatement();
-	    statement01.executeUpdate(String.format("UPDATE Teams SET capId=NULL WHERE capId=%d", user.id));
 	    Statement statement = dbInterface.createStatement();
+	    statement.executeUpdate(String.format("DELETE FROM UsersInDisciplines WHERE userId=%d", user.id));
+	    statement.executeUpdate(String.format("DELETE FROM PlayersInTeams WHERE userId=%d", user.id));
+	    statement.executeUpdate(String.format("UPDATE Teams SET capId=NULL WHERE capId=%d", user.id));
 	    if (statement.executeUpdate(String.format("DELETE FROM Users WHERE userId=%d", user.id)) == 0)
 		return false;
 	    else
