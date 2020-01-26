@@ -18,6 +18,13 @@
             hasło : <input type = "password" name = "password" id="password"> <br>
         </form>
       <input type = "submit" value = "Zatwierdz" onclick="submit()">
+      
+        <br/><br/>
+      
+        <a href="/Turnieje/Registration.jsp">
+            <input type = "submit" value = "Rejestracja">
+        </a>
+      
     </center>
     <script>
         function submit()

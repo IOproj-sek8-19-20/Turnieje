@@ -23,6 +23,12 @@
        </form>
       <input type = "submit" value = "Zatwierdz" onclick="submit()">
       
+        <br/><br/>
+      
+        <a href="/Turnieje/Login.jsp">
+            <input type = "submit" value = "Logowanie">
+        </a>
+      
       </center>
       <script>
         function submit()
