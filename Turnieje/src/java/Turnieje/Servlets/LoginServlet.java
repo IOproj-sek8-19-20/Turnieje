@@ -45,40 +45,45 @@ ITeamRepository teamRepository;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          response.setContentType("text/html;charset=UTF-8");
-
-        String JSONString = request.getParameter("JSONFromLogin");
+       String JSONString = request.getParameter("JSONFromLogin");
         JSONObject JSON = new JSONObject(JSONString);
         String login = JSON.getString("login");
         String password = JSON.getString("password");
         //pomysł :
-        //User user = new User(getByEmail(document.getElementById("login").value;))
+        //User user = userRepository.getByEmail(login);
         // if (user != null)
            //    {
              ///      if (user.checkpassword(document.getElementById("password").value;))
             //       {
-             //          location.replace("/Turnieje/MainMenu?JSON");
+             //          location = "/Turnieje/MainMenu?JSON";
             //       }
             //   }
             //   else
            //    {
-           //        location.replace("/Turnieje/BadLogin?JSONFromLogin");
+           //        location = "/Turnieje/BadLogin?JSONFromLogin";
            //    }
           //  }
         //   System.out.print(login);
          //   System.out.print(password);
          
-          if ((login.equals("123")) && (password.equals("123"))) //test
-          { HttpSession session = request.getSession(true);
+        if ((login.equals("123")) && (password.equals("123"))) //test
+        { 
+            HttpSession session = request.getSession(true);
             Object obj = session.getAttribute("ListOperation");
             session.setAttribute("loginUser", login);
-             session.setAttribute("passwordUser", password);
-             session.setAttribute("acive","YES"); // sprawdzanie na każdej stornie 
-             //zabrania wpsiania od razu adresu akcji wymagającej logowania
-              response.sendRedirect("MainMenu.jsp");
-          }
-          else
-          {
-             response.sendRedirect("BadLogin.jsp");
+            session.setAttribute("passwordUser", password);
+            
+            session.setAttribute("loggedUser", login);
+            //Jezeli ta postac przejdzie to pakowanie do sesji loginu, hasla, a chyba
+            //nawet active jest zbedne, bo mozna wyciagnac wszystko z obiektu user
+            //oraz sprawdzac czy jest nullem
+            session.setAttribute("acive","YES"); // sprawdzanie na każdej stornie 
+            //zabrania wpsiania od razu adresu akcji wymagającej logowania
+            response.sendRedirect("MainMenu.jsp");
+        }
+        else
+        {
+            response.sendRedirect("BadLogin.jsp");
         }
 }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
