@@ -26,6 +26,7 @@
             {
                        location = "/Turnieje/Login.jsp";
             }
+            </script>
         </body>
     </html>
 </f:view>
