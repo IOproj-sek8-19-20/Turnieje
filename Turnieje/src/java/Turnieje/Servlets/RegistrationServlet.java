@@ -143,25 +143,36 @@ ITeamRepository teamRepository;
          user.setLastName(surname);
          user.setPassHash(password1);
          UserId userid = userRepository.add(user);
+         
+         if (userid == null)
+         {
+              statement ="Email ktory podales juz istnieje w bazie!";
+              response.sendRedirect("BadRegistration.jsp?statement="+statement);
+         }
+         else
+         {
          int id=userid.id;
-       
-       
          GoogleMail.Send("turniejeserwis","Aligator33",email,
-            email,"Link Aktywacyjny","Jeśli się rejestrowałeś skopiuj ten link aktywacyjny:"
+            email,"Link Aktywacyjny","Jeśli się rejestrowałeś skopiuj ten link aktywacyjny: "
                       + "http://localhost:15406/Turnieje/RegistrationActivate.jsp?id="+id);
-        }
+        
         if(statement.isEmpty())
-        {   
-          //  HttpSession session = request.getSession(true);
-          //  session.setAttribute("passwordUser", password1);
-         //   session.setAttribute("loggedUser", email);
-        //response.sendRedirect("MainMenu.jsp");
+        {   //HttpSession session = request.getSession(true);
+            //   session.setAttribute("passwordUser", password1);
+             //         session.setAttribute("loggedUser", email);
+              //        session.setAttribute("acive","YES");
             response.sendRedirect("GoodRegistration.jsp");
         }
         else
-         {  
-            response.sendRedirect("BadRegistration.jsp?statement="+statement);
+        {  
+          response.sendRedirect("BadRegistration.jsp?statement="+statement);
         }
+        }
+        }
+         else
+         {
+              response.sendRedirect("BadRegistration.jsp?statement="+statement);
+         }
     }
     
  

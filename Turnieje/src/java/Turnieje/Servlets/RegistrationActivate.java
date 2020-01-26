@@ -22,8 +22,8 @@ import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
  *
  * @author mariu
  */
-@WebServlet(name = "RegistrationActive", urlPatterns = {"/RegistrationActive"})
-public class RegistrationActive extends HttpServlet {
+@WebServlet(name = "RegistrationActivate", urlPatterns = {"/RegistrationActivate"})
+public class RegistrationActivate extends HttpServlet {
     //<editor-fold defaultstate="expanded" desc="init()">
     RepositoryProvider repositoryProvider;
     IUserRepository userRepository;
@@ -47,11 +47,12 @@ public class RegistrationActive extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String JSONString = request.getParameter("JSONFromRegistrationActive");
-        JSONObject JSON = new JSONObject(JSONString);
-        String id = JSON.getString("id");
-      // User user = new User();
-      UserId userId = new UserId(Integer.parseInt(id));
+       // String JSONString = request.getParameter("JSONFromRegistrationActivate");
+      //  JSONObject JSON = new JSONObject(JSONString);
+      //  String id = JSON.getString("id");
+      int id= Integer.parseInt(request.getParameter("JSONFromRegistrationActivate"));
+    //  User user = new User();
+      UserId userId = new UserId(id);
         User user = userRepository.getById(userId);
         user.getActive();
         response.sendRedirect("Login.jsp");
