@@ -12,6 +12,12 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Pomyślnie zmieniono imię</h1>
+        <h1>Pomyślnie zmieniono imię.</h1>
+        <script>
+        setTimeout(function() 
+        {
+            location = "/Turnieje/TeamCreateManage/EditMenu.jsp"
+        }, 2000);
+        </script>
     </body>
 </html>

@@ -22,8 +22,8 @@ import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
  *
  * @author user
  */
-@WebServlet(name = "LastNameChange", urlPatterns = {"/LastNameChange"})
-public class LastNameChange extends HttpServlet 
+@WebServlet(name = "PasswordChange", urlPatterns = {"/PasswordChange"})
+public class PasswordChange extends HttpServlet 
 {
     RepositoryProvider repositoryProvider;
     IUserRepository userRepository;
@@ -43,32 +43,31 @@ public class LastNameChange extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
+     throws ServletException, IOException 
     {
-            response.setContentType("text/html;charset=UTF-8");
+      response.setContentType("text/html;charset=UTF-8");
             String JSONString = request.getParameter("JSON");
             JSONObject JSON = new JSONObject(JSONString);
-            String lastName = JSON.getString("lastName");
+            String newPassword = JSON.getString("newPassword");
             String password = JSON.getString("password");
             HttpSession session = request.getSession(true);
             String userLogin = (String) session.getAttribute("loggedUser");
             User u = new User();
             u=userRepository.getByEmail(userLogin);
             String goodPassword=u.getPassHash();
-            if(goodPassword.equals(password) && lastName.length() > 0)
+            if(goodPassword.equals(password) && newPassword.length() > 0)
             {
-                u.setLastName(lastName);
+                u.setPassHash(newPassword);
                 if(userRepository.update(u))
                 {
-                    response.sendRedirect("/Turnieje/TeamCreateManage/ChangeLastName.jsp?lastName="+lastName);
+                    response.sendRedirect("/Turnieje/TeamCreateManage/PasswordChanged.jsp?lastName="+newPassword);
                 }
            
             }
             else
             {
-                response.sendRedirect("/Turnieje/TeamCreateManage/FailToChangeLastName.jsp?lastName="+lastName);
+                response.sendRedirect("/Turnieje/TeamCreateManage/FailToChangePassword.jsp?lastName="+newPassword);
             }
     }
 

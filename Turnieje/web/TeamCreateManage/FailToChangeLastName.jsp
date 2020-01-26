@@ -1,6 +1,6 @@
 <%-- 
-    Document   : FailToChange
-    Created on : 2020-01-26, 15:46:52
+    Document   : FailToChangeLastName
+    Created on : 2020-01-26, 19:53:24
     Author     : user
 --%>
 
@@ -12,7 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Nie udalo sie zmienic danych! Wpisano zle haslo lub dane nie spelniaja wymagan</h1>
+        <h1>Nie udało się zmienić nazwiska. Podano złe hasło lub nazwisko nie spełnia wymagań!</h1>
         <script>
         setTimeout(function() 
         {

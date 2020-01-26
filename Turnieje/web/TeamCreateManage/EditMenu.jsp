@@ -13,13 +13,13 @@
             </h1>
             Nowe imie: <input type = "text" name = "login" id="firstName"> <br> 
             Nowe nazwisko: <input type = "text" name = "password" id="lastName"> <br> 
-            Nowy mail: <input type = "text" name = "password" id="email"> <br>
+            <!--Nowy mail: <input type = "text" name = "password" id="email"> <br>-->
             Biezace haslo: <input type = "text" name = "password" id="password"> <br>
             Nowe haslo: <input type = "text" name = "password" id="newPassword"> <br>
         </form>
         <input type = "submit" value = "Zmien imię" onclick="submit()">   <br>
       <input type = "submit" value = "Zmien nazwisko" onclick="submit1()"> <br>
-      <input type = "submit" value = "Zmien email" onclick="submit2()"> <br>
+     <!-- <input type = "submit" value = "Zmien email" onclick="submit2()"> <br>-->
       <input type = "submit" value = "Zmien haslo" onclick="submit3()"> <br>
       <input type = "submit" value = "Usun konto" onclick="submit4()"> <br>
     </center>
@@ -38,13 +38,13 @@
             console.log(JSONToSend);
             location = "/Turnieje/LastNameChange?JSON="+ JSONToSend;
         }
-        function submit2()
+        /*function submit2()
         {
             var JSONToSend = "{\"email\":\"" + document.getElementById("email").value + "\",";
             JSONToSend = JSONToSend + "\"password\":\"" + document.getElementById("password").value + "\"}";
             console.log(JSONToSend);
             location = "/Turnieje/EmailChange?JSON="+ JSONToSend;
-        }
+        }*/
         function submit3()
         {
             var JSONToSend = "{\"password\":\"" + document.getElementById("password").value + "\",";
