@@ -77,7 +77,7 @@
             firstButton.value = firstTeamName;
             firstButtonLabel.innerText = firstTeamName;
             
-            var secondTeamName = matchName.substring(secondSpace, matchName.length);
+            var secondTeamName = matchName.substring(secondSpace+1, matchName.length);
             var secondButton = document.getElementById("secondTeam");
             var secondButtonLabel = document.getElementById("secondTeamLabel");
             secondButton.value = secondTeamName;

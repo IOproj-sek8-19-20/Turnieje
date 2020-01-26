@@ -5,8 +5,12 @@
  */
 package Turnieje.Servlets;
 
+
+import email.GoogleMail;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.ServletException;
@@ -14,10 +18,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
+import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
-
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 /**
  *
  * @author mariu
@@ -27,14 +34,20 @@ public class RegistrationServlet extends HttpServlet {
 ITeamRepository teamRepository;
 
     //<editor-fold defaultstate="expanded" desc="init()">
+    RepositoryProvider repositoryProvider;
+    IUserRepository userRepository;
+ 
+
     @Override
     public void init() {
-        //teamRepository = new TeamRepository();
+        repositoryProvider = RepositoryProvider.getInstance();
+        userRepository = repositoryProvider.getUserRepository();
+     
     }
     //wykorzystanie klasy InternetAddress do sprawdzenia emaila 
       public static boolean isValidEmailAddress(String email) { 
-   boolean result = true;
-   try {
+    boolean result = true;
+     try {
       InternetAddress emailAddr = new InternetAddress(email);
       emailAddr.validate();
    } catch (AddressException ex) {
@@ -42,6 +55,12 @@ ITeamRepository teamRepository;
    }
    return result;
     }
+       public static boolean validateFirstName(String firstName) {       
+             return firstName.matches("[A-Z][a-zA-Z]*");
+        }
+        public static boolean validateLastName(String lastName) {
+        return lastName.matches("[a-zA-z]+(['-][a-zA-Z]+)*");
+     }
     //</editor-fold>
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -53,7 +72,7 @@ ITeamRepository teamRepository;
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, MessagingException {
         response.setContentType("text/html;charset=UTF-8");
         
         String JSONString = request.getParameter("JSONFromRegistration");
@@ -63,33 +82,86 @@ ITeamRepository teamRepository;
         String email = JSON.getString("email");
         String password1 = JSON.getString("password1");
         String password2 = JSON.getString("password2");
-        String checkBox= JSON.getString("checkBox"); //on gdy zazanaczony
+        String checkBox= JSON.getString("checkBox"); 
         String statement ="";
         if ("".equals(name))
         {statement="Imie jest puste!";
+
         }
-         if ("".equals(surname))
+        if(name.length()<3)
+        {
+            statement="Imie jest zbyt krótkie!";
+        }
+        if(!validateFirstName(name))
+        {
+            statement="Imie jest niepoprawne!";
+
+        }
+        if(!validateLastName(surname))
+        {
+            statement="Nazwisko jest niepoprawne!";
+
+        }
+        if ("".equals(surname))
         {statement="Nazwisko jest puste!";
+  
         }
-         
+        if(surname.length()<3)
+        {
+        statement="Nazwisko jest zbyt krótkie!";
+
+        }
         if (!(password1.equals(password2)))
         { statement="Hasła są różne!";
+      
         }
         
          if (("".equals(password1)) || ("".equals(password2)))
         {statement="Hasło jest puste!";
+      
         }
-         
-          if (("on".equals(checkBox)))
+         if(password1.length()<8)
         {
-        statement="Brak akceptacji regulaminu!";
+        statement="Hasło jest zbyt krótkie!";
+        
         }
           if(!isValidEmailAddress(email))
           {
           statement="Niepoprawny email!";
+         
           }
-        
-         response.sendRedirect("BadRegistration.jsp?statement="+statement);
+         if ("false".equals(checkBox))
+          {
+              statement="Brak akceptacji regulaminu!";
+             
+          } 
+         if("".equals(statement))
+        { User user = new User();
+         user.setEmail(email);
+         user.setFirstName(name);
+         user.setActive(false);
+         user.setLastName(surname);
+         user.setPassHash(password1);
+         UserId userid = userRepository.add(user);
+         int id=userid.id;
+       
+       
+         GoogleMail.Send("turniejeserwis","Aligator33",email,
+            email,"Link Aktywacyjny","Jeśli się rejestrowałeś skopiuj ten link aktywacyjny:"
+                      + "http://localhost:15406/Turnieje/RegistrationActivate.jsp?id="+id);
+        }
+        if(statement.isEmpty())
+        {   
+          //  HttpSession session = request.getSession(true);
+          //  session.setAttribute("passwordUser", password1);
+         //   session.setAttribute("loggedUser", email);
+        //response.sendRedirect("MainMenu.jsp");
+            response.sendRedirect("GoodRegistration.jsp");
+        }
+        else
+         {  
+            response.sendRedirect("BadRegistration.jsp?statement="+statement);
+        }
     }
     
  
@@ -106,7 +178,11 @@ ITeamRepository teamRepository;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    try {
         processRequest(request, response);
+    } catch (MessagingException ex) {
+        Logger.getLogger(RegistrationServlet.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     /**
@@ -120,7 +196,11 @@ ITeamRepository teamRepository;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    try {
         processRequest(request, response);
+    } catch (MessagingException ex) {
+        Logger.getLogger(RegistrationServlet.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }
 
     /**

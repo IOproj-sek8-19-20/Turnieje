@@ -59,8 +59,8 @@ public class AAPrepareManageTeam extends HttpServlet {
         Team actualTeam = teamRepository.getByName(teamName);
         
         Set<User> allUsers = userRepository.getAll();
-        
         Set<User> usersInTeam = userRepository.getByTeam(actualTeam.getId());
+        
         Set<String> usersInTeamEmails = new HashSet<>();
         for(User user: usersInTeam)
         {

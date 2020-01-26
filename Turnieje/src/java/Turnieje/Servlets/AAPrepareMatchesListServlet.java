@@ -67,8 +67,8 @@ public class AAPrepareMatchesListServlet extends HttpServlet {
             matchesNames.add(matchName);
         }
         
-        matchesNames.add("Test vs Test2");
-        matchesNames.add("Atest vs Atest2");
+        //matchesNames.add("Team1 vs Team4");
+        //matchesNames.add("Atest vs Atest2");
         
         HttpSession session = request.getSession(true);
         session.setAttribute("matchesToShow", matchesNames);

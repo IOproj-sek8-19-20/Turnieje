@@ -13,7 +13,7 @@
     </head>
     <!-- 2 inity, 1 dla list uzytkownikow, 2 dla list dyscyplin-->
     <script>var toInit = "Users", toInit2 = "Disciplines";</script>
-    <body onload="init(toInit);init(toInit2);myCountingFunction(toInit);myCountingFunction(toInit2)">
+    <body onload="addCaptain();init(toInit);init(toInit2);myCountingFunction(toInit);myCountingFunction(toInit2)">
     <%
         //Sprawdzanie, czy uzytkownik jest zalogowany
         String userEmail = (String) session.getAttribute("loggedUser");
@@ -98,6 +98,32 @@
     </center>
     
     <script> 
+        function addCaptain()
+        {
+            var captainEmail = document.getElementById("captain").value;
+            
+            var iframe = document.getElementById("AvaibleUsers");   //dobieram sie do iframe
+            var select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
+            var options = select.getElementsByTagName('option');    //pobieram opcje z listy
+            //usuwam kapitana z dostepnych zawodnikow
+            for (var i = 0, optionsLength = options.length; i < optionsLength; i++) 
+            {
+                if (options[i].value == captainEmail) 
+                {
+                    select.remove(i);
+                    break;
+                }
+            }
+            
+            //dodaje kapitana do dodanych zawodnikow
+            var iframe2 = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
+            var select2 = iframe2.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
+            var option = document.createElement("option");
+            option.text = captainEmail;
+            select2.add(option);
+
+            myCountingFunction("Users");
+        }
         function temp()
         {
             var myVar="Create";

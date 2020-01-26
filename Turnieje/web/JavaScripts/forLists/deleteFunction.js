@@ -10,6 +10,17 @@ function deleteFunction(toDelete)
     var select2 = iframe2.contentWindow.document.getElementById("choosed"+toDelete);   //dobieram sie do listy druzyn
     var option = document.createElement("option");
     option.text = options[select.selectedIndex].text;
+    
+    var captainEmail = document.getElementById("captain").value;
+    if(captainEmail != null)
+    {
+        if(option.text == captainEmail)
+        {
+            alert("Kapitan jest nietykalny");
+            return;
+        }
+    }
+    
     select2.add(option);
 
     select.remove(select.selectedIndex);

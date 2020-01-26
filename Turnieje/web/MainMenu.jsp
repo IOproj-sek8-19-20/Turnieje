@@ -60,11 +60,7 @@
         <a href="/Turnieje/PrepareTeamsList?onlyMine=true">
         <input type = "submit" value = "Pokaż moje drużyny">
         </a>
-        <br/><br/>
-        
-        <a href="/Turnieje/EditMyData?onlyMine=true">
-        <input type = "submit" value = "Edytuj konto">
-        </a>
+
         
     </center>
     </body>

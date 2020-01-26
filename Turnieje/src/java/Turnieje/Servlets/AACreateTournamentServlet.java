@@ -181,10 +181,9 @@ public class AACreateTournamentServlet extends HttpServlet {
             //No z tą datą to tak jeszcze do przemyślenia
             toAdd.setDate(date);
             toAdd.setFinished(false);
-            toAdd.setWinner(null);
             toAdd.setTourId(newTournamentWithId.id);
-            toAdd.setTeamId((i+1), teamsInTournament.get(i).id);
-            toAdd.setTeamId((i+2), teamsInTournament.get(i+1).id);
+            toAdd.setTeamId((1), teamsInTournament.get(i).id);
+            toAdd.setTeamId((2), teamsInTournament.get(i+1).id);
             matchRepository.addMatch(toAdd);
         }
 

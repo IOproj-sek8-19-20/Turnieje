@@ -8,7 +8,7 @@
     <body>
     <center>
         <form action = "Login" method="get" id="myForm">
-            Nowe imie: <input type = "text" name = "login" id="firstName"> <br> 
+            Wprowadz kod wysłany na starego maila: <input type = "text" name = "login" id="firstName"> <br> 
             Nowe nazwisko: <input type = "text" name = "password" id="lastName"> <br> 
             Nowy mail: <input type = "text" name = "password" id="email"> <br>
             Biezace haslo: <input type = "text" name = "password" id="password"> <br>
