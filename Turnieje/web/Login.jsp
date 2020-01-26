@@ -9,14 +9,28 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://localhost:8080/Turnieje/CSS/style.css" type="text/css"/>
         <title>Logowanie</title>
     </head>
     <body>
     <center>
         <form action = "Login" method="get" id="myForm">
-            login : <input type = "text" name = "login" id="login"> <br>
-            hasło : <input type = "password" name = "password" id="password"> <br>
+            
+            <div id="regDiv">
+                <div id="text">
+                   <label for="name">Login: </label><br/>
+                   <label for="surname">Hasło: </label><br/>
+                </div>
+                <div id="fields">
+                    <input type = "text" name = "login" id="login"> <br>
+                    <input type = "password" name = "password" id="password"> <br>
+                </div>
+            </div>
+            
+            
         </form>
+        
+        <br>
       <input type = "submit" value = "Zatwierdz" onclick="submit()">
       
         <br/><br/>

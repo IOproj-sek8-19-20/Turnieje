@@ -25,7 +25,7 @@ input[type=text], select, input[type=number], input[type=submit] {
     box-sizing: border-box;
 }
 
-input[type=date] {
+input[type=date], [type=password]{
     width: 150px;
     padding: 4px 6px;
     margin: 8px 0;
@@ -99,6 +99,49 @@ iframe {
 #enterResult{
     width: 120px;
 }
+
+#myCheck{
+    margin-top: 13px;
+    zoom: 1.3;
+}
+
+#myForm{
+    display: inline-block;
+}
+
+#text{
+    text-align: right;
+}
+
+#fields{
+    text-align: left;
+    display: inline-block;
+    float: left;
+    padding-top: 2px;
+    margin-top: 5px;
+}
+
+label {
+    display:inline-block;
+    float: right;
+    padding-top: 18px;
+}
+
+#regDiv{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+logDiv{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
 
 /* width */
 ::-webkit-scrollbar {

@@ -9,19 +9,35 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://localhost:8080/Turnieje/CSS/style.css" type="text/css"/>
         <title>Registration</title>
     </head>
     <body>
     <center>
        <form action = "Registration" method="get" id="myForm">
-           Imie : <input type = "text" name = "name" id="name"> <br>
-     Nazwisko : <input type = "text" name = "surname" id="surname"><br>
-     Adres email: <input type = "text" name = "email" id="email"><br>
-     Hasło:<input type = "password" name = "password1" id="password1"> <br>
-     Powtórz hasło:<input type = "password" name = "password2" id="password2"> <br>
-     Regulamin:    <input type="checkbox" id="myCheck" onclick="myFunction()">
-       </form>
-      <input type = "submit" value = "Zatwierdz" onclick="submit()">
+           
+            <div id="regDiv">
+                <div id="text">
+                   <label for="name">Imie:</label><br/>
+                   <label for="surname">Nazwisko: </label><br/>
+                   <label for="email">Adres email: </label><br/>
+                   <label for="password1">Hasło: </label><br/>
+                   <label for="password2">Powtórz hasło: </label><br/>
+                   <label for="myCheck">Regulamin:</label><br/>
+                </div>
+                <div id="fields">
+                   <input type = "text" name = "name" id="name"> <br>
+                   <input type = "text" name = "surname" id="surname"><br>
+                   <input type = "text" name = "email" id="email"><br>
+                   <input type = "password" name = "password1" id="password1"> <br>
+                   <input type = "password" name = "password2" id="password2"> <br>
+                   <input type="checkbox" id="myCheck" onclick="myFunction()">
+                </div>
+            </div>
+           
+        </form>
+        <br/><br/>
+        <input type = "submit" value = "Zatwierdz" onclick="submit()">
       
         <br/><br/>
       
