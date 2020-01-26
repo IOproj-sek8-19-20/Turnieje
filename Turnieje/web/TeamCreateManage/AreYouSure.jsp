@@ -6,6 +6,15 @@
         <title>Usuń konto</title>
     </head>
     <body>
+        <%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+    %>
     <center>
             <h1> Na pewno? Twoje konto zostanie usunięte na zawsze<br>
             To na prawdę długo!</h1>

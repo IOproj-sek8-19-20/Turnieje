@@ -6,6 +6,15 @@
         <title>Zmien dane</title>
     </head>
     <body>
+        <%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+    %>
     <center>
         <form action = "Login" method="get" id="myForm">
             <h1> Aby zmienić dane, wpisz nowe dane w odpowiednie pole, <br>
@@ -13,15 +22,13 @@
             </h1>
             Nowe imię: <input type = "text" name = "login" id="firstName"> <br> 
             Nowe nazwisko: <input type = "text" name = "password" id="lastName"> <br> 
-            <!--Nowy mail: <input type = "text" name = "password" id="email"> <br>-->
             Bieżące hasło: <input type = "text" name = "password" id="password"> <br>
             Nowe hasło: <input type = "text" name = "password" id="newPassword"> <br>
         </form>
-        <input type = "submit" value = "Zmien imię" onclick="submit()">   <br>
-      <input type = "submit" value = "Zmien nazwisko" onclick="submit1()"> <br>
-     <!-- <input type = "submit" value = "Zmien email" onclick="submit2()"> <br>-->
-      <input type = "submit" value = "Zmien haslo" onclick="submit3()"> <br>
-      <input type = "submit" value = "Usun konto" onclick="submit4()"> <br>
+        <input type = "submit" value = "Zmień imię" onclick="submit()">   <br>
+      <input type = "submit" value = "Zmień nazwisko" onclick="submit1()"> <br>
+      <input type = "submit" value = "Zmień hasło" onclick="submit3()"> <br>
+      <input type = "submit" value = "Usuń konto" onclick="submit4()"> <br>
       <a href="/Turnieje/MainMenu.jsp">
         <input type = "submit" value = "Powrót" >
         </a>
@@ -42,13 +49,6 @@
             console.log(JSONToSend);
             location = "/Turnieje/LastNameChange?JSON="+ JSONToSend;
         }
-        /*function submit2()
-        {
-            var JSONToSend = "{\"email\":\"" + document.getElementById("email").value + "\",";
-            JSONToSend = JSONToSend + "\"password\":\"" + document.getElementById("password").value + "\"}";
-            console.log(JSONToSend);
-            location = "/Turnieje/EmailChange?JSON="+ JSONToSend;
-        }*/
         function submit3()
         {
             var JSONToSend = "{\"password\":\"" + document.getElementById("password").value + "\",";

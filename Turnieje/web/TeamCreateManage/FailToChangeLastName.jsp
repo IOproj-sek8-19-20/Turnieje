@@ -12,6 +12,15 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+    %>
         <h1>Nie udało się zmienić nazwiska. Podano złe hasło lub nazwisko nie spełnia wymagań!</h1>
         <script>
         setTimeout(function() 
