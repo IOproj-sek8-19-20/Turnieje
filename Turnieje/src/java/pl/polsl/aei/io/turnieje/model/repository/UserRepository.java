@@ -56,7 +56,8 @@ public class UserRepository implements IUserRepository {
 	    } 
 	}
 	catch (Exception exc) {
-	    throw new RuntimeException(exc);
+	    //throw new RuntimeException(exc);
+            return null;
 	}
 	return ret;
     }

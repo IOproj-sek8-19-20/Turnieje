@@ -49,8 +49,8 @@
         <servlet-class>Turnieje.Servlets.AAEnterResultServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>RegistrationActive</servlet-name>
-        <servlet-class>Turnieje.Servlets.RegistrationActive</servlet-class>
+        <servlet-name>RegistrationActivate</servlet-name>
+        <servlet-class>Turnieje.Servlets.RegistrationActivate</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateTeamServlet</servlet-name>
@@ -101,8 +101,8 @@
         <url-pattern>/EnterResult</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RegistrationActive</servlet-name>
-        <url-pattern>/RegistrationActive</url-pattern>
+        <servlet-name>RegistrationActivate</servlet-name>
+        <url-pattern>/RegistrationActivate</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
