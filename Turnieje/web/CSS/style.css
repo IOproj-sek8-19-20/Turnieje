@@ -78,6 +78,12 @@ iframe {
     margin-top: 5px;
 }
 
+#Im100Sure{
+    width: 250px;
+}
+#ImNot100Sure{
+    width: 180px;
+}
 
 
 #added{
