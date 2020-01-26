@@ -93,8 +93,14 @@ public class MatchRepository implements IMatchRepository {
 		match.setDate(rs.getDate("matchDate"));
 		match.setFinished(rs.getBoolean("finished"));
 		match.setWinner(new TeamId(rs.getInt("winner")));
-		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
-		match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
+		if (rs.getInt("team1Id") == 0)
+		    match.setTeamId(1, null);
+		else
+		    match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
+		if (rs.getInt("team2Id") == 0)
+		    match.setTeamId(2, null);
+		else
+		    match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
 		set.add(match);
 	    }
 	    return set;
@@ -114,8 +120,14 @@ public class MatchRepository implements IMatchRepository {
 		match.setDate(rs.getDate("matchDate"));
 		match.setFinished(rs.getBoolean("finished"));
 		match.setWinner(new TeamId(rs.getInt("winner")));
-		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
-		match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
+		if (rs.getInt("team1Id") == 0)
+		    match.setTeamId(1, null);
+		else
+		    match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
+		if (rs.getInt("team2Id") == 0)
+		    match.setTeamId(2, null);
+		else
+		    match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
 		return match;
 	    }
 	    else {
@@ -142,8 +154,14 @@ public class MatchRepository implements IMatchRepository {
 		match.setDate(rs.getDate("matchDate"));
 		match.setFinished(rs.getBoolean("finished"));
 		match.setWinner(new TeamId(rs.getInt("winner")));
-		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
-		match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
+		if (rs.getInt("team1Id") == 0)
+		    match.setTeamId(1, null);
+		else
+		    match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
+		if (rs.getInt("team2Id") == 0)
+		    match.setTeamId(2, null);
+		else
+		    match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
 	    }
 	    return set;
 	}
@@ -163,8 +181,14 @@ public class MatchRepository implements IMatchRepository {
 		match.setDate(rs.getDate("matchDate"));
 		match.setFinished(rs.getBoolean("finished"));
 		match.setWinner(new TeamId(rs.getInt("winner")));
-		match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
-		match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
+		if (rs.getInt("team1Id") == 0)
+		    match.setTeamId(1, null);
+		else
+		    match.setTeamId(1, new TeamId(rs.getInt("team1Id")));
+		if (rs.getInt("team2Id") == 0)
+		    match.setTeamId(2, null);
+		else
+		    match.setTeamId(2, new TeamId(rs.getInt("team2Id")));
                 set.add(match);
 	    }
 	    return set;
