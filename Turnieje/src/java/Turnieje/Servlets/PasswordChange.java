@@ -56,7 +56,7 @@ public class PasswordChange extends HttpServlet
             User u = new User();
             u=userRepository.getByEmail(userLogin);
             String goodPassword=u.getPassHash();
-            if(goodPassword.equals(password) && newPassword.length() > 0)
+            if(goodPassword.equals(password) && newPassword.length() >=8)
             {
                 u.setPassHash(newPassword);
                 if(userRepository.update(u))

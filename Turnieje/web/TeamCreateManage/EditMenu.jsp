@@ -22,8 +22,8 @@
             </h1>
             Nowe imię: <input type = "text" name = "login" id="firstName"> <br> 
             Nowe nazwisko: <input type = "text" name = "password" id="lastName"> <br> 
-            Bieżące hasło: <input type = "text" name = "password" id="password"> <br>
-            Nowe hasło: <input type = "text" name = "password" id="newPassword"> <br>
+            Bieżące hasło: <input type = "password" name = "password" id="password"> <br>
+            Nowe hasło: <input type = "password" name = "password" id="newPassword"> <br>
         </form>
         <input type = "submit" value = "Zmień imię" onclick="submit()">   <br>
       <input type = "submit" value = "Zmień nazwisko" onclick="submit1()"> <br>
@@ -49,6 +49,7 @@
             console.log(JSONToSend);
             location = "/Turnieje/LastNameChange?JSON="+ JSONToSend;
         }
+
         function submit3()
         {
             var JSONToSend = "{\"password\":\"" + document.getElementById("password").value + "\",";
