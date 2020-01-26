@@ -37,7 +37,7 @@
         
         <br/><br/>
         
-        <input type = "submit" value = "Pokaz turniej" onclick="submitShowTour()">
+        <input type = "submit" value = "Pokaż turniej" onclick="submitShowTour()">
         
         
         
@@ -58,7 +58,7 @@
         Powrót do menu glownego
         -->
         <form action = "/Turnieje/MainMenu.jsp" method="get">
-            <input type = "submit" value = "Powrot">
+            <input type = "submit" value = "Powrót">
         </form>
         
     </center>

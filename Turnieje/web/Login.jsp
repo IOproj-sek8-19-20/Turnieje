@@ -18,8 +18,8 @@
             
             <div id="regDiv">
                 <div id="text">
-                   <label for="name">Login: </label><br/>
-                   <label for="surname">Hasło: </label><br/>
+                   <label class="label2" for="name">Login: </label><br/>
+                   <label class="label2" for="surname">Hasło: </label><br/>
                 </div>
                 <div id="fields">
                     <input type = "text" name = "login" id="login"> <br>

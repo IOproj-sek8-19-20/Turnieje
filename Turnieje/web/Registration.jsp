@@ -18,19 +18,19 @@
            
             <div id="regDiv">
                 <div id="text">
-                   <label for="name">Imie:</label><br/>
-                   <label for="surname">Nazwisko: </label><br/>
-                   <label for="email">Adres email: </label><br/>
-                   <label for="password1">Hasło: </label><br/>
-                   <label for="password2">Powtórz hasło: </label><br/>
-                   <label for="myCheck">Regulamin:</label><br/>
+                   <label class="label2" for="name">Imie:</label><br/>
+                   <label class="label2" for="surname">Nazwisko: </label><br/>
+                   <label class="label2" for="email">Adres email: </label><br/>
+                   <label class="label2" for="password1">Hasło: </label><br/>
+                   <label class="label2" for="password2">Powtórz hasło: </label><br/>
+                   <label class="label2" for="myCheck">Regulamin:</label><br/>
                 </div>
                 <div id="fields">
-                   <input type = "text" name = "name" id="name"> <br>
-                   <input type = "text" name = "surname" id="surname"><br>
-                   <input type = "text" name = "email" id="email"><br>
-                   <input type = "password" name = "password1" id="password1"> <br>
-                   <input type = "password" name = "password2" id="password2"> <br>
+                   <input  type = "text" name = "name" id="name"> <br>
+                   <input  type = "text" name = "surname" id="surname"><br>
+                   <input  type = "text" name = "email" id="email"><br>
+                   <input  type = "password" name = "password1" id="password1"> <br>
+                   <input  type = "password" name = "password2" id="password2"> <br>
                    <input type="checkbox" id="myCheck" onclick="myFunction()">
                 </div>
             </div>
