@@ -56,6 +56,10 @@
         <servlet-name>PasswordChange</servlet-name>
         <servlet-class>Turnieje.Servlets.PasswordChange</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountFinalyDeleted</servlet-name>
+        <servlet-class>Turnieje.Servlets.AccountFinalyDeleted</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CreateTeamServlet</servlet-name>
         <url-pattern>/CreateTeam</url-pattern>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>PasswordChange</servlet-name>
         <url-pattern>/PasswordChange</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountFinalyDeleted</servlet-name>
+        <url-pattern>/AccountFinalyDeleted</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

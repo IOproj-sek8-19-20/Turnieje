@@ -22,6 +22,10 @@
      <!-- <input type = "submit" value = "Zmien email" onclick="submit2()"> <br>-->
       <input type = "submit" value = "Zmien haslo" onclick="submit3()"> <br>
       <input type = "submit" value = "Usun konto" onclick="submit4()"> <br>
+      <a href="/Turnieje/MainMenu.jsp">
+        <input type = "submit" value = "Powrót" >
+        </a>
+      
     </center>
     <script>
         function submit()

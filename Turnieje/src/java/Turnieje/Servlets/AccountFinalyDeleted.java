@@ -22,8 +22,8 @@ import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
  *
  * @author user
  */
-@WebServlet(name = "DeleteMyAccount", urlPatterns = {"/DeleteMyAccount"})
-public class DeleteMyAccount extends HttpServlet 
+@WebServlet(name = "AccountFinalyDeleted", urlPatterns = {"/AccountFinalyDeleted"})
+public class AccountFinalyDeleted extends HttpServlet 
 {
     RepositoryProvider repositoryProvider;
     IUserRepository userRepository;
@@ -46,28 +46,14 @@ public class DeleteMyAccount extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        response.setContentType("text/html;charset=UTF-8");
-            String JSONString = request.getParameter("JSON");
-            JSONObject JSON = new JSONObject(JSONString);
-            String password = JSON.getString("password");
+            response.setContentType("text/html;charset=UTF-8");
             HttpSession session = request.getSession(true);
             String userLogin = (String) session.getAttribute("loggedUser");
             User u = new User();
             u=userRepository.getByEmail(userLogin);
-            String goodPassword=u.getPassHash();
-            
-            if(goodPassword.equals(password))
-            {
-                    response.sendRedirect("/Turnieje/TeamCreateManage/AreYouSure.jsp?");
-
-            }
-            else
-            {
-                response.sendRedirect("/Turnieje/TeamCreateManage/FailToDelete.jsp?");
-            }
-            
-        
-    
+            userRepository.delete(u);
+            //userRepository.update(u);
+            response.sendRedirect("/Turnieje/Registration.jsp?");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
