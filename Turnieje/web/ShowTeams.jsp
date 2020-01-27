@@ -55,7 +55,7 @@
             var iframe = document.getElementById("Teams");   //dobieram sie do iframe
             var select = iframe.contentWindow.document.getElementById("choosedTeams");   //dobieram sie do listy druzyn
             var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-            location = "/Turnieje/TeamView.jsp?teamName="+options[select.selectedIndex].text;
+            location = "/Turnieje/TeamView?teamName="+options[select.selectedIndex].text;
         }
         
         function submitEditTeam()

@@ -70,7 +70,7 @@
             var iframe = document.getElementById("Tournaments");   //dobieram sie do iframe
             var select = iframe.contentWindow.document.getElementById("choosedTournaments");   //dobieram sie do listy turnieji
             var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-            location = "/Turnieje/TournamentView.jsp?tournamentName="+options[select.selectedIndex].text;
+            location = "/Turnieje/TournamentView?tournamentName="+options[select.selectedIndex].text;
         }
         
         function submitEditTour()
