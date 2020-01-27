@@ -22,7 +22,9 @@
             return;
         }
         %>
+        <center>
         <h1>Pomyślnie zmieniono hasło</h1>
+        <center/>
         <script>
         setTimeout(function() 
         {
