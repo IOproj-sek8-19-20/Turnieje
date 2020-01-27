@@ -11,10 +11,11 @@ function deleteFunction(toDelete)
     var option = document.createElement("option");
     option.text = options[select.selectedIndex].text;
     
-    var captainEmail = document.getElementById("captain").value;
+    var captainEmail = document.getElementById("captain");
     if(captainEmail != null)
     {
-        if(option.text == captainEmail)
+        var captainEmailValue = captainEmail.value;
+        if(option.text == captainEmailValue)
         {
             alert("Kapitan jest nietykalny");
             return;

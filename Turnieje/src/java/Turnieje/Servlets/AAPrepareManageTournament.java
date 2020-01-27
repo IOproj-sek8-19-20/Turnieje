@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
+import pl.polsl.aei.io.turnieje.model.datamodel.Match;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
@@ -33,6 +35,7 @@ public class AAPrepareManageTournament extends HttpServlet {
     ITournamentRepository tournamentRepository;
     ITeamRepository teamRepository;
     IDisciplineRepository disciplineRepository;
+    IMatchRepository matchRepository;
 
     @Override
     public void init() {
@@ -40,6 +43,7 @@ public class AAPrepareManageTournament extends HttpServlet {
         tournamentRepository = repositoryProvider.getTournamentRepository();
         teamRepository = repositoryProvider.getTeamRepository();
         disciplineRepository = repositoryProvider.getDisciplineRepository();
+        matchRepository = repositoryProvider.getMatchRepository();
     }
 
 
@@ -58,6 +62,16 @@ public class AAPrepareManageTournament extends HttpServlet {
 
         String tournamentName= request.getParameter("tournamentName");
         Tournament toEdit = tournamentRepository.getByName(tournamentName);
+        
+        Set<Match> tournamentMatches = matchRepository.getByTournament(toEdit);
+        for(Match match: tournamentMatches)
+        {
+            if(match.getFinished()==true)
+            {
+                response.sendRedirect("/Turnieje/Error.jsp?errorMessage=Nie można edytowac rozpoczetego turnieju!");
+                return;
+            }
+        }
         
         Set<Team> allTeams = teamRepository.getAll();
         Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
