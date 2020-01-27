@@ -88,6 +88,11 @@
             var iframe = document.getElementById("Matches");   //dobieram sie do iframe
             var select = iframe.contentWindow.document.getElementById("choosedMatches");   //dobieram sie do listy druzyn
             var options = select.getElementsByTagName('option'); 
+            if(options[select.selectedIndex].text.includes("jeszcze nikt")==true)
+            {
+                alert("Mecz niekompletny!");
+                return;
+            }
             
             var firstButton = document.getElementById("firstTeam");
             var secondButton = document.getElementById("secondTeam");

@@ -87,9 +87,16 @@ public class AAEnterResultServlet extends HttpServlet {
         if(tournamentMatchesLeft.size()==1)
         {
             tournament.setFinished(true);
+            for(Match match: tournamentMatchesLeft)
+            {
+                match.setFinished(true);
+                matchRepository.update(match);
+            }   
+            response.sendRedirect("/Turnieje/Error.jsp?errorMessage=Turniej "+tournamentName+" wygrala druzyna "+winner+"!");
+            return;
         }
         
-        for(Match match: tournamentMatches)
+        for(Match match: tournamentMatchesLeft)
         {
             if(match.getTeamId(1).id==firstTeam.id.id)
             {
@@ -107,7 +114,7 @@ public class AAEnterResultServlet extends HttpServlet {
         }
         
         boolean found = false;
-        for(Match match: tournamentMatches)
+        for(Match match: tournamentMatchesLeft)
         {
             //znajduje mecz w którym jest tylko pierwsza druzyna, dodaje druga
             if(match.getTeamId(2) == null)

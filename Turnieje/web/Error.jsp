@@ -14,6 +14,11 @@
     <body>
     <center><b><h1>
         <%= request.getParameter("errorMessage") %>
-    </h1></b></center>
+    </h1></b>
+    <br/><br/><br/>
+    <form action = "/Turnieje/MainMenu.jsp" method="get">
+            <input type = "submit" value = "Powrót">
+        </form>
+    </center>
     </body>
 </html>
