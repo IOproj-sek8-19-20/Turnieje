@@ -135,7 +135,8 @@ ITeamRepository teamRepository;
              
           } 
          if("".equals(statement))
-        { User user = new User();
+        { 
+         User user = new User();
          user.setEmail(email);
          user.setFirstName(name);
          user.setActive(false);
@@ -165,10 +166,10 @@ ITeamRepository teamRepository;
         }
         }
         }
-         else
-         {
-              response.sendRedirect("BadRegistration.jsp?statement="+statement);
-         }
+        else
+        {
+        response.sendRedirect("BadRegistration.jsp?statement="+statement);
+        }
     }
     
  

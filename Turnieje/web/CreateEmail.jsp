@@ -63,7 +63,7 @@
             var iframe = document.getElementById("AvaibleUsers");   //dobieram sie do iframe
             var select = iframe.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
             var options = select.getElementsByTagName('option');    //pobieram opcje z listy
-            //usuwam kapitana z dostepnych zawodnikow
+            //usuwam wysyłajaćego z dostepnych zawodnikow
             for (var i = 0, optionsLength = options.length; i < optionsLength; i++) 
             {
                 if (options[i].value == captainEmail) 
@@ -72,14 +72,6 @@
                     break;
                 }
             }
-            
-            //dodaje kapitana do dodanych zawodnikow
-          //  var iframe2 = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
-          //  var select2 = iframe2.contentWindow.document.getElementById("choosedUsers");   //dobieram sie do listy druzyn
-          //  var option = document.createElement("option");
-          //  option.text = captainEmail;
-         //   select2.add(option);
-
             myCountingFunction("Users");
         }
         function temp()
