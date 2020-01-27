@@ -1,17 +1,21 @@
-<%@ page import="java.sql.*" %>
-<%ResultSet resultset =null;%>
-<%@page import="java.util.TreeSet"%>
-<%@page import="java.util.Set"%>
-<!DOCTYPE html> <html>
+<!DOCTYPE html>
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/Turnieje/CSS/style.css" type="text/css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://localhost:8080/Turnieje/CSS/style.css" type="text/css"/>
         <title>Podglad druzyny</title>
     </head>
-
-    <script>var toInit = "Users";</script>
-    <body onload="init(toInit);">
+<%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+    %>
+    <script>var toCount="Users"</script>
+    <body onload="myCountingFunction(toCount)">
 
     <center>
         
@@ -23,7 +27,7 @@
 
         <br/><br/>
 
-        <iframe id="Users" src="/Turnieje/Lists/TeamPlayersList.jsp"></iframe>
+        <iframe id="Users" src="/Turnieje/Lists/UsersList.jsp?inTeam=true"></iframe>
         
         <br/><br/>
         
@@ -42,7 +46,7 @@
                 var iframe = document.getElementById("Users");   
                 var select = iframe.contentWindow.document.getElementById("choosedUsers");   
                 var options = select.getElementsByTagName('option');    
-                location = "/Turnieje/UserView.jsp?userName="+options[select.selectedIndex].text;
+                location = "/Turnieje/UserView?userName="+options[select.selectedIndex].text;
             }
     </script>
     </body>

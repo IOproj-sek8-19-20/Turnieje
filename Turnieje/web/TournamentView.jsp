@@ -1,18 +1,22 @@
-<%@ page import="java.sql.*" %>
-<%ResultSet resultset =null;%>
-<%@page import="java.util.TreeSet"%>
-<%@page import="java.util.Set"%>
 <!DOCTYPE html> 
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/Turnieje/CSS/style.css" type="text/css"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://localhost:8080/Turnieje/CSS/style.css" type="text/css"/>
         <title>Podglad turnieju</title>
     </head>
 
-    <script>var toInit = "Teams";</script>
-    
-
+        <%
+        //Sprawdzanie, czy uzytkownik jest zalogowany
+        String userEmail = (String) session.getAttribute("loggedUser");
+        if(userEmail == null)
+        {
+            response.sendRedirect("http://localhost:8080/Turnieje/Login.jsp");
+            return;
+        }
+    %>
+    <script>var toCount="Teams"</script>
+    <body onload="myCountingFunction(toCount)">
     <center>
         
         <h1>Nazwa turnieju: <%= request.getParameter("tournamentName") %> </h1>
@@ -23,7 +27,7 @@
         
         <br/><br/>
         
-        <iframe id="Teams" src="/Turnieje/Lists/TournamentTeamsList.jsp"></iframe>
+        <iframe id="Teams" src="/Turnieje/Lists/TeamsList.jsp?inTournament=true"></iframe>
         
         <br/><br/>
         
@@ -44,6 +48,7 @@
         </form>
 
         </center>
+        <script src="/Turnieje/JavaScripts/forLists/optionsCounter.js"></script>
         <script>
         function submitShowBracket()
             {
@@ -60,7 +65,7 @@
                 var iframe = document.getElementById("Teams");   
                 var select = iframe.contentWindow.document.getElementById("choosedTeams");   
                 var options = select.getElementsByTagName('option');    
-                location = "/Turnieje/TeamView.jsp?teamName="+options[select.selectedIndex].text;
+                location = "/Turnieje/TeamView?teamName="+options[select.selectedIndex].text;
             }
         </script>
     </body>
