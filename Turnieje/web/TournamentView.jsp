@@ -35,10 +35,6 @@
         
         <br/><br/>
         
-        <input type = "submit" value = "Drabinka" onclick="submitShowBracket()">  
-        
-        <br/><br/>
-        
         <input type = "submit" value = "Harmonogram" onclick="submitShowSchedule()">    
         
         <br/><br/>
@@ -50,15 +46,10 @@
         </center>
         <script src="/Turnieje/JavaScripts/forLists/optionsCounter.js"></script>
         <script>
-        function submitShowBracket()
-            {
-                var name = "<%= request.getParameter("tournamentName")%>"
-                location = "/Turnieje/TournamentBracketView.jsp?tournamentName="+name;
-            }
         function submitShowSchedule()
             {
                 var name = "<%= request.getParameter("tournamentName")%>"
-                location = "/Turnieje/TournamentScheduleView.jsp?tournamentName="+name;
+                location = "/Turnieje/TournamentSchedule?tournamentName="+name;
             }
         function submitShowTeam()
             {

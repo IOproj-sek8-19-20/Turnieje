@@ -14,7 +14,18 @@
         
         <br><br/>
         
-        <%-- informacje o uzytkowniku z tym id--%>
+        ${name}
+        
+        <br><br/>
+        
+        
+        ${firstName}
+        
+        <br><br/>
+        
+        
+        ${lastName}
+        
         
         <br><br/>
         
