@@ -6,13 +6,11 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.datamodel.UserId;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
@@ -24,7 +22,7 @@ import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
  */
 @WebServlet(name = "RegistrationActivate", urlPatterns = {"/RegistrationActivate"})
 public class RegistrationActivate extends HttpServlet {
-    //<editor-fold defaultstate="expanded" desc="init()">
+ 
     RepositoryProvider repositoryProvider;
     IUserRepository userRepository;
  
@@ -47,12 +45,8 @@ public class RegistrationActivate extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       // String JSONString = request.getParameter("JSONFromRegistrationActivate");
-      //  JSONObject JSON = new JSONObject(JSONString);
-      //  String id = JSON.getString("id");
       int id= Integer.parseInt(request.getParameter("JSONFromRegistrationActivate"));
-    //  User user = new User();
-      UserId userId = new UserId(id);
+         UserId userId = new UserId(id);
         User user = userRepository.getById(userId);
         user.setActive(true);
         userRepository.update(user);

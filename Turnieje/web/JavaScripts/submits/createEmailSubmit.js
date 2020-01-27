@@ -6,6 +6,7 @@ function submit(myVar)
        alert("Nie mozesz wyslac pustej wiadomosci!");
        return;
     }
+   
     var JSONToSend = "{\"sender\":\"" + document.getElementById("captain").value + "\",";
     
    // kapitan druzyny
@@ -17,6 +18,11 @@ function submit(myVar)
     var iframe = document.getElementById("ChoosedUsers");   //dobieram sie do iframe
   var select = iframe.contentWindow.document.getElementById("choosedUsers");
    var options = select.getElementsByTagName('option');    //pobieram opcje z listy
+      if(options.length==0)
+    {
+       alert("Wybierz przynajmniej jednego odbiorcę!");
+       return;
+    }
    var i;
     console.log(JSONToSend);
     var JSONArrayOfUsersToAdd = "";

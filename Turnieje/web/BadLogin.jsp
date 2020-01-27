@@ -20,8 +20,7 @@
         <script>
             function submit()
             {
-                       
-        location = "/Turnieje/Login.jsp";
+                 location = "/Turnieje/Login.jsp";
             }
     </script>
     </body>

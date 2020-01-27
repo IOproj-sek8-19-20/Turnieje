@@ -7,7 +7,6 @@ package Turnieje.Servlets;
 
 import email.GoogleMail;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
@@ -18,10 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import pl.polsl.aei.io.turnieje.model.datamodel.PlayerInTeam;
-import pl.polsl.aei.io.turnieje.model.datamodel.User;
-import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
-import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
@@ -62,7 +57,6 @@ public class CreateEmail extends HttpServlet {
          JSONArray users = JSON.getJSONArray("usersToAdd");
            for(int i=0; i<users.length();i++)
         {
-         //  users.getString(i)
              GoogleMail.Send("turniejeserwis","Aligator33",users.getString(i),
           users.getString(i),topic,text);
       
