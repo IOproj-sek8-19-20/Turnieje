@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
@@ -23,11 +25,13 @@ import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
 @WebServlet(name = "UserViewServlet", urlPatterns = {"/UserView"})
 public class UserViewServlet extends HttpServlet {
 
+    RepositoryProvider repositoryProvider;
     IUserRepository userRepository;
     
     @Override
     public void init() {
-        //userRepository = new UserRepository();
+        repositoryProvider = RepositoryProvider.getInstance();
+        userRepository = repositoryProvider.getUserRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +45,13 @@ public class UserViewServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String JSONString = request.getParameter("JSONFromUserView");
-        JSONObject JSON = new JSONObject(JSONString);
-
-        String userName = JSON.getString("name");
+        
+        String userName = request.getParameter("userName");
+        User user = userRepository.getByEmail(userName);
+        request.setAttribute("name", user.getEmail());
+        request.setAttribute("firstName", user.getFirstName());
+        request.setAttribute("lastName", user.getLastName());
+        request.getRequestDispatcher("UserView.jsp").forward(request, response);
 
         response.sendRedirect("UserView.jsp?userName=" + userName);
     }

@@ -85,7 +85,7 @@ public class TournamentScheduleServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
         session.setAttribute("matchesToShow", matchesNames);
         session.setAttribute("tournamentName", tournamentName);
-        response.sendRedirect("TournamentSchedule.jsp?tournamentName=" + tournamentName);
+        response.sendRedirect("TournamentScheduleView.jsp?tournamentName=" + tournamentName);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
