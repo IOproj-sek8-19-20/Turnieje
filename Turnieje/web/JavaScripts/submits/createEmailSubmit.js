@@ -1,7 +1,7 @@
 function submit(myVar)
 {
   
-    if(document.getElementById("text").value=="")
+    if(document.getElementById("textArea").value=="")
     {
        alert("Nie mozesz wyslac pustej wiadomosci!");
        return;
@@ -9,7 +9,7 @@ function submit(myVar)
     var JSONToSend = "{\"sender\":\"" + document.getElementById("captain").value + "\",";
     
    // kapitan druzyny
-   JSONToSend = JSONToSend + "\"text\":\"" + document.getElementById("text").value + "\",";
+   JSONToSend = JSONToSend + "\"text\":\"" + document.getElementById("textArea").value + "\",";
 
     //sekcja uzytkownikow do dodania
    JSONToSend = JSONToSend + " \"usersToAdd\": [";

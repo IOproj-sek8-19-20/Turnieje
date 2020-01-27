@@ -11,11 +11,12 @@
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <link rel="stylesheet" href="/Turnieje/CSS/style.css" type="text/css"/>
             <title>Powodzenie wyslania</title>
         </head>
         <body>
     <center>
-        Pomyslnie wysłano! <br></br>
+        Pomyślnie wysłano! <br></br>
           <input type = "submit" value = "Wróć do strony głównej" onclick="submit()">
     </center>
         <script>

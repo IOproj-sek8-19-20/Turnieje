@@ -13,6 +13,7 @@
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <link rel="stylesheet" href="/Turnieje/CSS/style.css" type="text/css"/>
             <title>Stwórz email</title>
         </head>
         <script>var toInit = "Users";</script>
@@ -48,8 +49,7 @@
          <br/><br/>
                     Treść:
                     <br/><br/>
-                    <textarea id="text" rows="25" cols="33">
-                    </textarea>
+                    <textarea id="textArea" rows="25" cols="80"></textarea>
                      <br/><br/>
                     
             <input type = "submit" value = "Zatwierdź" onclick="temp()">

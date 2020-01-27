@@ -122,6 +122,10 @@ iframe {
     text-align: right;
 }
 
+#textArea{
+    text-align: left;
+}
+
 #fields{
     text-align: left;
     display: inline-block;
