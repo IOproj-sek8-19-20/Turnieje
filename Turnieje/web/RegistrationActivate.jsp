@@ -11,6 +11,7 @@
     <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <link rel="stylesheet" href="/Turnieje/CSS/style.css" type="text/css"/>
             <title>Aktywacja Linku </title>
         </head>
         <body>
