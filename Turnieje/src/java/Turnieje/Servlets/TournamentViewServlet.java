@@ -6,15 +6,19 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
+import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
+import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
-import pl.polsl.aei.io.turnieje.model.repository.TournamentRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
@@ -24,11 +28,15 @@ import pl.polsl.aei.io.turnieje.model.repository.TournamentRepository;
 @WebServlet(name = "TournamentViewServlet", urlPatterns = {"/TournamentView"})
 public class TournamentViewServlet extends HttpServlet {
 
-    ITournamentRepository teamRepository;
-    
+    RepositoryProvider repositoryProvider;
+    ITeamRepository teamRepository;
+    ITournamentRepository tournamentRepository;
+
     @Override
     public void init() {
-        //teamRepository = new TournamentRepository();
+        repositoryProvider = RepositoryProvider.getInstance();
+        teamRepository = repositoryProvider.getTeamRepository();
+        tournamentRepository = repositoryProvider.getTournamentRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,21 +50,24 @@ public class TournamentViewServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String JSONString = request.getParameter("JSONFromTournamentView");
-        JSONObject JSON = new JSONObject(JSONString);
-
-        String tournamentName = JSON.getString("name");
         
-        JSONArray teams = JSON.getJSONArray("teamsInTournament");
-        //wypisanie druzyn
-        for(int i=0; i<teams.length();i++)
+        String tournamentName= request.getParameter("tournamentName");
+        Tournament tournament = tournamentRepository.getByName(tournamentName);
+        
+        Set<Team> teamsInTournament = teamRepository.getByTournament(tournament);
+        
+        Set<String> teamsInTournamentNames = new HashSet<>();
+        for(Team team: teamsInTournament)
         {
-            System.out.print(teams.getString(i));
+            teamsInTournamentNames.add(team.getName());
         }
-
+        
+        HttpSession session = request.getSession(true);
+        session.setAttribute("torunament", tournament.getName());
+        session.setAttribute("teamsInTournament", teamsInTournamentNames);
         response.sendRedirect("TournamentView.jsp?tournamentName=" + tournamentName);
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

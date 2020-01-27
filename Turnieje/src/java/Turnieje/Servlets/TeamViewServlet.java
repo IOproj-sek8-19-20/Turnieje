@@ -6,15 +6,19 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import javax.servlet.http.HttpSession;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
+import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
-import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
@@ -24,11 +28,15 @@ import pl.polsl.aei.io.turnieje.model.repository.TeamRepository;
 @WebServlet(name = "TeamViewServlet", urlPatterns = {"/TeamView"})
 public class TeamViewServlet extends HttpServlet {
 
+    RepositoryProvider repositoryProvider;
     ITeamRepository teamRepository;
-    
+    IUserRepository userRepository;
+
     @Override
     public void init() {
-        //teamRepository = new TeamRepository();
+        repositoryProvider = RepositoryProvider.getInstance();
+        teamRepository = repositoryProvider.getTeamRepository();
+        userRepository = repositoryProvider.getUserRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,18 +50,21 @@ public class TeamViewServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String JSONString = request.getParameter("JSONFromTeamView");
-        JSONObject JSON = new JSONObject(JSONString);
-
-        String teamName = JSON.getString("name");
         
-        JSONArray users = JSON.getJSONArray("playersInTeam");
-        //wypisanie zawodników
-        for(int i=0; i<users.length();i++)
+        String teamName= request.getParameter("teamName");
+        Team team = teamRepository.getByName(teamName);
+        
+        Set<User> usersInTeam = userRepository.getByTeam(team.getId());
+        
+        Set<String> usersInTeamEmails = new HashSet<>();
+        for(User user: usersInTeam)
         {
-            System.out.print(users.getString(i));
+            usersInTeamEmails.add(user.getEmail());
         }
-
+        
+        HttpSession session = request.getSession(true);
+        session.setAttribute("team", team.getName());
+        session.setAttribute("usersInTeam", usersInTeamEmails);
         response.sendRedirect("TeamView.jsp?teamName=" + teamName);
     }
 

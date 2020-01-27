@@ -7,15 +7,24 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import pl.polsl.aei.io.turnieje.model.datamodel.Match;
+import pl.polsl.aei.io.turnieje.model.datamodel.Team;
+import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
+import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
+import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.MatchRepository;
+import pl.polsl.aei.io.turnieje.model.repository.RepositoryProvider;
 
 /**
  *
@@ -25,11 +34,17 @@ import pl.polsl.aei.io.turnieje.model.repository.MatchRepository;
 @WebServlet(name = "TournamentScheduleServlet", urlPatterns = {"/TournamentSchedule"})
 public class TournamentScheduleServlet extends HttpServlet {
 
+    RepositoryProvider repositoryProvider;
+    ITournamentRepository tournamentRepository;
     IMatchRepository matchRepository;
+    ITeamRepository teamRepository;
     
     @Override
     public void init() {
-        //matchRepository = new MatchRepository();
+        repositoryProvider = RepositoryProvider.getInstance();
+        tournamentRepository = repositoryProvider.getTournamentRepository();
+        matchRepository = repositoryProvider.getMatchRepository();
+        teamRepository = repositoryProvider.getTeamRepository();
     }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,18 +58,33 @@ public class TournamentScheduleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String JSONString = request.getParameter("JSONFromTournamentView");
-        JSONObject JSON = new JSONObject(JSONString);
-
-        String tournamentName = JSON.getString("name");
+        String tournamentName = request.getParameter("tournamentName");
+        Tournament tournament = tournamentRepository.getByName(tournamentName);
+        Set<Match> tournamentMatches = matchRepository.getByTournament(tournament);
         
-        JSONArray matches = JSON.getJSONArray("matchesInTournament");
-        //wypisanie meczow
-        for(int i=0; i<matches.length();i++)
+        Set<String> matchesNames = new HashSet<>();
+        for(Match match: tournamentMatches)
         {
-            System.out.print(matches.getString(i));
+            if(match.getFinished()==false)
+            {
+                String team1Name = teamRepository.getById(match.getTeamId(1)).getName();
+                if(match.getTeamId(2)!=null)
+                {
+                    Team secondTeam = teamRepository.getById(match.getTeamId(2));
+                    String team2Name = secondTeam.getName();
+                    String matchName = team1Name + " vs " + team2Name;
+                    matchesNames.add(matchName);
+                }
+                else
+                {
+                    String matchName = team1Name + " vs jeszcze nikt";
+                    matchesNames.add(matchName);
+                }
+            }
         }
-
+        HttpSession session = request.getSession(true);
+        session.setAttribute("matchesToShow", matchesNames);
+        session.setAttribute("tournamentName", tournamentName);
         response.sendRedirect("TournamentSchedule.jsp?tournamentName=" + tournamentName);
     }
 
