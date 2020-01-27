@@ -33,9 +33,9 @@
         
         <br/><br/>
         
-        <input type = "submit" value = "Pokaz druzyne" onclick="submitShowTeam()">
+        <input type = "submit" value = "Pokaż drużyne" onclick="submitShowTeam()">
         
-        <input type = "submit" value = "Edytuj druzyne" onclick="submitEditTeam()">
+        <input type = "submit" value = "Edytuj drużyne" onclick="submitEditTeam()">
         
         <br/><br/>
         
@@ -43,7 +43,7 @@
         Powrót do menu glownego
         -->
         <form action = "/Turnieje/MainMenu.jsp" method="get">
-            <input type = "submit" value = "Powrot">
+            <input type = "submit" value = "Powrót">
         </form>
         
     </center>

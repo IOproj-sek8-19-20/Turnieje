@@ -27,6 +27,8 @@
 
     Date date = new Date();
     SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+    Calendar c = Calendar.getInstance();
+    c.setTime(ft.parse(ft.format(date).toString()));
 %>
     <script>var toInit="Teams"</script>
     <body onload="init(toInit),myCountingFunction(toInit)">
@@ -63,15 +65,16 @@
             
             <br/><br/>
             
-            Rozmiar drużyn: <input type="number" id="teamSize" name="teamSize" value="1" min="1">
+            Sugerowany rozmiar drużyn: <input type="number" id="teamSize" name="teamSize" value="1" min="1">
             
             <br/><br/>
         
-            Data rozpoczęcia: <input type="date" id="startDate" name="startDate" value="<%=ft.format(date)%>" min="<%=ft.format(date)%>">
+            Data rozpoczęcia: <input type="date" id="startDate" name="startDate" value="<%= ft.format(date)%>" min="<%= ft.format(date)%>">
             
             <br/><br/>
             
-            Data zakończenia: <input type="date" id="endDate" name="endDate" value="<%=ft.format(date)%>" min="<%=ft.format(date)%>">
+            <% c.add(Calendar.DAY_OF_MONTH, 1); %>
+            Data zakończenia: <input type="date" id="endDate" name="endDate" value="<%= ft.format(c.getTime())%>" min="<%= ft.format(c.getTime())%>" readonly>
             
             <br/><br/>
             
@@ -109,8 +112,50 @@
         <script> 
             function temp()
             {
+                date();
+                return;
                 var myVar="Create";
                 submit(myVar);
+            }
+            function date()
+            {
+                var startDate = new Date(document.getElementById("startDate").value);
+                
+                var iframe = document.getElementById("ChoosedTeams");   //dobieram sie do iframe
+                var select = iframe.contentWindow.document.getElementById("choosedTeams");   //dobieram sie do listy druzyn
+                var options = select.getElementsByTagName('option');  
+                
+                var n = options.length;
+                var potega=0;
+                if(n==0)
+                {
+                    alert("Brak drużyn!");
+                    return;
+                }
+                else
+                {
+                    while(n%2 == 0)
+                    {
+                        n/=2;
+                        potega+=1;
+                    }
+                    if(n == 0 || n != 1)
+                    {
+                        alert("Liczba drużyn NIE jest potęgą dwójki");
+                        return;
+                    }
+                }
+                
+                //var endDate = new Date(document.getElementById("startDate").value);
+                alert(document.getElementById("startDate").value);
+                var endDate = new Date("2020-02-27");
+                endDate.setDate(startDate.getDate()+potega);
+                
+                var endDateString = endDate.getFullYear()+"-"+"0"+(endDate.getMonth()+1)+"-"+endDate.getDate();
+                alert(endDateString);
+                
+                document.getElementById("endDate").value = endDateString;
+                
             }
         </script>
     <script src="/Turnieje/JavaScripts/forLists/initFunction.js"></script>

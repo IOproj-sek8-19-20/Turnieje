@@ -2,6 +2,8 @@
     Document   : ManageTournament
     Author     : Daniel Kaleta
 --%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html> 
@@ -30,6 +32,9 @@
         Integer toEditTeamSize = (Integer) session.getAttribute("tournamentToEditTeamSize");
         
         String tournamentModes = (String) session.getAttribute("tournamentModes");
+        
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
     %>
 
     <center>
@@ -61,7 +66,15 @@
             
             <br/><br/>
             
-            Rozmiar drużyn: <input type="number" id="teamSize" name="teamSize" value="<%= toEditTeamSize %>" min="1">
+            Sugerowany rozmiar drużyn: <input type="number" id="teamSize" name="teamSize" value="<%= toEditTeamSize %>" min="1">
+            
+            <br/><br/>
+            
+             Data rozpoczęcia: <input type="date" id="startDate" name="startDate" value="<%=ft.format(date)%>" min="<%=ft.format(date)%>">
+            
+            <br/><br/>
+            
+            Data zakończenia: <input type="date" id="endDate" name="endDate" value="<%=ft.format(date)%>" min="<%=ft.format(date)%>" readonly>
             
             <br/><br/>
             
