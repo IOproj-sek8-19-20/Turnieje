@@ -89,7 +89,7 @@ ITeamRepository teamRepository;
         }
         if(name.length()<3)
         {
-            statement="Imie jest zbyt krótkie!";
+            statement="Imie jest zbyt krotkie!";
         }
         if(!validateFirstName(name))
         {
@@ -107,21 +107,21 @@ ITeamRepository teamRepository;
         }
         if(surname.length()<3)
         {
-        statement="Nazwisko jest zbyt krótkie!";
+        statement="Nazwisko jest zbyt krotkie!";
 
         }
         if (!(password1.equals(password2)))
-        { statement="Hasła są różne!";
+        { statement="Hasla są rozne!";
       
         }
         
          if (("".equals(password1)) || ("".equals(password2)))
-        {statement="Hasło jest puste!";
+        {statement="Haslo jest puste!";
       
         }
          if(password1.length()<8)
         {
-        statement="Hasło jest zbyt krótkie!";
+        statement="Haslo jest zbyt krotkie!";
         
         }
           if(!isValidEmailAddress(email))
