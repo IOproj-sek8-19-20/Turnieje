@@ -15,7 +15,7 @@ input[type=radio] {
 }
 
 input[type=text], select, input[type=number], input[type=submit] {
-    width: 120px;
+    width: 150px;
     padding: 4px 6px;
     margin: 8px 0;
     display: inline-block;
@@ -85,6 +85,9 @@ iframe {
     width: 180px;
 }
 
+#login{
+    width: 150px;
+}
 
 #added{
     margin-left: 5px;
