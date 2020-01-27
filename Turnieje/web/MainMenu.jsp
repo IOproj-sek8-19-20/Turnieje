@@ -67,16 +67,18 @@
         </a>
         
         <br/><br/>
+         
+        <a href="/Turnieje/PrepareSendEmail">
+        <input type = "submit" value = "Wyślij wiadomość">
+        </a>
+        
+        <br/><br/>
         
         <a href="/Turnieje/AALogout">
         <input type = "submit" value = "Wyloguj">
         </a>
 
-          <br/><br/>
-         
-        <a href="/Turnieje/PrepareSendEmail">
-        <input type = "submit" value = "Wyslij wiadomosc">
-        </a>
+
         
     </center>
     </body>
