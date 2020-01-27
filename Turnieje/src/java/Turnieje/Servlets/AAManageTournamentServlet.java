@@ -6,8 +6,10 @@
 package Turnieje.Servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,12 +20,14 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pl.polsl.aei.io.turnieje.model.datamodel.Discipline;
+import pl.polsl.aei.io.turnieje.model.datamodel.Match;
 import pl.polsl.aei.io.turnieje.model.datamodel.Team;
 import pl.polsl.aei.io.turnieje.model.datamodel.TeamInTournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.Tournament;
 import pl.polsl.aei.io.turnieje.model.datamodel.TournamentMode;
 import pl.polsl.aei.io.turnieje.model.datamodel.User;
 import pl.polsl.aei.io.turnieje.model.repository.IDisciplineRepository;
+import pl.polsl.aei.io.turnieje.model.repository.IMatchRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITeamRepository;
 import pl.polsl.aei.io.turnieje.model.repository.ITournamentRepository;
 import pl.polsl.aei.io.turnieje.model.repository.IUserRepository;
@@ -43,6 +47,7 @@ public class AAManageTournamentServlet extends HttpServlet {
     ITeamRepository teamRepository;
     IUserRepository userRepository;
     IDisciplineRepository disciplineRepository;
+    IMatchRepository matchRepository;
 
     @Override
     public void init() {
@@ -51,6 +56,7 @@ public class AAManageTournamentServlet extends HttpServlet {
         tournamentRepository = repositoryProvider.getTournamentRepository();
         userRepository = repositoryProvider.getUserRepository();
         disciplineRepository = repositoryProvider.getDisciplineRepository();
+        matchRepository = repositoryProvider.getMatchRepository();
     }
 
     /**
@@ -125,11 +131,18 @@ public class AAManageTournamentServlet extends HttpServlet {
             toEdit.addTeam(toAdd);
         }
         
+        Set<Match> tournamentMatches = matchRepository.getByTournament(toEdit);
+        for(Match match: tournamentMatches)
+        {
+            matchRepository.delete(match);
+        }
         tournamentRepository.update(toEdit);
         
         Set<Team> allTeams = teamRepository.getAll();
         Set<Team> teamsInTournament = teamRepository.getByTournament(toEdit);
-        //Usuniecie z allUsers uzytkownikow juz dodanych
+        //Usuwam wszystkie mecze aby uzupelnic na nowo
+        
+        //Usuniecie z allTeams druzyn juz dodanych
         for (Team team: teamsInTournament)
         {
             for (Team team2: allTeams)
@@ -152,6 +165,20 @@ public class AAManageTournamentServlet extends HttpServlet {
         for(Team team: teamsInTournament)
         {
             teamsInTournamentNames.add(team.getName());
+        }
+        
+        List<Team> teamsInTournamentList = new ArrayList<>(teamsInTournament);
+        for(int i=0; i<teamsInTournamentList.size();i+=2)
+        {
+            //Tworzenie nowej listy meczy
+            Match toAdd = new Match();
+            //No z tą datą to tak jeszcze do przemyślenia
+            toAdd.setDate(date);
+            toAdd.setFinished(false);
+            toAdd.setTourId(toEdit.id);
+            toAdd.setTeamId((1), teamsInTournamentList.get(i).id);
+            toAdd.setTeamId((2), teamsInTournamentList.get(i+1).id);
+            matchRepository.addMatch(toAdd);
         }
         
         Set<String> allDisciplinesNames = new HashSet<>();

@@ -64,12 +64,15 @@ public class AAPrepareManageTournament extends HttpServlet {
         Tournament toEdit = tournamentRepository.getByName(tournamentName);
         
         Set<Match> tournamentMatches = matchRepository.getByTournament(toEdit);
-        for(Match match: tournamentMatches)
+        if(tournamentMatches!=null)
         {
-            if(match.getFinished()==true)
+            for(Match match: tournamentMatches)
             {
-                response.sendRedirect("/Turnieje/Error.jsp?errorMessage=Nie można edytowac rozpoczetego turnieju!");
-                return;
+                if(match.getFinished()==true)
+                {
+                    response.sendRedirect("/Turnieje/Error.jsp?errorMessage=Nie można edytowac rozpoczetego turnieju!");
+                    return;
+                }
             }
         }
         
@@ -116,6 +119,7 @@ public class AAPrepareManageTournament extends HttpServlet {
         session.setAttribute("notTeamDisciplines", allDisciplinesNames);
         String actualAdmin = (String) session.getAttribute("loggedUser");
         session.setAttribute("tournamentAdmin", actualAdmin);
+        session.setAttribute("tournamentModes", toEdit.getMode().Pucharowy.toString());
         
         response.sendRedirect("/Turnieje/TournamentCreateManage/ManageTournament.jsp?tournamentName="+tournamentName);
     }

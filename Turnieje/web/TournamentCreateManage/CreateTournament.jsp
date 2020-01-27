@@ -93,7 +93,7 @@
             </div>
             
             <br/><br/>
-                <input type = "submit" value = "Zatwierdz" onclick="temp()">
+                <input type = "submit" value = "Zatwierdź" onclick="temp()">
 
             
         <!--
@@ -101,7 +101,7 @@
         -->
         <br/>
         <form action = "/Turnieje/MainMenu.jsp" method="get">
-            <input type = "submit" value = "Powrot">
+            <input type = "submit" value = "Powrót">
         </form>
         
         </center>

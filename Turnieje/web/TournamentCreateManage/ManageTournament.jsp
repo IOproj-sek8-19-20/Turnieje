@@ -29,7 +29,7 @@
         String tournamentAdmin = (String) session.getAttribute("tournamentAdmin");
         Integer toEditTeamSize = (Integer) session.getAttribute("tournamentToEditTeamSize");
         
-        Set<String> tournamentModes = (Set<String>) session.getAttribute("tournamentModes");
+        String tournamentModes = (String) session.getAttribute("tournamentModes");
     %>
 
     <center>
@@ -56,11 +56,7 @@
         
         Tryb rozgrywek:
             <select name="tournamentMode" size="1" id="tournamentMode">
-            
-            <% for(String mode: tournamentModes)
-                { %>
-                    <option> <%= mode %></option>
-                <% } %>
+                <option> <%= tournamentModes %></option> %>
             </select>
             
             <br/><br/>
@@ -92,13 +88,13 @@
             
         <br/><br/>
         
-        <input type = "submit" value = "Zatwierdz" onclick="temp()">
+        <input type = "submit" value = "Zatwierdź" onclick="temp()">
         
         <!--
         Powrót do menu glownego
         -->
         <form action = "/Turnieje/MainMenu.jsp" method="get">
-            <input type = "submit" value = "Powrot">
+            <input type = "submit" value = "Powrót">
         </form>
 
     </center>
