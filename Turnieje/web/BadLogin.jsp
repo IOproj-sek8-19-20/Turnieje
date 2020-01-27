@@ -13,8 +13,10 @@
         <title>Rezultat logowania </title>
     </head>
     <body>
+    <center>
         <h1>Zly login lub haslo!</h1>
         <input type = "submit" value = "Wróc do ekranu logowania" onclick="submit()">
+    </center>
         <script>
             function submit()
             {

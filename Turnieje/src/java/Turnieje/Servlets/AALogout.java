@@ -43,7 +43,7 @@ public class AALogout extends HttpServlet {
             session.removeAttribute((String) attribute);
         }
         
-        response.sendRedirect("/Turnieje/MainMenu.jsp");
+        response.sendRedirect("/Turnieje/Login.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -72,6 +72,11 @@
         <input type = "submit" value = "Wyloguj">
         </a>
 
+          <br/><br/>
+         
+        <a href="/Turnieje/PrepareSendEmail">
+        <input type = "submit" value = "Wyslij wiadomosc">
+        </a>
         
     </center>
     </body>

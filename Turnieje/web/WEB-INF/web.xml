@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
     <servlet>
         <servlet-name>CreateTeamServlet</servlet-name>
         <servlet-class>Turnieje.Servlets.AACreateTeamServlet</servlet-class>
@@ -63,6 +67,19 @@
     <servlet>
         <servlet-name>AALogout</servlet-name>
         <servlet-class>Turnieje.Servlets.AALogout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PrepareSendEmail</servlet-name>
+        <servlet-class>Turnieje.Servlets.PrepareSendEmail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateEmail</servlet-name>
+        <servlet-class>Turnieje.Servlets.CreateEmail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>CreateTeamServlet</servlet-name>
@@ -128,9 +145,22 @@
         <servlet-name>AALogout</servlet-name>
         <url-pattern>/AALogout</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PrepareSendEmail</servlet-name>
+        <url-pattern>/PrepareSendEmail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateEmail</servlet-name>
+        <url-pattern>/CreateEmail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+
 </web-app>

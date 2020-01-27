@@ -13,8 +13,10 @@
         <title>Niepowodzenie Rejestracji</title>
     </head>
     <body>
+    <center>
         <h1> <%= request.getParameter("statement") %> </h1>
-          <input type = "submit" value = "Wróc do ekranu rejestracji" onclick="submit()">
+          <input type = "submit" value = "Wróć do ekranu rejestracji" onclick="submit()">
+    </center>
         <script>
             function submit()
             {
