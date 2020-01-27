@@ -109,8 +109,6 @@
         <script> 
             function temp()
             {
-                date();
-                return;
                 var myVar="Create";
                 submit(myVar);
             }
